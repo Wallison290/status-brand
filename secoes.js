@@ -9,3 +9,15 @@
     });
   });
 })();
+
+// Seção 01: clicar na fita do símbolo escolhe o pilar; a fita ativa se desloca para fora junto com o rótulo.
+(() => {
+  'use strict';
+  document.querySelectorAll('.hx6-seg').forEach(seg => {
+    const button = document.querySelector(`.hx6-label[data-pillar="${seg.dataset.seg}"]`);
+    if (!button) return;
+    seg.style.setProperty('--dx', button.style.getPropertyValue('--dx'));
+    seg.style.setProperty('--dy', button.style.getPropertyValue('--dy'));
+    seg.addEventListener('click', () => button.click());
+  });
+})();

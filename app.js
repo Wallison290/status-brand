@@ -26,21 +26,18 @@
     ['Uma conversa que faz sentido.', 'Transformamos sua estratégia em uma comunicação consistente, relevante e reconhecível em cada canal.'],
     ['Cada ação com um objetivo.', 'Planejamos campanhas, acompanhamos indicadores e ajustamos o caminho com base no que o seu negócio precisa.'],
     ['Presença em cada detalhe.', 'Conectamos identidade, conteúdo e experiência digital para tornar cada contato com a marca mais claro e intuitivo.'],
-    ['Mais possibilidades. Menos atrito.', 'Sites, automações e inteligência artificial ajudam a aproximar o cliente e simplificar os processos da sua operação.']
+    ['Mais possibilidades. Menos atrito.', 'Sites, automações e inteligência artificial ajudam a aproximar o cliente e simplificar os processos da sua operação.'],
+    ['Uma parceria que permanece.', 'Acompanhamos cada etapa de perto, com escuta, clareza e ajustes constantes para crescer junto com o seu negócio.']
   ];
-  const tip = $('.ecl-tip');
   function showPillar(button) {
     const index = Number(button.dataset.pillar);
     $$('[data-pillar]').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button)); });
+    // destaca a fita do símbolo correspondente ao pilar
+    $$('.hx6-seg').forEach(seg => seg.classList.toggle('active', Number(seg.dataset.seg) === index));
     $('#pillar-number').textContent = `PILAR 0${index + 1}`;
     $('#pillar-title').textContent = pillars[index][0]; $('#pillar-copy').textContent = pillars[index][1];
-    if (tip) {
-      // o card acompanha o nó ativo; nos nós da esquerda ele abre para a esquerda
-      tip.style.setProperty('--tx', button.style.getPropertyValue('--x'));
-      tip.style.setProperty('--ty', button.style.getPropertyValue('--y'));
-      tip.dataset.side = button.dataset.side;
-      tip.classList.remove('swap'); void tip.offsetWidth; tip.classList.add('swap');
-    }
+    const center = $('.hx6-center');
+    if (center) { center.classList.remove('swap'); void center.offsetWidth; center.classList.add('swap'); }
   }
   const pillarButtons = $$('[data-pillar]');
   let pillarTimer = 0;
