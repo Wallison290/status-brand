@@ -1,5 +1,5 @@
 // Carrossel em meia-lua: os cards giram em volta de um centro abaixo do palco.
-// Gira sozinho, pausa com o mouse em cima e pode ser arrastado.
+// Gira sozinho o tempo todo e pode ser arrastado.
 (() => {
   'use strict';
   const section = document.querySelector('.arc-section');
@@ -65,9 +65,8 @@
     if (!on && running) { running = false; cancelAnimationFrame(raf); }
   }
 
-  stage.addEventListener('mouseenter', () => { targetSpeed = 0; });
-  stage.addEventListener('mouseleave', () => { targetSpeed = reduce ? 0 : SPEED; });
-  stage.addEventListener('focusin', () => { targetSpeed = 0; });
+  // gira mesmo com o mouse em cima; só pausa quando alguém navega pelos cards com o teclado
+  stage.addEventListener('focusin', e => { if (e.target.matches(':focus-visible')) targetSpeed = 0; });
   stage.addEventListener('focusout', () => { targetSpeed = reduce ? 0 : SPEED; });
 
   // arrastar para girar
