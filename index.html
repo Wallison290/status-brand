@@ -7,7 +7,7 @@
   <meta name="description" content="Estratégia, branding, conteúdo, performance e tecnologia. Um ecossistema para transformar presença em valor e dar à sua marca um novo status.">
   <meta property="og:title" content="Status Brand — Sua marca em outro status."><meta property="og:description" content="Marca, tecnologia e educação conectadas para fazer seu negócio crescer."><meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23675AA6'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Arial' font-size='44' fill='white'%3ES%3C/text%3E%3C/svg%3E">
-  <link rel="preload" href="assets/open-sans.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="assets/open-sans.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="hero3d.css">
 </head>
 <body>
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -18,12 +18,22 @@
   <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
 </div><nav id="mobile-menu" class="mobile-nav" aria-label="Menu mobile" hidden><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a><a href="#nichos">Especialidades</a><button data-contact>Começar meu projeto</button></nav></header>
 <main id="conteudo">
-<section class="hero" id="inicio" aria-labelledby="hero-title">
-  <div class="hero-aura"></div><img class="hero-sculpture" src="assets/hero.png" alt="Símbolo S da Status Brand em uma escultura escura iluminada em roxo" fetchpriority="high">
-  <div class="hero-intro"><span class="eyebrow">ESTRATÉGIA QUE MOVE MARCAS</span><p>Posicionamento que faz sentido.<br>Presença que faz a diferença.</p><a class="text-link" href="#solucoes">Conheça nossas soluções</a></div>
-  <div class="hero-heading"><span class="eyebrow">BRANDING · PERFORMANCE · TECNOLOGIA</span><h1 id="hero-title">Sua marca.<br>Outro <em>status.</em></h1><p>Conectamos estratégia, criatividade e tecnologia para transformar a maneira como o mercado vê o seu negócio.</p><button class="button primary" data-contact>Construir meu próximo passo</button></div>
-  <div class="hero-note"><span class="note-label">UMA VISÃO INTEGRADA</span><strong>360°</strong><span>Da essência da marca<br>à experiência do cliente.</span></div>
-  <div class="hero-baseline"><span>FEITA DE IDEIAS. MOVIDA POR PROPÓSITO.</span><a href="#sobre">Explore a Status Brand <span class="scroll-line"></span></a><span class="issue">BRASIL · 2026</span></div>
+<section class="hero3d" id="inicio" aria-labelledby="hero-title">
+  <div class="hx-glow" aria-hidden="true"></div>
+  <div class="hx-stage" aria-hidden="true"><img class="hx-fallback" src="assets/hero.png" alt="" fetchpriority="high"><canvas id="hx-canvas"></canvas></div>
+  <div class="hx-word" aria-hidden="true">STATUS</div>
+
+  <div class="hx-intro hx-in" style="--d:.15s"><p class="hx-intro-title">Estratégia de<br>performance</p><p>Branding, conteúdo, tráfego e tecnologia trabalhando juntos para a sua marca crescer com consistência.</p><a href="#solucoes" class="hx-link">Ver soluções <span aria-hidden="true">→</span></a></div>
+
+  <div class="hx-card hx-card-left hx-in" style="--d:.35s"><strong>360°</strong><span>Da essência da marca à experiência do cliente.</span></div>
+  <div class="hx-card hx-card-right hx-in" style="--d:.5s"><strong>5 mercados</strong><span>Saúde, estética, farmácias, gastronomia e empresas.</span></div>
+
+  <div class="hx-heading hx-in" style="--d:.25s">
+    <h1 id="hero-title">Sua marca.<br>Outro status.</h1>
+    <div class="hx-cta"><button class="hx-pill" data-contact aria-label="Começar meu projeto"><span aria-hidden="true">↘</span></button><p>Marketing que transforma negócios em marcas lembradas.</p></div>
+  </div>
+
+  <a class="hx-scroll" href="#sobre">Explore <span aria-hidden="true"></span></a>
 </section>
 <div class="marquee" aria-hidden="true"><div>ESTRATÉGIA <b>✳</b> BRANDING <b>✳</b> PERFORMANCE <b>✳</b> TECNOLOGIA <b>✳</b> CONTEÚDO <b>✳</b> ESTRATÉGIA <b>✳</b> BRANDING <b>✳</b> PERFORMANCE <b>✳</b> TECNOLOGIA <b>✳</b> CONTEÚDO <b>✳</b></div></div>
 <section class="section positioning" id="sobre">
@@ -63,5 +73,8 @@
 <footer><div class="footer-top"><a href="#inicio" class="brand-crop" aria-label="Status Brand — voltar ao início"><img src="assets/logo-oficial.jpeg" alt="Status Brand co."></a><p>Marcas com essência.<br>Presença com propósito.</p><nav aria-label="Menu do rodapé"><a href="#ecossistema">Ecossistema</a><a href="#projetos">Projetos</a><a href="#equipe">Equipe</a></nav></div><div class="footer-bottom"><span>© <span id="year">2026</span> Status Brand. Todos os direitos reservados.</span><span>BRANDING · PERFORMANCE · TECNOLOGIA</span></div></footer>
 <dialog id="contact-dialog" aria-labelledby="contact-title"><button class="dialog-close" aria-label="Fechar formulário">×</button><div id="brief-intro"><span class="eyebrow">O PRÓXIMO CAPÍTULO COMEÇA AQUI</span><h2 id="contact-title">Conte sobre<br><em>sua marca.</em></h2><p>Prepare um resumo do seu projeto para compartilhar com a equipe Status Brand.</p><form id="brief-form"><label>Seu nome<input name="name" autocomplete="name" required maxlength="100" placeholder="Como podemos chamar você?"></label><label>Empresa ou marca<input name="company" autocomplete="organization" required maxlength="120" placeholder="Nome da sua marca"></label><label>Do que você precisa?<select name="service" id="brief-service"><option>Quero entender por onde começar</option><option>Marca e posicionamento</option><option>Conteúdo e performance</option><option>Experiência e tecnologia</option></select></label><label>Qual é o seu principal desafio?<textarea name="goal" required minlength="10" maxlength="1500" rows="3" placeholder="Conte o que você quer transformar no seu negócio."></textarea></label><button type="submit" class="button primary">Gerar meu briefing</button><small>Os dados ficam apenas nesta página. Nenhuma mensagem é enviada automaticamente.</small></form></div><div id="brief-result" hidden><span class="eyebrow">PRONTO PARA COMPARTILHAR</span><h2>Seu próximo<br><em>passo está aqui.</em></h2><pre id="brief-text"></pre><div class="result-actions"><button class="button primary" id="copy-brief">Copiar briefing</button><button class="button" id="download-brief">Baixar resumo</button><button class="text-link" id="edit-brief">Editar informações</button></div><p id="copy-status" role="status">Copie ou baixe o resumo e compartilhe com a equipe Status Brand.</p></div></dialog>
 <dialog id="project-dialog" aria-labelledby="project-title"><button class="dialog-close" aria-label="Fechar detalhes">×</button><span class="eyebrow" id="project-eyebrow"></span><h2 id="project-title"></h2><p id="project-description"></p><div id="project-deliverables" class="project-deliverables"></div><button class="button primary" id="project-contact">Quero algo para minha marca</button></dialog>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script src="app.js" defer></script>
+<script src="hero3d.js" defer></script>
+<script>setTimeout(function(){var h=document.querySelector(".hero3d");if(h&&!h.classList.contains("hx-ready"))h.classList.add("hx-nogl")},4000)</script>
 </body></html>
