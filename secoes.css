@@ -110,18 +110,20 @@
   -webkit-mask:radial-gradient(closest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));mask:radial-gradient(closest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));
   animation:eco3-orbit 3.2s linear infinite paused}
 @keyframes eco3-orbit{to{transform:rotate(360deg)}}
+.eco3-label,.eco3-detail{position:relative;z-index:1}
+@media(hover:hover) and (min-width:901px){
 .eco3-circle:hover,.eco3-circle:focus-visible{scale:1.07;z-index:2;animation-play-state:paused}
 .eco3-circle:hover::after,.eco3-circle:focus-visible::after,.eco3-circle:hover::before,.eco3-circle:focus-visible::before{opacity:1}
 .eco3-circle:hover::before,.eco3-circle:focus-visible::before{animation-play-state:running}
-.eco3-label,.eco3-detail{position:relative;z-index:1}
 /* os vizinhos se afastam e apagam um pouco */
 .eco3-circles:hover .eco3-circle:not(:hover){opacity:.45;border-color:#ffffff26}
 .eco3-circle:hover ~ .eco3-circle{transform:translateX(26px)}
 .eco3-circle:has(~ .eco3-circle:hover){transform:translateX(-26px)}
+}
 .eco3-mark{transition:transform .8s cubic-bezier(.16,1,.3,1),color .4s,text-shadow .4s;z-index:3}
 .eco3-stage:hover .eco3-mark{transform:translate(-50%,-50%) rotate(180deg) scale(1.2);color:#d6c8ff;text-shadow:0 0 14px #a58bff}
 
-@media(max-width:760px){
+@media(max-width:900px){
   .eco3-title{margin-bottom:50px}
   .eco3-stage::before{display:none}
   /* no celular os círculos ficam empilhados e ainda se cruzando */
@@ -146,17 +148,17 @@
 .sol-card:nth-child(2){--ay:79px}
 .sol-n{position:absolute;left:50%;top:calc(var(--ay) + 12px);transform:translateX(-50%);font-size:clamp(22px,1.9vw,30px);font-weight:300;letter-spacing:-.03em;color:#e9e4f5}
 .sol-glass{position:relative;height:100%;display:flex;flex-direction:column;padding:24px 24px 22px;border-radius:16px;overflow:hidden;transform-origin:center top;
-  background:radial-gradient(ellipse 80% 70% at 50% 0%,#9d7cff99 0%,#5b3fc455 38%,transparent 70%),linear-gradient(180deg,#24164d 0%,#130d26 50%,#0c0916 100%);
-  border:1px solid #a58bff3d;box-shadow:inset 0 1px 0 #d6c8ff59,0 24px 60px #0009,0 0 40px #5b3fc426;
-  transform:rotateX(14deg) rotateZ(var(--rz,0deg));transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .4s}
+  /* acabamento fosco: superfície chapada com granulado leve, sem brilho nem reflexo */
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E"),#16131c;
+  border:1px solid #ffffff14;box-shadow:0 18px 40px #00000073;
+  transform:rotateX(14deg) rotateZ(var(--rz,0deg));transition:transform .6s cubic-bezier(.16,1,.3,1),border-color .4s,background-color .4s}
 .sol-card:nth-child(1) .sol-glass{--rz:3.5deg}
 .sol-card:nth-child(3) .sol-glass{--rz:-3.5deg}
-.sol-glass::before{content:"";position:absolute;left:18%;right:18%;top:0;height:1px;background:linear-gradient(90deg,transparent,#efe8ff,transparent)}
-.sol-card:hover .sol-glass,.sol-card:focus-within .sol-glass{transform:rotateX(4deg) rotateZ(0deg) translateY(-8px);box-shadow:inset 0 1px 0 #d6c8ff80,0 30px 70px #000a,0 0 60px #7c5ce655}
+.sol-card:hover .sol-glass,.sol-card:focus-within .sol-glass{transform:rotateX(4deg) rotateZ(0deg) translateY(-8px);border-color:#675aa680;background-color:#1a1622}
 .sol-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
 .sol-glass h3{margin:0;font-size:clamp(19px,1.6vw,24px);font-weight:500;letter-spacing:-.02em;line-height:1.2;color:#fff}
-.sol-icon{flex-shrink:0;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:#ffffff14;border:1px solid #ffffff33;box-shadow:inset 0 1px 0 #ffffff26}
-.sol-icon svg{width:22px;height:22px;fill:none;stroke:#f1ecff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sol-icon{flex-shrink:0;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:#221d2b;border:1px solid #ffffff12}
+.sol-icon svg{width:22px;height:22px;fill:none;stroke:#b9a8f1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sol-glass p{margin:0;font-size:13.5px;line-height:1.6;color:#bcb5cc}
 .sol-list{list-style:none;margin:18px 0 20px;padding:14px 0 0;border-top:1px solid #ffffff17;font-size:12px;color:#cfc8de}
 .sol-list li{padding:4px 0}
