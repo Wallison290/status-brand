@@ -28,12 +28,31 @@
     ['Presença em cada detalhe.', 'Conectamos identidade, conteúdo e experiência digital para tornar cada contato com a marca mais claro e intuitivo.'],
     ['Mais possibilidades. Menos atrito.', 'Sites, automações e inteligência artificial ajudam a aproximar o cliente e simplificar os processos da sua operação.']
   ];
-  $$('[data-pillar]').forEach(button => button.addEventListener('click', () => {
+  const tip = $('.ecl-tip');
+  function showPillar(button) {
     const index = Number(button.dataset.pillar);
     $$('[data-pillar]').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button)); });
     $('#pillar-number').textContent = `PILAR 0${index + 1}`;
     $('#pillar-title').textContent = pillars[index][0]; $('#pillar-copy').textContent = pillars[index][1];
-  }));
+    if (tip) {
+      // o card acompanha o nó ativo; nos nós da esquerda ele abre para a esquerda
+      tip.style.setProperty('--tx', button.style.getPropertyValue('--x'));
+      tip.style.setProperty('--ty', button.style.getPropertyValue('--y'));
+      tip.dataset.side = button.dataset.side;
+      tip.classList.remove('swap'); void tip.offsetWidth; tip.classList.add('swap');
+    }
+  }
+  const pillarButtons = $$('[data-pillar]');
+  let pillarTimer = 0;
+  pillarButtons.forEach(button => button.addEventListener('click', () => { clearInterval(pillarTimer); showPillar(button); }));
+  if (pillarButtons.length) {
+    showPillar(pillarButtons[0]);
+    // percorre os pilares sozinho até a pessoa clicar em um
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let current = 0;
+      pillarTimer = setInterval(() => { current = (current + 1) % pillarButtons.length; showPillar(pillarButtons[current]); }, 4500);
+    }
+  }
   const processCopy = [
     'Começamos pelo seu negócio: contexto, público, desafios e oportunidades. O diagnóstico dá sentido às decisões que vêm depois.',
     'Organizamos prioridades e definimos o plano. Posicionamento, canais, mensagens e objetivos passam a trabalhar na mesma direção.',
