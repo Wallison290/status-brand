@@ -26,8 +26,7 @@
     ['Uma conversa que faz sentido.', 'Transformamos sua estratégia em uma comunicação consistente, relevante e reconhecível em cada canal.'],
     ['Cada ação com um objetivo.', 'Planejamos campanhas, acompanhamos indicadores e ajustamos o caminho com base no que o seu negócio precisa.'],
     ['Presença em cada detalhe.', 'Conectamos identidade, conteúdo e experiência digital para tornar cada contato com a marca mais claro e intuitivo.'],
-    ['Mais possibilidades. Menos atrito.', 'Sites, automações e inteligência artificial ajudam a aproximar o cliente e simplificar os processos da sua operação.'],
-    ['Uma parceria que permanece.', 'Acompanhamos cada etapa de perto, com escuta, clareza e ajustes constantes para crescer junto com o seu negócio.']
+    ['Mais possibilidades. Menos atrito.', 'Sites, automações e inteligência artificial ajudam a aproximar o cliente e simplificar os processos da sua operação.']
   ];
   function showPillar(button) {
     const index = Number(button.dataset.pillar);

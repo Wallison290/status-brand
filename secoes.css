@@ -1,4 +1,4 @@
-/* Seção 01 — Posicionamento: símbolo hexagonal de fitas torcidas com seis pilares */
+/* Seção 01 — Posicionamento: anel de cinco partes com pontas arredondadas que se sobrepõem */
 .ecl{padding-bottom:120px;overflow:hidden}
 .ecl .section-kicker{border:0;margin-bottom:40px}
 .ecl-stage{position:relative;display:flex;flex-direction:column;align-items:center}
@@ -21,13 +21,14 @@
 /* textos posicionados nas fitas (coordenadas geradas junto com o desenho) */
 .hx6-labels{position:absolute;inset:0;pointer-events:none}
 .hx6-label,.hx6-para,.hx6-icon{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);color:#fff}
-.t-light.hx6-label,.t-light.hx6-para,.t-light.hx6-icon{color:#2a2338}
+.t-light.hx6-label,.t-light.hx6-para,.t-light.hx6-icon,.t-lilac.hx6-label,.t-lilac.hx6-para,.t-lilac.hx6-icon{color:#221c30}
 .hx6-label{pointer-events:auto;display:grid;justify-items:center;gap:.2cqw;padding:.6cqw 1cqw;background:none;border:0;cursor:pointer;font:inherit;text-align:center}
-.hx6-num{font-size:4.4cqw;font-weight:300;line-height:1;letter-spacing:-.02em}
-.hx6-name{font-size:1.95cqw;font-weight:600;letter-spacing:.01em}
+.hx6-num{font-size:6.4cqw;font-weight:700;line-height:1;letter-spacing:-.02em}
+.hx6-name{display:none;font-size:1.95cqw;font-weight:600;letter-spacing:.01em}
 .hx6-label:focus-visible{outline:2px solid var(--lilac);outline-offset:2px;border-radius:8px}
-.hx6-para{margin:0;width:12cqw;font-size:1.35cqw;line-height:1.4;text-align:left;opacity:.85}
-.hx6-icon{width:3.4cqw;height:3.4cqw;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.hx6-para{margin:0;width:19cqw;font-size:1.6cqw;line-height:1.4;text-align:left;opacity:.85}
+.hx6-para strong{display:block;margin-bottom:.3cqw;font-size:1.75cqw}
+.hx6-icon{width:4.4cqw;height:4.4cqw;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 
 /* explicação do pilar ativo: só no celular, abaixo do símbolo */
 .hx6-center{display:none}
@@ -35,8 +36,8 @@
 @keyframes hx6-fade{from{opacity:0;transform:translateY(4px)}}
 @container (max-width:560px){
   .hx6-para{display:none}
-  .hx6-num{font-size:5.6cqw}
-  .hx6-name{font-size:2.9cqw}
+  .hx6-num{font-size:7cqw}
+  .hx6-name{display:block;font-size:2.9cqw}
   .hx6-icon{width:5cqw;height:5cqw}
   .hx6-center{display:block;margin-top:24px;padding:16px 18px;border:1px solid #ffffff1c;border-radius:14px;background:#141119;text-align:center}
   .hx6-center span{font-size:9px;letter-spacing:.2em;color:var(--lilac)}
