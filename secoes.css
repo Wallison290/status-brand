@@ -68,9 +68,9 @@
 }
 
 /* Seção 03 — Ecossistema: frase de impacto, bolhas em escada, selo girando e lista grande */
-.eco2-grid{display:grid;grid-template-columns:auto auto 130px minmax(400px,1fr);gap:clamp(28px,3.2vw,56px);align-items:center;max-width:1400px;margin:0 auto}
+.eco2-grid{display:grid;grid-template-columns:max-content auto 130px minmax(400px,1fr);gap:clamp(28px,3.2vw,56px);align-items:center;max-width:1400px;margin:0 auto}
 .eco2-statement{text-align:right;padding-right:clamp(28px,3.2vw,56px);border-right:1px solid #ffffff2e;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
-.eco2-statement h2{margin:0;font-size:clamp(40px,3.5vw,60px);line-height:.95;font-weight:400;letter-spacing:-.055em}
+.eco2-statement h2{margin:0;white-space:nowrap;font-size:clamp(40px,3.5vw,60px);line-height:.95;font-weight:400;letter-spacing:-.055em}
 .eco2-statement h2 b{font-weight:400;background:linear-gradient(160deg,#d9cdff,#8b6cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
 .eco2-statement p{margin:22px 0 0;font-size:14px;color:#c9c4d6;max-width:220px;margin-left:auto;line-height:1.4}
 
@@ -88,34 +88,44 @@
 .eco2-badge .eco2-s{width:30px;height:35px;background-position:-48px -36px;background-size:274px auto}
 @keyframes eco2-spin{to{transform:rotate(360deg)}}
 
-.eco2-list details{border-bottom:1px solid #ffffff17;padding:10px 0}
-.eco2-list summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:12px;color:#5f5a6b;transition:color .3s}
-.eco2-list summary::-webkit-details-marker{display:none}
-.eco2-list summary:hover{color:#a29cb1}
-.eco2-num{font-size:13px;margin-top:.6em;color:inherit;letter-spacing:-.02em}
-.eco2-list h3{margin:0;white-space:nowrap;font-size:clamp(32px,3.3vw,56px);line-height:1.15;font-weight:400;letter-spacing:-.055em;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:2px;text-underline-offset:.14em;transition:text-decoration-color .3s}
-.eco2-arrow{flex-shrink:0;margin-left:auto;margin-top:.9em;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-size:18px;font-weight:400;line-height:1;color:#fff;background:transparent;border:1px solid #ffffff1f;transition:background .3s,border-color .3s,transform .3s}
-.eco2-list details[open] summary{color:#fff}
-.eco2-list details[open] .eco2-num{color:var(--lilac)}
-.eco2-list details[open] h3{text-decoration-color:#fff}
-.eco2-list details[open] .eco2-arrow{background:var(--purple);border-color:var(--purple);transform:rotate(90deg)}
-.eco2-body{padding:8px 0 14px 34px}
-.eco2-tags{display:inline-flex;flex-wrap:wrap;gap:6px 0;padding:7px 14px;border:1px solid #ffffff1f;border-radius:100px;background:#ffffff06}
-.eco2-tags span{font-size:11px;color:#d5cfe2}
-.eco2-tags span+span::before{content:"•";margin:0 9px;color:#8f89a0}
-.eco2-body p{margin:14px 0 0;max-width:460px;font-size:14px;line-height:1.6;color:#aea8bd}
+/* três frentes: cards de vidro ao longo de um arco de luz */
+.eco2-path{position:relative;padding:34px 0}
+.eco2-arc{position:absolute;left:0;top:0;width:100px;height:100%;overflow:visible;fill:none}
+.eco2-arc path{stroke:#b9a2ff;stroke-width:1.6;vector-effect:non-scaling-stroke}
+.eco2-arc .glow{stroke:#8b6cf0;stroke-width:9;opacity:.55;filter:blur(7px)}
+.eco2-cards{list-style:none;margin:0;padding:0;display:grid;gap:30px;perspective:1100px}
+.eco2-card{position:relative;--ax:48px}
+.eco2-card:nth-child(2){--ax:79px}
+.eco2-n{position:absolute;left:calc(var(--ax) + 14px);top:50%;transform:translateY(-50%);font-size:clamp(22px,1.9vw,30px);font-weight:300;letter-spacing:-.03em;color:#e9e4f5}
+.eco2-glass{position:relative;margin-left:calc(var(--ax) + 72px);padding:20px 22px 18px;border-radius:14px;overflow:hidden;transform-origin:left center;
+  background:radial-gradient(ellipse 70% 90% at 55% 0%,#9d7cff99 0%,#5b3fc455 38%,transparent 70%),linear-gradient(180deg,#24164d 0%,#130d26 55%,#0c0916 100%);
+  border:1px solid #a58bff3d;box-shadow:inset 0 1px 0 #d6c8ff59,0 24px 60px #0009,0 0 40px #5b3fc426;
+  transform:rotateY(-14deg) rotateZ(var(--rz,0deg));transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .4s}
+.eco2-card:nth-child(1) .eco2-glass{--rz:-4deg}
+.eco2-card:nth-child(3) .eco2-glass{--rz:3.5deg}
+.eco2-glass::before{content:"";position:absolute;left:18%;right:18%;top:0;height:1px;background:linear-gradient(90deg,transparent,#efe8ff,transparent)}
+.eco2-card:hover .eco2-glass{transform:rotateY(-6deg) rotateZ(0deg) translateX(6px);box-shadow:inset 0 1px 0 #d6c8ff80,0 28px 70px #000a,0 0 60px #7c5ce655}
+.eco2-card-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.eco2-card h3{margin:0;font-size:clamp(18px,1.5vw,22px);font-weight:500;letter-spacing:-.02em;color:#fff}
+.eco2-icon{flex-shrink:0;display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:#ffffff14;border:1px solid #ffffff33;box-shadow:inset 0 1px 0 #ffffff26}
+.eco2-icon svg{width:18px;height:18px;fill:none;stroke:#f1ecff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.eco2-card p{margin:0;font-size:12.5px;line-height:1.6;color:#bcb5cc;max-width:420px}
+.eco2-card small{display:block;margin-top:12px;font-size:10px;letter-spacing:.08em;color:#9d8fd0;text-transform:uppercase}
 
 @media(max-width:1100px){
   .eco2-grid{grid-template-columns:auto auto 1fr;row-gap:50px}
   .eco2-middle{display:none}
-  .eco2-list{grid-column:1/-1}
+  .eco2-path{grid-column:1/-1;max-width:720px}
 }
 @media(max-width:760px){
   .eco2-grid{grid-template-columns:1fr;gap:34px}
   .eco2-statement{text-align:left;border-right:0;padding-right:0}
   .eco2-statement p{margin-left:0}
   .eco2-bubbles{--b:84px}
-  .eco2-list h3{font-size:34px;white-space:normal}
-  .eco2-body{padding-left:0}
+  .eco2-card{--ax:24px}
+  .eco2-card:nth-child(2){--ax:44px}
+  .eco2-glass{margin-left:calc(var(--ax) + 46px);padding:16px}
+  .eco2-n{font-size:20px;left:calc(var(--ax) + 8px)}
+  .eco2-arc{width:60px}
 }
-@media(prefers-reduced-motion:reduce){.eco2-badge svg{animation:none}}
+@media(prefers-reduced-motion:reduce){.eco2-badge svg{animation:none}.eco2-glass{transition:none}}
