@@ -10,14 +10,25 @@
   });
 })();
 
-// Seção 01: clicar na fita do símbolo escolhe o pilar; a fita ativa se desloca para fora junto com o rótulo.
+// Seção 01: passar o mouse (ou focar) numa parte do anel escolhe o pilar e abre a seta com o card de informações.
 (() => {
   'use strict';
-  document.querySelectorAll('.hx6-seg').forEach(seg => {
-    const button = document.querySelector(`.hx6-label[data-pillar="${seg.dataset.seg}"]`);
-    if (!button) return;
-    seg.style.setProperty('--dx', button.style.getPropertyValue('--dx'));
-    seg.style.setProperty('--dy', button.style.getPropertyValue('--dy'));
-    seg.addEventListener('click', () => button.click());
+  const symbol = document.querySelector('.hx6-symbol');
+  if (!symbol) return;
+  const open = index => symbol.querySelectorAll('.hx6-line, .hx6-call').forEach(el => el.classList.toggle('open', el.dataset.call === String(index)));
+  const pick = index => {
+    const button = symbol.querySelector(`.hx6-label[data-pillar="${index}"]`);
+    if (button && button.getAttribute('aria-pressed') !== 'true') button.click();
+    open(index);
+  };
+  symbol.querySelectorAll('.hx6-seg, .hx6-label, [data-part]').forEach(el => {
+    const index = el.dataset.seg ?? el.dataset.pillar ?? el.dataset.part;
+    el.addEventListener('mouseenter', () => pick(index));
+    if (el.matches('.hx6-seg')) el.addEventListener('click', () => pick(index));
   });
+  symbol.querySelectorAll('.hx6-label').forEach(button => {
+    button.addEventListener('focus', () => open(button.dataset.pillar));
+    button.addEventListener('blur', () => open(-1));
+  });
+  symbol.addEventListener('mouseleave', () => open(-1));
 })();
