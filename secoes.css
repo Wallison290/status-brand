@@ -93,9 +93,6 @@
 .eco3-copy{margin:70px auto 0;max-width:620px;font-size:clamp(17px,1.5vw,22px);line-height:1.45;color:#d8d3e3}
 .eco3-copy em{font-style:normal;color:#a58bff}
 
-.eco3-foot{display:flex;align-items:center;gap:34px;max-width:1400px;margin:90px auto 0;padding-top:18px;border-top:1px solid #ffffff17;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#77727f}
-.eco3-foot a{margin-left:auto;font-size:18px;color:#a58bff;transition:transform .3s}
-.eco3-foot a:hover{transform:translate(3px,-3px)}
 
 /* movimento dos círculos: flutuam, seguem a luz do mouse e reagem entre si */
 .eco3-circle{overflow:hidden;animation:eco3-float 7s ease-in-out infinite;animation-delay:calc(var(--i) * -2.3s);
@@ -133,7 +130,6 @@
   .eco3-label{font-size:26px}
   .eco3-detail{opacity:1;max-height:none;transform:none;font-size:12px;max-width:200px}
   .eco3-mark{display:none}
-  .eco3-foot{gap:14px;flex-wrap:wrap;font-size:8px;margin-top:60px}
 }
 @media(prefers-reduced-motion:reduce){.eco3-circle,.eco3-label,.eco3-detail{transition:none}.eco3-circle{animation:none}.eco3-circle::before{animation:none}}
 
