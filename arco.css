@@ -1,0 +1,69 @@
+/* Seção 02 — Projetos & Marcas: carrossel em meia-lua girando sobre um mostrador */
+.arc-section{--R:700px;--card-w:190px;--card-h:200px;position:relative;overflow:hidden;padding:105px var(--gutter) 110px;max-width:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 62%,#1a1330 0%,transparent 70%)}
+.arc-section .section-kicker{max-width:1800px;margin:0 auto 30px;border-top:1px solid var(--line);padding-top:20px;color:#aaa6b2;font-size:10px}
+
+/* o palco tem a altura do topo do círculo até os números */
+.arc-stage{position:relative;height:calc(var(--R) * .78 + var(--card-h) * .6);touch-action:pan-y;cursor:grab;user-select:none}
+.arc-stage.dragging{cursor:grabbing}
+
+/* centro do círculo: os cards giram em volta deste ponto */
+.arc-orbit{position:absolute;left:50%;top:calc(var(--R) + var(--card-h) / 2 + 10px);width:0;height:0}
+.arc-card{position:absolute;left:0;top:0;width:var(--card-w);height:var(--card-h);margin:calc(var(--card-h) / -2) 0 0 calc(var(--card-w) / -2);
+  border-radius:22px;overflow:hidden;will-change:transform,opacity;
+  transform:rotate(var(--a,0deg)) translateY(calc(var(--R) * -1));
+  box-shadow:0 18px 50px #0009,0 0 0 1px #ffffff1c;background:#141019}
+.arc-shot img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform .6s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.arc-shot:hover img,.arc-shot:focus-visible img{transform:scale(1.06)}
+.arc-card:focus-visible{outline:2px solid var(--lilac);outline-offset:4px}
+
+.arc-cap{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;font-size:10px;line-height:1.35;color:#d5cfe2;
+  background:linear-gradient(transparent,#0b0910e6);opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.arc-cap b{display:block;font-size:12px;color:#fff;font-weight:600}
+.arc-card:hover .arc-cap,.arc-card:focus-visible .arc-cap{opacity:1;transform:none}
+
+/* cards de logo: fundo lilás claro com a marca tipográfica */
+.arc-logo{display:grid;place-items:center;background:linear-gradient(160deg,#f4f0ff,#d9cdfb);color:#1b1528}
+.arc-logo>span:first-child{font-size:26px;line-height:1.1;text-align:center}
+.arc-logo .arc-cap{background:none;color:#5a4d80;text-align:center;opacity:.9;transform:none;padding-bottom:14px}
+
+/* mostrador: anel de risquinhos logo abaixo dos cards */
+.arc-dial{position:absolute;left:50%;top:calc(var(--R) + var(--card-h) / 2 + 10px);--r:calc(var(--R) - var(--card-h) / 2 - 34px);
+  width:calc(var(--r) * 2);height:calc(var(--r) * 2);margin:calc(var(--r) * -1) 0 0 calc(var(--r) * -1);border-radius:50%;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,#b9a8f1aa 0 .18deg,transparent .18deg 1.5deg);
+  -webkit-mask:radial-gradient(closest-side,transparent calc(100% - 22px),#000 calc(100% - 21px)),linear-gradient(#000 25%,transparent 55%);
+  -webkit-mask-composite:source-in;mask:radial-gradient(closest-side,transparent calc(100% - 22px),#000 calc(100% - 21px)) intersect,linear-gradient(#000 25%,transparent 55%);
+  opacity:.55}
+
+/* texto dentro do arco */
+.arc-content{position:absolute;left:0;right:0;margin-inline:auto;top:calc(var(--card-h) + 110px);width:min(620px,100%);text-align:center;z-index:2}
+.arc-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid #ffffff30;border-radius:8px;font-size:10px;letter-spacing:.14em;color:#d8d2e6;background:#ffffff08}
+.arc-chip b{color:var(--lilac);font-weight:400}
+.arc-content h2{margin:22px 0 16px;font-size:clamp(30px,3.4vw,52px);line-height:1.08;font-weight:400;letter-spacing:-.035em}
+.arc-content h2 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;color:var(--lilac);font-size:1.1em;letter-spacing:-.01em}
+.arc-content p{margin:0 auto 28px;max-width:460px;font-size:14px;line-height:1.65;color:#b9b3c7}
+.arc-btn{display:inline-flex;align-items:center;gap:12px;padding:12px 14px 12px 22px;border-radius:100px;background:#f1ecff;color:#1b1528;font-size:13px;font-weight:600;transition:background .3s,gap .3s}
+.arc-btn span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;font-size:14px}
+.arc-btn:hover{background:#fff;gap:16px}
+
+/* números */
+.arc-stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);max-width:980px;margin:10px auto 0;text-align:center}
+.arc-stats div{padding:6px 18px}
+.arc-stats div+div{border-left:1px solid #ffffff1c}
+.arc-stats strong{display:block;font-size:clamp(28px,2.8vw,42px);font-weight:400;letter-spacing:-.04em;line-height:1.1}
+.arc-stats span{display:block;margin-top:8px;font-size:11px;line-height:1.45;color:#9e98ad;max-width:170px;margin-inline:auto}
+
+@media(max-width:760px){
+  .arc-section{padding:65px 24px 70px}
+  .arc-section .section-kicker{font-size:8px;letter-spacing:.08em}
+  .arc-content{top:calc(var(--card-h) + 70px)}
+  .arc-content p{font-size:13px}
+  .arc-logo>span:first-child{font-size:18px}
+  .arc-logo .arc-cap{display:none}
+  .arc-stats{grid-template-columns:1fr 1fr;row-gap:26px;margin-top:20px}
+  .arc-stats div:nth-child(3){border-left:0}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .arc-shot img,.arc-cap{transition:none}
+}
