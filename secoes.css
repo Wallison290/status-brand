@@ -66,3 +66,56 @@
   .ecl-disc,.ecl-spark{animation:none}
   .ecl-tip{transition:none}
 }
+
+/* Seção 03 — Ecossistema: frase de impacto, bolhas em escada, selo girando e lista grande */
+.eco2-grid{display:grid;grid-template-columns:auto auto 130px minmax(400px,1fr);gap:clamp(28px,3.2vw,56px);align-items:center;max-width:1400px;margin:0 auto}
+.eco2-statement{text-align:right;padding-right:clamp(28px,3.2vw,56px);border-right:1px solid #ffffff2e;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.eco2-statement h2{margin:0;font-size:clamp(40px,3.5vw,60px);line-height:.95;font-weight:400;letter-spacing:-.055em}
+.eco2-statement h2 b{font-weight:400;background:linear-gradient(160deg,#d9cdff,#8b6cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eco2-statement p{margin:22px 0 0;font-size:14px;color:#c9c4d6;max-width:220px;margin-left:auto;line-height:1.4}
+
+.eco2-bubbles{--b:clamp(72px,5.8vw,96px);list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,var(--b));grid-template-rows:repeat(3,var(--b));gap:4px}
+.eco2-bubble{grid-column:var(--c);grid-row:var(--r);display:grid;place-items:center;border-radius:50%;font-size:clamp(11px,.95vw,14px);font-weight:600;letter-spacing:-.01em;color:#f1ecff;
+  background:radial-gradient(circle at 50% 30%,#3a2470 0%,#1d1236 55%,#0d0818 100%);box-shadow:inset 0 1px 0 #ffffff1f,0 0 0 1px #8b6cf026;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s}
+.eco2-bubble:hover{transform:scale(1.06);box-shadow:inset 0 1px 0 #ffffff2a,0 0 0 1px #a58bff66,0 0 30px #7c5ce655}
+.eco2-s{display:block;width:44px;height:52px;background:url("assets/logo-oficial.jpeg") -70.4px -52.8px/402px auto no-repeat;mix-blend-mode:screen}
+
+.eco2-middle{align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;gap:40px;padding:8px 0}
+.eco2-middle p{margin:0;font-size:13px;line-height:1.3;color:#d9d4e4}
+.eco2-badge{position:relative;width:118px;height:118px;display:grid;place-items:center}
+.eco2-badge svg{position:absolute;inset:0;width:100%;height:100%;animation:eco2-spin 22s linear infinite}
+.eco2-badge text{fill:#e6e0f2;font-size:9.2px;letter-spacing:.16em;font-weight:600}
+.eco2-badge .eco2-s{width:30px;height:35px;background-position:-48px -36px;background-size:274px auto}
+@keyframes eco2-spin{to{transform:rotate(360deg)}}
+
+.eco2-list details{border-bottom:1px solid #ffffff17;padding:10px 0}
+.eco2-list summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:12px;color:#5f5a6b;transition:color .3s}
+.eco2-list summary::-webkit-details-marker{display:none}
+.eco2-list summary:hover{color:#a29cb1}
+.eco2-num{font-size:13px;margin-top:.6em;color:inherit;letter-spacing:-.02em}
+.eco2-list h3{margin:0;white-space:nowrap;font-size:clamp(32px,3.3vw,56px);line-height:1.15;font-weight:400;letter-spacing:-.055em;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:2px;text-underline-offset:.14em;transition:text-decoration-color .3s}
+.eco2-arrow{flex-shrink:0;margin-left:auto;margin-top:.9em;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-size:18px;font-weight:400;line-height:1;color:#fff;background:transparent;border:1px solid #ffffff1f;transition:background .3s,border-color .3s,transform .3s}
+.eco2-list details[open] summary{color:#fff}
+.eco2-list details[open] .eco2-num{color:var(--lilac)}
+.eco2-list details[open] h3{text-decoration-color:#fff}
+.eco2-list details[open] .eco2-arrow{background:var(--purple);border-color:var(--purple);transform:rotate(90deg)}
+.eco2-body{padding:8px 0 14px 34px}
+.eco2-tags{display:inline-flex;flex-wrap:wrap;gap:6px 0;padding:7px 14px;border:1px solid #ffffff1f;border-radius:100px;background:#ffffff06}
+.eco2-tags span{font-size:11px;color:#d5cfe2}
+.eco2-tags span+span::before{content:"•";margin:0 9px;color:#8f89a0}
+.eco2-body p{margin:14px 0 0;max-width:460px;font-size:14px;line-height:1.6;color:#aea8bd}
+
+@media(max-width:1100px){
+  .eco2-grid{grid-template-columns:auto auto 1fr;row-gap:50px}
+  .eco2-middle{display:none}
+  .eco2-list{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .eco2-grid{grid-template-columns:1fr;gap:34px}
+  .eco2-statement{text-align:left;border-right:0;padding-right:0}
+  .eco2-statement p{margin-left:0}
+  .eco2-bubbles{--b:84px}
+  .eco2-list h3{font-size:34px;white-space:normal}
+  .eco2-body{padding-left:0}
+}
+@media(prefers-reduced-motion:reduce){.eco2-badge svg{animation:none}}
