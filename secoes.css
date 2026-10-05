@@ -67,65 +67,46 @@
   .ecl-tip{transition:none}
 }
 
-/* Seção 03 — Ecossistema: frase de impacto, bolhas em escada, selo girando e lista grande */
-.eco2-grid{display:grid;grid-template-columns:max-content auto 130px minmax(400px,1fr);gap:clamp(28px,3.2vw,56px);align-items:center;max-width:1400px;margin:0 auto}
-.eco2-statement{text-align:right;padding-right:clamp(28px,3.2vw,56px);border-right:1px solid #ffffff2e;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
-.eco2-statement h2{margin:0;white-space:nowrap;font-size:clamp(40px,3.5vw,60px);line-height:.95;font-weight:400;letter-spacing:-.055em}
-.eco2-statement h2 b{font-weight:400;background:linear-gradient(160deg,#d9cdff,#8b6cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
-.eco2-statement p{margin:22px 0 0;font-size:14px;color:#c9c4d6;max-width:220px;margin-left:auto;line-height:1.4}
+/* Seção 03 — Ecossistema: três círculos de contorno que se cruzam */
+.eco3{text-align:center;overflow:hidden}
+.eco3-title{margin:10px 0 70px;font-size:clamp(40px,6.2vw,96px);line-height:1;font-weight:300;letter-spacing:-.045em;text-transform:uppercase}
+.eco3-title span{display:block}
+.eco3-title span:first-child{color:#a29dae}
+.eco3-title span:last-child{font-weight:400;background:linear-gradient(90deg,#8f7cf7,#b9a2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-.eco2-bubbles{--b:clamp(72px,5.8vw,96px);list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,var(--b));grid-template-rows:repeat(3,var(--b));gap:4px}
-.eco2-bubble{grid-column:var(--c);grid-row:var(--r);display:grid;place-items:center;border-radius:50%;font-size:clamp(11px,.95vw,14px);font-weight:600;letter-spacing:-.01em;color:#f1ecff;
-  background:radial-gradient(circle at 50% 30%,#3a2470 0%,#1d1236 55%,#0d0818 100%);box-shadow:inset 0 1px 0 #ffffff1f,0 0 0 1px #8b6cf026;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s}
-.eco2-bubble:hover{transform:scale(1.06);box-shadow:inset 0 1px 0 #ffffff2a,0 0 0 1px #a58bff66,0 0 30px #7c5ce655}
-.eco2-s{display:block;width:44px;height:52px;background:url("assets/logo-oficial.jpeg") -70.4px -52.8px/402px auto no-repeat;mix-blend-mode:screen}
+.eco3-stage{position:relative;width:min(1080px,100%);margin:0 auto}
+/* linha em L: vem da lateral e desce até o círculo do meio */
+.eco3-stage::before{content:"";position:absolute;left:50%;top:-50px;width:50vw;height:50px;border-top:1px solid #ffffff38;border-left:1px solid #ffffff38;pointer-events:none}
+.eco3-circles{list-style:none;margin:0;padding:0;position:relative;aspect-ratio:100/36}
+.eco3-circle{position:absolute;top:0;left:calc(var(--i) * 32%);width:36%;aspect-ratio:1;border-radius:50%;border:1px solid #ffffff4d;display:grid;place-items:center;align-content:center;gap:14px;padding:0 9%;cursor:default;outline:none;
+  transition:background .5s,border-color .5s,box-shadow .5s}
+.eco3-label{font-size:clamp(22px,2.5vw,38px);font-weight:300;letter-spacing:-.02em;text-transform:uppercase;color:#d8d3e3;transition:transform .5s cubic-bezier(.16,1,.3,1),color .4s}
+.eco3-detail{display:block;max-width:240px;font-size:13px;line-height:1.55;color:#b9b3c7;opacity:0;max-height:0;transform:translateY(8px);transition:opacity .4s,transform .5s cubic-bezier(.16,1,.3,1),max-height .5s}
+.eco3-detail b{display:block;margin-bottom:4px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--lilac)}
+.eco3-circle:hover,.eco3-circle:focus-visible{background:radial-gradient(circle,#5b3fc42e,transparent 70%);border-color:#b9a2ff;box-shadow:0 0 50px #7c5ce633,inset 0 0 40px #7c5ce622}
+.eco3-circle:hover .eco3-label,.eco3-circle:focus-visible .eco3-label{color:#fff}
+.eco3-circle:hover .eco3-detail,.eco3-circle:focus-visible .eco3-detail{opacity:1;max-height:160px;transform:none}
 
-.eco2-middle{align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;gap:40px;padding:8px 0}
-.eco2-middle p{margin:0;font-size:13px;line-height:1.3;color:#d9d4e4}
-.eco2-badge{position:relative;width:118px;height:118px;display:grid;place-items:center}
-.eco2-badge svg{position:absolute;inset:0;width:100%;height:100%;animation:eco2-spin 22s linear infinite}
-.eco2-badge text{fill:#e6e0f2;font-size:9.2px;letter-spacing:.16em;font-weight:600}
-.eco2-badge .eco2-s{width:30px;height:35px;background-position:-48px -36px;background-size:274px auto}
-@keyframes eco2-spin{to{transform:rotate(360deg)}}
+/* ✳ nos pontos onde os círculos se cruzam */
+.eco3-mark{position:absolute;left:var(--x);top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--bg);color:#8f7cf7;font-size:22px;line-height:1;pointer-events:none}
 
-/* três frentes: cards de vidro ao longo de um arco de luz */
-.eco2-path{position:relative;padding:34px 0}
-.eco2-arc{position:absolute;left:0;top:0;width:100px;height:100%;overflow:visible;fill:none}
-.eco2-arc path{stroke:#b9a2ff;stroke-width:1.6;vector-effect:non-scaling-stroke}
-.eco2-arc .glow{stroke:#8b6cf0;stroke-width:9;opacity:.55;filter:blur(7px)}
-.eco2-cards{list-style:none;margin:0;padding:0;display:grid;gap:30px;perspective:1100px}
-.eco2-card{position:relative;--ax:48px}
-.eco2-card:nth-child(2){--ax:79px}
-.eco2-n{position:absolute;left:calc(var(--ax) + 14px);top:50%;transform:translateY(-50%);font-size:clamp(22px,1.9vw,30px);font-weight:300;letter-spacing:-.03em;color:#e9e4f5}
-.eco2-glass{position:relative;margin-left:calc(var(--ax) + 72px);padding:20px 22px 18px;border-radius:14px;overflow:hidden;transform-origin:left center;
-  background:radial-gradient(ellipse 70% 90% at 55% 0%,#9d7cff99 0%,#5b3fc455 38%,transparent 70%),linear-gradient(180deg,#24164d 0%,#130d26 55%,#0c0916 100%);
-  border:1px solid #a58bff3d;box-shadow:inset 0 1px 0 #d6c8ff59,0 24px 60px #0009,0 0 40px #5b3fc426;
-  transform:rotateY(-14deg) rotateZ(var(--rz,0deg));transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .4s}
-.eco2-card:nth-child(1) .eco2-glass{--rz:-4deg}
-.eco2-card:nth-child(3) .eco2-glass{--rz:3.5deg}
-.eco2-glass::before{content:"";position:absolute;left:18%;right:18%;top:0;height:1px;background:linear-gradient(90deg,transparent,#efe8ff,transparent)}
-.eco2-card:hover .eco2-glass{transform:rotateY(-6deg) rotateZ(0deg) translateX(6px);box-shadow:inset 0 1px 0 #d6c8ff80,0 28px 70px #000a,0 0 60px #7c5ce655}
-.eco2-card-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
-.eco2-card h3{margin:0;font-size:clamp(18px,1.5vw,22px);font-weight:500;letter-spacing:-.02em;color:#fff}
-.eco2-icon{flex-shrink:0;display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:#ffffff14;border:1px solid #ffffff33;box-shadow:inset 0 1px 0 #ffffff26}
-.eco2-icon svg{width:18px;height:18px;fill:none;stroke:#f1ecff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.eco2-card p{margin:0;font-size:12.5px;line-height:1.6;color:#bcb5cc;max-width:420px}
-.eco2-card small{display:block;margin-top:12px;font-size:10px;letter-spacing:.08em;color:#9d8fd0;text-transform:uppercase}
+.eco3-copy{margin:70px auto 0;max-width:620px;font-size:clamp(17px,1.5vw,22px);line-height:1.45;color:#d8d3e3}
+.eco3-copy em{font-style:normal;color:#a58bff}
 
-@media(max-width:1100px){
-  .eco2-grid{grid-template-columns:auto auto 1fr;row-gap:50px}
-  .eco2-middle{display:none}
-  .eco2-path{grid-column:1/-1;max-width:720px}
-}
+.eco3-foot{display:flex;align-items:center;gap:34px;max-width:1400px;margin:90px auto 0;padding-top:18px;border-top:1px solid #ffffff17;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#77727f}
+.eco3-foot a{margin-left:auto;font-size:18px;color:#a58bff;transition:transform .3s}
+.eco3-foot a:hover{transform:translate(3px,-3px)}
+
 @media(max-width:760px){
-  .eco2-grid{grid-template-columns:1fr;gap:34px}
-  .eco2-statement{text-align:left;border-right:0;padding-right:0}
-  .eco2-statement p{margin-left:0}
-  .eco2-bubbles{--b:84px}
-  .eco2-card{--ax:24px}
-  .eco2-card:nth-child(2){--ax:44px}
-  .eco2-glass{margin-left:calc(var(--ax) + 46px);padding:16px}
-  .eco2-n{font-size:20px;left:calc(var(--ax) + 8px)}
-  .eco2-arc{width:60px}
+  .eco3-title{margin-bottom:50px}
+  .eco3-stage::before{display:none}
+  /* no celular os círculos ficam empilhados e ainda se cruzando */
+  .eco3-circles{aspect-ratio:auto;display:flex;flex-direction:column;align-items:center}
+  .eco3-circle{position:relative;left:auto;width:min(78vw,300px);margin-top:-34px}
+  .eco3-circle:first-child{margin-top:0}
+  .eco3-label{font-size:26px}
+  .eco3-detail{opacity:1;max-height:none;transform:none;font-size:12px;max-width:200px}
+  .eco3-mark{display:none}
+  .eco3-foot{gap:14px;flex-wrap:wrap;font-size:8px;margin-top:60px}
 }
-@media(prefers-reduced-motion:reduce){.eco2-badge svg{animation:none}.eco2-glass{transition:none}}
+@media(prefers-reduced-motion:reduce){.eco3-circle,.eco3-label,.eco3-detail{transition:none}}
