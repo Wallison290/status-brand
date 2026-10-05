@@ -1,18 +1,18 @@
 /* Seção 01 — Posicionamento em formato de eclipse: disco escuro com coroa de luz roxa */
-.ecl{padding-bottom:140px;overflow:hidden}
+.ecl{padding-bottom:110px;overflow:hidden}
 .ecl .section-kicker{border:0;margin-bottom:40px}
-.ecl-stage{--disc:min(100%,860px);position:relative;display:flex;flex-direction:column;align-items:center}
+.ecl-stage{--disc:min(100%,600px,72vh);position:relative;display:flex;flex-direction:column;align-items:center}
 
 .ecl-head{position:relative;z-index:3;text-align:center;max-width:900px}
 .ecl-title{margin:0 0 26px;font-size:clamp(32px,3.6vw,56px);line-height:1.08;font-weight:400;letter-spacing:-.035em}
 .ecl-title em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--lilac);font-size:1.12em}
 .ecl-copy{margin:0 auto;max-width:430px;font-size:13px;line-height:1.65;color:#c9c4d6}
 
-/* o disco entra por baixo do texto: o parágrafo fica dentro do topo do eclipse */
-.ecl-disc{position:relative;width:var(--disc);aspect-ratio:1;margin-top:-118px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#0c0a12,#050407 70%);
-  box-shadow:0 0 0 1px #a58bff40,0 -6px 30px 4px #a58bffaa,0 0 70px 14px #7c5ce6aa,0 0 160px 50px #5b3fc466,0 0 320px 110px #2a1a5e55;
+/* disco do eclipse: título e frase ficam logo acima, sobre a coroa de luz */
+.ecl-disc{position:relative;width:var(--disc);aspect-ratio:1;margin-top:44px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#0c0a12,#050407 70%);
+  box-shadow:0 0 0 1px #a58bff40,0 -5px 24px 3px #a58bffaa,0 0 54px 10px #7c5ce6aa,0 0 120px 36px #5b3fc466,0 0 240px 80px #2a1a5e55;
   animation:ecl-corona 8s ease-in-out infinite}
-@keyframes ecl-corona{50%{box-shadow:0 0 0 1px #a58bff55,0 -6px 36px 6px #b9a2ffc0,0 0 90px 20px #7c5ce6bb,0 0 190px 60px #5b3fc477,0 0 360px 120px #2a1a5e55}}
+@keyframes ecl-corona{50%{box-shadow:0 0 0 1px #a58bff55,0 -5px 30px 5px #b9a2ffc0,0 0 70px 16px #7c5ce6bb,0 0 150px 46px #5b3fc477,0 0 280px 90px #2a1a5e55}}
 
 .ecl-lines{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#8f7bd6;stroke-width:1.2;stroke-dasharray:2 8;opacity:.45}
 .ecl-lines .ecl-inner{stroke-dasharray:1 5;opacity:.7}
@@ -31,7 +31,7 @@
 .ecl-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(-100% + 17px));display:flex;flex-direction:column;align-items:center;gap:10px;padding:6px;background:none;border:0;color:#cfc3f5;cursor:pointer;font:inherit}
 .ecl-node.is-low{flex-direction:column-reverse;transform:translate(-50%,-17px)}
 .ecl-node i{display:block;width:22px;height:22px;border-radius:50%;border:2px solid #a58bff;background:#07060b;transition:background .3s,box-shadow .3s,transform .3s}
-.ecl-label{font-size:13px;white-space:nowrap;text-decoration:underline;text-decoration-color:#a58bff80;text-underline-offset:4px;transition:color .3s}
+.ecl-label{font-size:12px;white-space:nowrap;text-decoration:underline;text-decoration-color:#a58bff80;text-underline-offset:4px;transition:color .3s}
 .ecl-label sup{font-size:8px;margin-right:3px;color:#8f89a0;vertical-align:top;text-decoration:none;display:inline-block}
 .ecl-node:hover i{transform:scale(1.15);box-shadow:0 0 18px #a58bff99}
 .ecl-node:hover .ecl-label,.ecl-node.active .ecl-label{color:#fff}
@@ -43,7 +43,7 @@
   background:#0b0910e6;border:1px solid #a58bff66;box-shadow:0 0 30px #7c5ce633;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   transform:translate(34px,-50%);transition:left .5s cubic-bezier(.16,1,.3,1),top .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
 .ecl-tip[data-side="left"]{transform:translate(calc(-100% - 34px),-50%)}
-.ecl-tip[data-side="top"]{transform:translate(100px,-12%)}
+.ecl-tip[data-side="top"]{transform:translate(80px,-88%)}
 .ecl-tip-num{font-size:9px;letter-spacing:.18em;color:var(--lilac)}
 .ecl-tip h3{margin:6px 0 6px;font-size:15px;line-height:1.3;font-weight:600}
 .ecl-tip p{margin:0;font-size:12px;line-height:1.55;color:#b9b3c7}
