@@ -1,0 +1,21 @@
+SITE STATUS BRAND — ARQUIVOS COMPLETOS
+
+COMO ABRIR
+1. Extraia todo o conteúdo deste ZIP.
+2. Entre na pasta Status-Brand.
+3. Abra index.html no navegador.
+
+COMO EDITAR
+index.html: textos e estrutura das seções.
+styles.css: cores, fontes, layout, animações e adaptação para celular.
+app.js: menus, filtros, abas, janelas e gerador de briefing.
+assets/: logo, imagens e fonte usadas no site.
+
+COMO PUBLICAR
+Envie os arquivos de dentro da pasta Status-Brand para a raiz de uma hospedagem de sites estáticos. Não é necessário instalar dependências ou executar compilação.
+
+CONTATO
+O formulário gera um briefing local para copiar ou baixar. Ele não envia mensagens nem salva dados em servidor. A conexão com WhatsApp depende do número oficial.
+A cópia automática pode exigir que o site esteja servido via HTTPS. A opção Baixar resumo continua disponível.
+
+Veja NOTAS-DO-PROJETO.md para o conteúdo que aguarda materiais oficiais.
