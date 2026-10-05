@@ -1,7 +1,7 @@
 /* Seção 01 — Posicionamento em formato de eclipse: disco escuro com coroa de luz roxa */
 .ecl{padding-bottom:110px;overflow:hidden}
 .ecl .section-kicker{border:0;margin-bottom:40px}
-.ecl-stage{--disc:min(100%,600px,72vh);position:relative;display:flex;flex-direction:column;align-items:center}
+.ecl-stage{--disc:min(100%,720px,82vh);position:relative;display:flex;flex-direction:column;align-items:center}
 
 .ecl-head{position:relative;z-index:3;text-align:center;max-width:900px}
 .ecl-title{margin:0 0 26px;font-size:clamp(32px,3.6vw,56px);line-height:1.08;font-weight:400;letter-spacing:-.035em}
