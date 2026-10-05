@@ -67,8 +67,8 @@ function init(THREE, RoomEnvironment) {
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // no celular a área é mais estreita: afasta a câmera para o S caber
-    camera.position.z = camera.aspect < 1.2 ? 7.2 / Math.max(camera.aspect, 0.6) : 7.6;
+    // afasta a câmera quando a tela é estreita: no desktop o S ocupa no máximo ~30% da largura (a coluna central)
+    camera.position.z = camera.aspect < 1.2 ? 7.2 / Math.max(camera.aspect, 0.6) : Math.max(7.6, 12.7 / camera.aspect);
     camera.updateProjectionMatrix();
   }
   resize();
