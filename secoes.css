@@ -36,9 +36,16 @@
 @keyframes hx6-fade{from{opacity:0;transform:translateY(4px)}}
 @container (max-width:560px){
   .hx6-para{display:none}
-  .hx6-num{font-size:7cqw}
-  .hx6-name{display:block;font-size:2.9cqw}
-  .hx6-icon{width:5cqw;height:5cqw}
+  /* no celular cada aba mostra ícone, número e nome empilhados no centro visível dela (medido sem o que a vizinha cobre);
+     !important porque as posições do desktop estão inline no HTML */
+  .hx6-label[data-pillar="0"]{--x:45.1%!important;--y:18.8%!important} .hx6-icon[data-part="0"]{--x:45.1%!important;--y:9.8%!important}
+  .hx6-label[data-pillar="1"]{--x:78.5%!important;--y:38.5%!important} .hx6-icon[data-part="1"]{--x:78.5%!important;--y:29.5%!important}
+  .hx6-label[data-pillar="2"]{--x:71.5%!important;--y:75.4%!important} .hx6-icon[data-part="2"]{--x:71.5%!important;--y:66.4%!important}
+  .hx6-label[data-pillar="3"]{--x:34.4%!important;--y:80.2%!important} .hx6-icon[data-part="3"]{--x:34.4%!important;--y:71.2%!important}
+  .hx6-label[data-pillar="4"]{--x:18.4%!important;--y:46.3%!important} .hx6-icon[data-part="4"]{--x:18.4%!important;--y:37.3%!important}
+  .hx6-num{font-size:6.4cqw}
+  .hx6-name{display:block;font-size:2.7cqw;white-space:nowrap}
+  .hx6-icon{width:4.4cqw;height:4.4cqw}
   .hx6-center{display:block;margin-top:24px;padding:16px 18px;border:1px solid rgba(255,255,255,.3);border-radius:14px;background:rgba(20,19,24,.72);text-align:center}
   .hx6-center span{font-size:9px;letter-spacing:.2em;color:#9e9aa8}
   .hx6-center h3{font-size:16px;margin:6px 0}
