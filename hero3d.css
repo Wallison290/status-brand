@@ -18,10 +18,10 @@
     linear-gradient(180deg,#0b0713,#07050c 60%,#050409)}
 .sx-glow::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");opacity:.08;mix-blend-mode:overlay}
 
-.sx-kicker{position:absolute;left:50%;top:calc(var(--row-y) - var(--tile) / 2 - 56px);transform:translateX(-50%);margin:0;font-size:14px;letter-spacing:.08em;color:#cfc8de;white-space:nowrap}
+.sx-kicker{position:absolute;left:50%;top:calc(var(--row-y) - var(--tile) / 2 - 56px);transform:translateX(-50%);margin:0;font-family:Unbounded,Open Sans,sans-serif;font-size:13px;font-weight:500;letter-spacing:.14em;color:#cfc8de;white-space:nowrap}
 
 /* fileira de tiles: centrada no símbolo; as pontas somem nas laterais */
-.sx-row{position:absolute;left:50%;top:var(--row-y);display:flex;gap:var(--gap);padding:160px 0;transform:translate(-50%,-50%);
+.sx-row{position:absolute;left:50%;top:var(--row-y);display:flex;align-items:center;gap:var(--gap);padding:160px 0;perspective:1100px;transform:translate(-50%,-50%);
   -webkit-mask-image:linear-gradient(90deg,transparent 2%,#000 22%,#000 78%,transparent 98%);mask-image:linear-gradient(90deg,transparent 2%,#000 22%,#000 78%,transparent 98%)}
 .sx-tile{position:relative;flex:0 0 var(--tile);height:var(--tile);border-radius:24%;display:grid;place-items:center;
   background:linear-gradient(155deg,#ffffff14,#ffffff03 55%),#120c1f80;border:1px solid #a58bff38;
@@ -31,7 +31,9 @@
 .sx-tile svg{width:44%;fill:none;stroke:#b9a8f1;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;opacity:.32;transition:opacity .4s}
 .sx-tile:not(.sx-main):hover{border-color:#a58bff70}
 .sx-tile:not(.sx-main):hover svg{opacity:.6}
-.sx-tile.mid{--d:.35s}.sx-tile.near{--d:.5s}.sx-tile.far{--d:.65s}
+.sx-tile.mid{--d:.35s;--s:.9;--r:14deg;--b:0px}.sx-tile.near{--d:.5s;--s:.8;--r:24deg;--b:1.2px}.sx-tile.far{--d:.65s;--s:.7;--r:32deg;--b:2.5px}
+.sx-tile.mid,.sx-tile.near,.sx-tile.far{filter:blur(var(--b))}
+.sx-row>.sx-tile:nth-child(-n+3){--dir:1}.sx-row>.sx-tile:nth-child(n+5){--dir:-1}
 
 /* tile central: acende quando o dedo toca */
 .sx-main{--d:.15s;z-index:1;border-color:#c9b6ff70;
@@ -48,16 +50,29 @@
 .sx-hand{position:absolute;left:50%;top:calc(var(--row-y) + var(--tile) / 2 - var(--tile) * .1);width:calc(var(--tile) * 1.55);
   transform:translate(-50%,0);opacity:0;animation:sx-hand-in 1.3s cubic-bezier(.16,1,.3,1) .3s forwards;pointer-events:none;
   -webkit-mask-image:linear-gradient(#000 42%,transparent 88%);mask-image:linear-gradient(#000 42%,transparent 88%)}
-.sx-hand-svg{display:block;width:100%;height:auto;opacity:.95;transform:translateY(8px);
+.sx-hand-svg{display:block;width:100%;height:auto;opacity:calc(.95 * var(--fade,1));transform:translateY(8px);
   animation:sx-tap var(--loop) cubic-bezier(.45,0,.2,1) 1.5s infinite}
+
+/* camadas do parallax (hero.js) */
+.sx-glow,.sx-kicker,.sx-rail,.sx-note,.sx-row,.sx-title,.sx-hand{will-change:translate}
+.sx-title>*{opacity:var(--fade,1)}
 
 /* nome sobre a mão */
 .sx-title{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(var(--row-y) + var(--tile) / 2 + clamp(70px,13vh,150px));text-align:center;z-index:2}
-.sx-title h1{margin:0;font-size:clamp(46px,7.6vw,132px);font-weight:700;line-height:.95;letter-spacing:-.02em;text-transform:uppercase;
+.sx-title h1{margin:0;font-family:Unbounded,Open Sans,sans-serif;font-size:clamp(44px,8.2vw,150px);font-weight:600;line-height:.95;letter-spacing:-.035em;text-transform:uppercase;
   background:linear-gradient(180deg,#fff 35%,#cfc6e2 70%,#8f86a6);-webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 8px 30px #000c)}
-.sx-sub{margin:14px 0 0;font-size:clamp(18px,1.9vw,30px);font-weight:500;letter-spacing:-.01em;color:#9a80ff;text-shadow:0 2px 20px #000}
-.sx-line{margin:16px auto 0;max-width:460px;font-size:13px;line-height:1.6;color:#d9d3e6;text-shadow:0 2px 16px #000}
+.sx-sub{margin:18px 0 0;font-size:clamp(17px,1.6vw,24px);font-weight:300;letter-spacing:.01em;color:#e7e2f2;text-shadow:0 2px 20px #000}
+.sx-sub em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:1.45em;letter-spacing:0;color:#a88dff}
+.sx-line{margin:14px auto 0;max-width:420px;font-size:12px;line-height:1.6;letter-spacing:.02em;color:#a9a2b9;text-shadow:0 2px 16px #000}
+
+/* detalhes editoriais que quebram a simetria */
+.sx-note{position:absolute;right:var(--gutter);top:150px;margin:0;text-align:right;font-size:12px;line-height:1.45;color:#a9a2b9}
+.sx-note b{font-weight:600;color:#fff}
+.sx-rail{position:absolute;left:calc(var(--gutter) - 6px);top:var(--row-y);margin:0;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#6f6880;white-space:nowrap}
+.sx-rail span{color:var(--lilac);margin-block-end:14px}
+.sx-rail.sx-in{animation-name:sx-fade}
+@keyframes sx-fade{from{opacity:0}to{opacity:1}}
 
 /* cantos inferiores */
 .sx-pill{position:absolute;left:var(--gutter);bottom:36px;display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:100px;font-size:12px;color:#e7e2f2;
@@ -75,7 +90,7 @@
 
 @keyframes sx-rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes sx-rise-c{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translateX(-50%)}}
-@keyframes sx-tile-in{from{opacity:0;transform:translateY(26px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes sx-tile-in{from{opacity:0;transform:translateY(26px) scale(calc(var(--s,1) * .94)) rotateY(calc(var(--r,0deg) * var(--dir,0)))}to{opacity:1;transform:scale(var(--s,1)) rotateY(calc(var(--r,0deg) * var(--dir,0)))}}
 @keyframes sx-hand-in{from{opacity:0;transform:translate(-50%,40%)}to{opacity:1;transform:translate(-50%,0)}}
 /* toque em ~10% do ciclo: dedo sobe, tile afunda e solta uma onda */
 @keyframes sx-tap{0%,100%{transform:translateY(8px)}9%,12%{transform:translateY(-4px)}24%{transform:translateY(8px)}}
@@ -93,7 +108,8 @@
   .sx-kicker{font-size:12px;top:calc(var(--row-y) - var(--tile) / 2 - 40px)}
   .sx-row{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
   .sx-title{top:calc(var(--row-y) + var(--tile) / 2 + 80px);left:16px;right:16px}
-  .sx-title h1{font-size:clamp(40px,13vw,72px)}
+  .sx-title h1{font-size:clamp(36px,11.5vw,64px)}
+  .sx-note,.sx-rail{display:none}
   .sx-line{font-size:12px;max-width:300px}
   .sx-pill{left:16px;bottom:24px}
   .sx-go{right:16px;bottom:20px}
@@ -105,6 +121,7 @@
 @media(prefers-reduced-motion:reduce){
   .sx-tile,.sx-main,.sx-main img,.sx-main::after,.sx-ripple,.sx-hand,.sx-hand-svg,.sx-in{animation:none!important}
   .sx-tile,.sx-hand,.sx-in,.sx-main::after{opacity:1}
+  .sx-tile{transform:scale(var(--s,1)) rotateY(calc(var(--r,0deg) * var(--dir,0)))}
   .sx-hand-svg{transform:none}
   .sx-main img{filter:drop-shadow(0 0 18px #8b6cf0aa);opacity:1}
 }
