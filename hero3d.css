@@ -1,3 +1,5 @@
+@font-face{font-family:Michroma;src:url('assets/michroma.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+
 /* Cabeçalho — pílula de vidro escuro flutuante (mesmo estilo do site A'Solary) */
 .site-header{position:absolute;inset:1.75rem 0 auto;z-index:60;background:none;pointer-events:none}
 .header-inner{position:relative;z-index:2;max-width:1360px;width:calc(100% - var(--gutter) * 2);margin-inline:auto;pointer-events:auto;
@@ -108,7 +110,7 @@
 
 /* nome sobre a mão */
 .sx-title{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(var(--row-y) + var(--tile) / 2 + clamp(70px,13vh,150px));text-align:center;z-index:2}
-.sx-title h1{margin:0;font-family:Unbounded,Open Sans,sans-serif;font-size:clamp(44px,8.2vw,150px);font-weight:600;line-height:.95;letter-spacing:-.035em;text-transform:uppercase;
+.sx-title h1{margin:0;font-family:Michroma,Open Sans,sans-serif;font-size:clamp(38px,6.4vw,118px);font-weight:400;line-height:1.02;letter-spacing:.01em;text-transform:uppercase;
   background:linear-gradient(180deg,#fff 35%,#cfc6e2 70%,#8f86a6);-webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 8px 30px #000c)}
 .sx-sub{margin:18px 0 0;font-size:clamp(17px,1.6vw,24px);font-weight:300;letter-spacing:.01em;color:#e7e2f2;text-shadow:0 2px 20px #000}
