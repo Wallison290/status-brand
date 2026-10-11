@@ -86,7 +86,7 @@
     const index = Number(b.dataset.niche); selectTab(b, '[data-niche]'); $('#niche-panel').setAttribute('aria-labelledby', b.id);
     $('#niche-word').textContent = niches[index][0]; $('#niche-title').innerHTML = niches[index][1]; $('#niche-desc').textContent = niches[index][2];
     const img = $('.niche-visual img');
-    img.src = index < 3 ? 'assets/nichos.png' : 'assets/portfolio.png';
+    img.src = index < 3 ? 'assets/img/nichos.png' : 'assets/img/portfolio.png';
     img.alt = index < 3 ? 'Imagem ilustrativa de uma profissional em uma clínica contemporânea' : 'Apresentação conceitual de marca e papelaria';
   }));
   $$('[data-filter]').forEach(b => b.addEventListener('click', () => {

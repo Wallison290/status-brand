@@ -10,8 +10,6 @@
   // [seletor, profundidade no mouse (px), fator de scroll (+ fica para trás, - vem para frente)]
   const layers = [
     [".sx-glow", -10, 0.45],
-    [".sx-kicker", -14, 0.22],
-    [".sx-rail", -6, 0.3],
     [".sx-row", -20, 0.2],
     [".sx-title", 10, 0],
     [".sx-hand", 30, -0.32],

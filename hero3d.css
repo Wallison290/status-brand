@@ -1,4 +1,5 @@
-@font-face{font-family:Michroma;src:url('assets/michroma.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+/* Bullish Light: a mesma fonte do texto da logo */
+@font-face{font-family:Bullish;src:url('assets/fonts/bullish-light.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
 
 /* Cabeçalho — pílula de vidro escuro flutuante (mesmo estilo do site A'Solary) */
 .site-header{position:absolute;inset:1.75rem 0 auto;z-index:60;background:none;pointer-events:none}
@@ -65,7 +66,6 @@
     linear-gradient(180deg,#0b0713,#07050c 60%,#050409)}
 .sx-glow::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");opacity:.08;mix-blend-mode:overlay}
 
-.sx-kicker{position:absolute;left:50%;top:calc(var(--row-y) - var(--tile) / 2 - 56px);transform:translateX(-50%);margin:0;font-family:Unbounded,Open Sans,sans-serif;font-size:13px;font-weight:500;letter-spacing:.14em;color:#cfc8de;white-space:nowrap}
 
 /* fileira de tiles: centrada no símbolo; as pontas somem nas laterais */
 .sx-row{position:absolute;left:50%;top:var(--row-y);width:calc(var(--tile) * 7 + var(--gap) * 6);display:flex;align-items:center;gap:var(--gap);padding:160px 0;perspective:1100px;transform:translate(-50%,-50%);
@@ -105,15 +105,15 @@
 /* luz do símbolo aceso caindo sobre a ponta do dedo, recortada no formato da mão */
 .sx-hand-tap::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.9 * var(--fade,1));
   background:radial-gradient(ellipse 22% 16% at 50.4% 4%,#cdb8ff99,#8b6cf033 55%,transparent 100%);
-  -webkit-mask:url("assets/mao.webp") center/100% 100% no-repeat;mask:url("assets/mao.webp") center/100% 100% no-repeat}
+  -webkit-mask:url("assets/img/mao.webp") center/100% 100% no-repeat;mask:url("assets/img/mao.webp") center/100% 100% no-repeat}
 
 /* camadas do parallax (hero.js) */
-.sx-glow,.sx-kicker,.sx-rail,.sx-row,.sx-title,.sx-hand{will-change:translate}
+.sx-glow,.sx-row,.sx-title,.sx-hand{will-change:translate}
 .sx-title>*{opacity:var(--fade,1)}
 
 /* nome sobre a mão */
 .sx-title{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(var(--row-y) + var(--tile) / 2 + clamp(70px,13vh,150px));text-align:center;z-index:2}
-.sx-title h1{margin:0;font-family:Michroma,Open Sans,sans-serif;font-size:clamp(38px,6.4vw,118px);font-weight:400;line-height:1.02;letter-spacing:.01em;text-transform:uppercase;
+.sx-title h1{margin:0;font-family:Bullish,Open Sans,sans-serif;font-size:clamp(46px,8.4vw,156px);font-weight:400;line-height:1.3;padding:.04em 0 .2em;letter-spacing:0;
   background:linear-gradient(180deg,#fff 35%,#cfc6e2 70%,#8f86a6);-webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 8px 30px #000c)}
 .sx-sub{margin:18px 0 0;font-size:clamp(17px,1.6vw,24px);font-weight:300;letter-spacing:.01em;color:#e7e2f2;text-shadow:0 2px 20px #000}
@@ -121,17 +121,12 @@
 .sx-line{margin:14px auto 0;max-width:420px;font-size:12px;line-height:1.6;letter-spacing:.02em;color:#a9a2b9;text-shadow:0 2px 16px #000}
 
 /* detalhes editoriais que quebram a simetria */
-.sx-rail{position:absolute;left:calc(var(--gutter) - 6px);top:var(--row-y);margin:0;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#6f6880;white-space:nowrap}
-.sx-rail.sx-in{animation-name:sx-fade}
-@keyframes sx-fade{from{opacity:0}to{opacity:1}}
 
 
 /* entrada */
 .sx-in{opacity:0;animation:sx-rise 1.1s cubic-bezier(.16,1,.3,1) var(--d,0s) forwards}
-.sx-kicker.sx-in{animation-name:sx-rise-c}
 
 @keyframes sx-rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes sx-rise-c{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translateX(-50%)}}
 @keyframes sx-tile-in{from{opacity:0;transform:translateY(26px) scale(calc(var(--s,1) * .94)) rotateY(calc(var(--r,0deg) * var(--dir,0)))}to{opacity:1;transform:scale(var(--s,1)) rotateY(calc(var(--r,0deg) * var(--dir,0)))}}
 @keyframes sx-hand-in{from{opacity:0;transform:translate(-50.4%,40%)}to{opacity:1;transform:translate(-50.4%,0)}}
 /* toque em ~10% do ciclo: dedo sobe, tile afunda e solta uma onda */
@@ -146,12 +141,10 @@
 
 @media(max-width:760px){
   .sx{--tile:34vw;--gap:18px;--row-y:34%;min-height:640px;max-height:none}
-  .sx-kicker{font-size:12px;top:calc(var(--row-y) - var(--tile) / 2 - 40px)}
-  .sx-row{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+    .sx-row{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
   .sx-title{top:calc(var(--row-y) + var(--tile) / 2 + 80px);left:16px;right:16px}
   .sx-title h1{font-size:clamp(36px,11.5vw,64px)}
-  .sx-rail{display:none}
-  .sx-line{font-size:12px;max-width:300px}
+    .sx-line{font-size:12px;max-width:300px}
 }
 /* toque: sem vidro desfocado nem blur (pesados na GPU do celular e causam travadas na rolagem) */
 @media(pointer:coarse),(max-width:760px){
@@ -159,7 +152,7 @@
   .site-header .mobile-nav{backdrop-filter:none;-webkit-backdrop-filter:none}
   .sx-tile{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(155deg,#ffffff14,#ffffff03 55%),#140e22}
   .sx-tile.mid,.sx-tile.near,.sx-tile.far{filter:none}
-  .sx-glow,.sx-kicker,.sx-rail,.sx-row,.sx-title,.sx-hand{will-change:auto}
+  .sx-glow,.sx-row,.sx-title,.sx-hand{will-change:auto}
   /* Safari iOS: camadas 3D/mascaradas podem ser pintadas por cima do cabeçalho ignorando o z-index.
      Sem 3D no toque, fileira sem a folga que subia até o topo e cabeçalho promovido à própria camada */
   .sx-row{perspective:none;padding:70px 0}
