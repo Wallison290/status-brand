@@ -3,9 +3,10 @@
 // que se soma aos `transform` das animações do CSS sem brigar com eles.
 (() => {
   const hero = document.querySelector(".sx");
-  if (!hero || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  // em telas de toque o parallax de scroll disputa com a rolagem nativa e trava: só roda com mouse
+  if (!hero || matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches) return;
 
-  const fine = matchMedia("(pointer: fine)").matches;
+  const fine = true;
   // [seletor, profundidade no mouse (px), fator de scroll (+ fica para trás, - vem para frente)]
   const layers = [
     [".sx-glow", -10, 0.45],
@@ -16,7 +17,7 @@
     [".sx-hand", 30, -0.32],
   ].map(([sel, m, s]) => [hero.querySelector(sel), m, s]).filter(([el]) => el);
 
-  const amp = innerWidth < 761 ? 0.5 : 1; // celular: metade da amplitude
+  const amp = 1;
   const target = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
   let visible = true, raf = 0;
 

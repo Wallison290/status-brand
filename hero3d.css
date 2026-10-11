@@ -66,9 +66,9 @@
 .sx-kicker{position:absolute;left:50%;top:calc(var(--row-y) - var(--tile) / 2 - 56px);transform:translateX(-50%);margin:0;font-family:Unbounded,Open Sans,sans-serif;font-size:13px;font-weight:500;letter-spacing:.14em;color:#cfc8de;white-space:nowrap}
 
 /* fileira de tiles: centrada no símbolo; as pontas somem nas laterais */
-.sx-row{position:absolute;left:50%;top:var(--row-y);display:flex;align-items:center;gap:var(--gap);padding:160px 0;perspective:1100px;transform:translate(-50%,-50%);
+.sx-row{position:absolute;left:50%;top:var(--row-y);width:calc(var(--tile) * 7 + var(--gap) * 6);display:flex;align-items:center;gap:var(--gap);padding:160px 0;perspective:1100px;transform:translate(-50%,-50%);
   -webkit-mask-image:linear-gradient(90deg,transparent 2%,#000 22%,#000 78%,transparent 98%);mask-image:linear-gradient(90deg,transparent 2%,#000 22%,#000 78%,transparent 98%)}
-.sx-tile{position:relative;flex:0 0 var(--tile);height:var(--tile);border-radius:24%;display:grid;place-items:center;
+.sx-tile{position:relative;flex:0 0 var(--tile);width:var(--tile);height:var(--tile);border-radius:24%;display:grid;place-items:center;
   background:linear-gradient(155deg,#ffffff14,#ffffff03 55%),#120c1f80;border:1px solid #a58bff38;
   box-shadow:inset 0 1px 0 #ffffff1f,inset 0 0 30px #7a5cf014,0 24px 60px #0008;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
@@ -149,9 +149,15 @@
   .sx-rail{display:none}
   .sx-line{font-size:12px;max-width:300px}
 }
-@media(max-width:760px) and (max-height:700px){
-  .sx-line{display:none}
+/* toque: sem vidro desfocado nem blur (pesados na GPU do celular e causam travadas na rolagem) */
+@media(pointer:coarse),(max-width:760px){
+  .header-inner{background:rgba(12,9,20,.88);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .site-header .mobile-nav{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .sx-tile{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(155deg,#ffffff14,#ffffff03 55%),#140e22}
+  .sx-tile.mid,.sx-tile.near,.sx-tile.far{filter:none}
+  .sx-glow,.sx-kicker,.sx-rail,.sx-row,.sx-title,.sx-hand{will-change:auto}
 }
+
 
 @media(prefers-reduced-motion:reduce){
   .sx-tile,.sx-main,.sx-main img,.sx-main::after,.sx-ripple,.sx-hand,.sx-hand-tap,.sx-in{animation:none!important}

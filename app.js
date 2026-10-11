@@ -32,8 +32,8 @@
     const index = Number(button.dataset.pillar);
     $$('[data-pillar]').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button)); });
     // destaca a fita do símbolo correspondente ao pilar
-    $('.hx6-seg').forEach(seg => seg.classList.toggle('active', Number(seg.dataset.seg) === index));
-    $('[data-part]').forEach(el => el.classList.toggle('active', Number(el.dataset.part) === index));
+    $$('.hx6-seg').forEach(seg => seg.classList.toggle('active', Number(seg.dataset.seg) === index));
+    $$('[data-part]').forEach(el => el.classList.toggle('active', Number(el.dataset.part) === index));
     // os 3 itens do pilar também aparecem no card abaixo do símbolo (telas menores)
     const list = $('#pillar-list'), items = $(`.hx6-call[data-call="${index}"] ul`);
     if (list && items) list.innerHTML = items.innerHTML;
