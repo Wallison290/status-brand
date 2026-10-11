@@ -1,5 +1,5 @@
 /* Cabeçalho — pílula de vidro escuro flutuante (mesmo estilo do site A'Solary) */
-.site-header{position:fixed;inset:1.75rem 0 auto;z-index:60;background:none;pointer-events:none}
+.site-header{position:absolute;inset:1.75rem 0 auto;z-index:60;background:none;pointer-events:none}
 .header-inner{position:relative;z-index:2;max-width:1360px;width:calc(100% - var(--gutter) * 2);margin-inline:auto;pointer-events:auto;
   display:flex;align-items:center;justify-content:space-between;gap:1.5rem;height:72px;padding:0 .75rem 0 1.5rem;
   background:rgba(10,8,16,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
