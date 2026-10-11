@@ -182,14 +182,29 @@
 .svc-nav button:hover:not(:disabled){transform:scale(1.08)}
 .svc-nav button:disabled{opacity:.35;cursor:default}
 
-/* trilho: sangra até a borda direita da página; rola com o dedo, a roda do mouse ou as setas */
-.svc-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;
-  margin-right:calc(var(--gutter) * -1);padding:6px var(--gutter) 10px 2px;scrollbar-width:none}
-.svc-track::-webkit-scrollbar{display:none}
-.svc-track:focus-visible{outline:2px solid var(--lilac);outline-offset:4px;border-radius:24px}
-.svc-card{position:relative;flex:0 0 clamp(270px,26vw,340px);scroll-snap-align:start;display:flex;flex-direction:column;min-height:440px;padding:24px 24px 22px;border-radius:24px;overflow:hidden;isolation:isolate;
+/* trilho: no desktop e no tablet os 3 cards cabem inteiros, sem sair pela borda; no celular vira carrossel de um card por vez */
+.svc-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:14px 0 6px}
+.svc-track:focus-visible{outline:2px solid var(--lilac);outline-offset:6px;border-radius:24px}
+.svc-card{position:relative;display:flex;flex-direction:column;min-width:0;min-height:440px;padding:24px 22px 22px;border-radius:24px;overflow:hidden;isolation:isolate;
   background:radial-gradient(ellipse 70% 45% at 12% 0%,#675aa633,transparent 70%),linear-gradient(180deg,#141219,#08070b);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 50px #0008;border:1px solid rgba(255,255,255,.08)}
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 50px #0008;border:1px solid rgba(255,255,255,.08);
+  opacity:.62;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .6s,border-color .6s,box-shadow .6s}
+/* card em destaque: sobe, clareia a borda e acende o ícone; o destaque percorre 1 → 2 → 3 sozinho */
+.svc-card.is-active{opacity:1;transform:translateY(-10px);border-color:rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 30px 60px #000a,0 0 0 1px #675aa640}
+.svc-card .svc-icon{transition:box-shadow .6s,transform .6s}
+.svc-card.is-active .svc-icon{transform:scale(1.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 12px 50px #675aa6cc,0 0 90px #675aa688}
+.svc-card .svc-n b{transition:color .6s}
+.svc-card.is-active .svc-n b{color:#fff}
+/* barra de tempo do destaque automático */
+.svc-card::after{content:"";position:absolute;left:22px;right:22px;top:0;height:2px;border-radius:2px;background:linear-gradient(90deg,#8a7fc4,#c9c2ef);transform:scaleX(0);transform-origin:left;opacity:0}
+.svc-card.is-active.is-timing::after{opacity:1;animation:svc-time var(--svc-t,4.5s) linear forwards}
+@keyframes svc-time{to{transform:scaleX(1)}}
+/* entrada: os cards sobem um depois do outro */
+.motion .svc:not(.visible) .svc-card{opacity:0;transform:translateY(40px)}
+.motion .svc.visible .svc-card{animation:svc-in .9s cubic-bezier(.16,1,.3,1) backwards}
+.motion .svc.visible .svc-card:nth-child(2){animation-delay:.12s}
+.motion .svc.visible .svc-card:nth-child(3){animation-delay:.24s}
+@keyframes svc-in{from{opacity:0;transform:translateY(40px)}}
 .svc-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;margin-bottom:56px;
   background:linear-gradient(160deg,#8a7fc4,#675aa6 55%,#4b4180);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 40px #675aa699,0 0 70px #675aa655}
 .svc-icon svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -204,15 +219,29 @@
 .svc-n{font-size:clamp(40px,3.6vw,54px);font-weight:300;line-height:.9;letter-spacing:-.05em;color:#fff;white-space:nowrap}
 .svc-n b{font-weight:300;color:#8f8a9c;margin-right:.06em}
 
-@media(max-width:900px){
+
+.svc-card h3{font-size:clamp(19px,1.5vw,24px)}
+.svc-n{font-size:clamp(34px,3vw,50px)}
+
+/* tablet: título em cima, os 3 cards lado a lado embaixo */
+@media(max-width:1180px){
   .svc{grid-template-columns:1fr;gap:28px}
   .svc-intro>p{max-width:460px}
   .svc-nav{margin-top:22px}
-  .svc-track{margin-left:calc(var(--gutter) * -1);padding-left:var(--gutter);scroll-padding-left:var(--gutter)}
-  .svc-card{flex-basis:min(82vw,340px);min-height:400px}
+}
+/* celular: um card por vez, do tamanho da área útil; passa sozinho, com as setas ou com o dedo */
+@media(max-width:760px){
+  .svc-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none;padding:14px 0 10px}
+  .svc-track::-webkit-scrollbar{display:none}
+  .svc-card{flex:0 0 100%;scroll-snap-align:center;min-height:400px;opacity:1}
+  .svc-card.is-active{transform:none}
   .svc-icon{margin-bottom:40px}
 }
-@media(prefers-reduced-motion:reduce){.svc-track{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){
+  .svc-track{scroll-behavior:auto}
+  .svc-card,.svc-card .svc-icon{transition:none}
+  .svc-card::after{display:none}
+}
 
 /* Núcleo do anel: poço de vidro escuro com o símbolo S aceso, na linguagem do hero */
 .hx6-symbol{--cx:-0.276;--cy:-0.961}

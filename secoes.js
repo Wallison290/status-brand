@@ -36,20 +36,57 @@
   symbol.addEventListener('mouseleave', () => open(-1));
 })();
 
-// Seção 04: setas do carrossel de soluções (o trilho também rola com o dedo e a roda do mouse)
+// Seção 04: destaque automático que percorre as soluções 1 → 2 → 3.
+// Desktop/tablet: os 3 cards ficam visíveis e o destaque passa de um para o outro.
+// Celular: carrossel de um card por vez que avança sozinho. Mouse em cima, toque ou foco pausam.
 (() => {
   'use strict';
   const track = document.querySelector('.svc-track');
   if (!track) return;
+  const cards = [...track.querySelectorAll('.svc-card')];
   const prev = document.querySelector('.svc-prev'), next = document.querySelector('.svc-next');
-  const stepSize = () => { const card = track.querySelector('.svc-card'); return card ? card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || 20) : 300; };
-  const update = () => {
-    prev.disabled = track.scrollLeft < 4;
-    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-  };
-  prev.addEventListener('click', () => track.scrollBy({ left: -stepSize() }));
-  next.addEventListener('click', () => track.scrollBy({ left: stepSize() }));
-  track.addEventListener('scroll', update, { passive: true });
-  addEventListener('resize', update);
-  update();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobile = matchMedia('(max-width: 760px)');
+  const DELAY = 4500;
+  track.style.setProperty('--svc-t', DELAY + 'ms');
+  let active = 0, timer = 0, paused = false, visible = false;
+
+  function show(i, fromScroll = false) {
+    active = (i + cards.length) % cards.length;
+    cards.forEach((c, k) => { c.classList.toggle('is-active', k === active); c.classList.remove('is-timing'); });
+    if (mobile.matches && !fromScroll) track.scrollTo({ left: cards[active].offsetLeft - track.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+    restart();
+  }
+  function restart() {
+    clearTimeout(timer);
+    if (reduce || paused || !visible) return;
+    const card = cards[active];
+    void card.offsetWidth; card.classList.add('is-timing'); // reinicia a barra de tempo
+    timer = setTimeout(() => show(active + 1), DELAY);
+  }
+  const pause = on => { paused = on; if (on) { clearTimeout(timer); cards.forEach(c => c.classList.remove('is-timing')); } else restart(); };
+
+  prev.addEventListener('click', () => show(active - 1));
+  next.addEventListener('click', () => show(active + 1));
+  cards.forEach((c, k) => c.addEventListener('mouseenter', () => { if (!mobile.matches) show(k); }));
+  track.addEventListener('mouseenter', () => pause(true));
+  track.addEventListener('mouseleave', () => pause(false));
+  track.addEventListener('focusin', () => pause(true));
+  track.addEventListener('focusout', () => pause(false));
+  track.addEventListener('touchstart', () => pause(true), { passive: true });
+  track.addEventListener('touchend', () => setTimeout(() => pause(false), 2500), { passive: true });
+  // no celular, o card que para no centro depois de arrastar vira o ativo
+  let st = 0;
+  track.addEventListener('scroll', () => {
+    if (!mobile.matches) return;
+    clearTimeout(st);
+    st = setTimeout(() => {
+      const mid = track.scrollLeft + track.clientWidth / 2;
+      const k = cards.reduce((b, c, i) => Math.abs(c.offsetLeft - track.offsetLeft + c.offsetWidth / 2 - mid) < Math.abs(cards[b].offsetLeft - track.offsetLeft + cards[b].offsetWidth / 2 - mid) ? i : b, 0);
+      if (k !== active) show(k, true);
+    }, 120);
+  }, { passive: true });
+
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? restart() : clearTimeout(timer); }, { threshold: 0.35 }).observe(track);
+  show(0, true);
 })();
