@@ -1,37 +1,42 @@
-// Carrossel em meia-lua: os cards giram em volta de um centro abaixo do palco.
-// Gira sozinho o tempo todo e pode ser arrastado.
+// Carrossel em cilindro visto por dentro (tela curva): os cards ficam na parede interna,
+// a câmera fica perto da parede da frente. Gira sozinho e pode ser arrastado.
 (() => {
   'use strict';
   const section = document.querySelector('.arc-section');
   if (!section) return;
   const stage = section.querySelector('.arc-stage');
-  const orbit = section.querySelector('.arc-orbit');
-  const content = section.querySelector('.arc-content');
+  const ring = section.querySelector('.arc-ring');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // duplica o conjunto para fechar o círculo sem buracos; as cópias ficam fora da navegação por teclado
-  const originals = [...orbit.children];
-  originals.forEach(card => {
+  // duplica o conjunto para fechar o cilindro sem buracos; as cópias ficam fora da navegação por teclado
+  [...ring.children].forEach(card => {
     const clone = card.cloneNode(true);
     clone.setAttribute('aria-hidden', 'true');
     clone.setAttribute('tabindex', '-1');
-    orbit.appendChild(clone);
+    ring.appendChild(clone);
   });
-  const cards = [...orbit.children];
+  const cards = [...ring.children];
   const step = 360 / cards.length;
 
-  let R = 700, cardH = 200;
+  // K: quanto a câmera avança para dentro do cilindro (fração do raio); P: perspectiva (fração do raio).
+  // Com P - K negativo, os cards das bordas chegam perto da câmera e crescem, e os do centro ficam longe.
+  // EDGE: ângulo do card que cai na borda do palco. No celular é menor: o cilindro fica maior e os cards também.
+  const K = 0.68, P = 0.5;
+  const deg = Math.PI / 180;
+  let R = 400, EDGE = 58, LIMIT = 64;
   function layout() {
-    const w = stage.clientWidth;
-    R = Math.min(820, Math.max(380, w * 0.52));
-    const cardW = Math.min(200, Math.max(96, R * 0.26));
-    cardH = cardW * 1.05;
-    section.style.setProperty('--R', R + 'px');
-    section.style.setProperty('--card-w', cardW + 'px');
-    section.style.setProperty('--card-h', cardH + 'px');
-    // o palco precisa caber tanto o arco quanto o texto do meio
-    const contentTop = content.offsetTop;
-    stage.style.height = Math.max(R * 0.78 + cardH * 0.6, contentTop + content.offsetHeight + 40) + 'px';
+    const W = stage.clientWidth;
+    [EDGE, LIMIT] = W < 700 ? [46, 58] : [58, 64];
+    // o card no ângulo EDGE cai na borda do palco
+    const d = P - K, sEdge = P / (d + Math.cos(EDGE * deg));
+    R = W / (2 * Math.sin(EDGE * deg) * sEdge);
+    const w = (2 * Math.PI * R / cards.length) * 0.84, h = w * 1.3;
+    stage.style.setProperty('--P', (P * R).toFixed(1) + 'px');
+    stage.style.setProperty('--w', w.toFixed(1) + 'px');
+    stage.style.setProperty('--h', h.toFixed(1) + 'px');
+    ring.style.setProperty('--R', R.toFixed(1) + 'px');
+    ring.style.transform = `translateZ(${(K * R).toFixed(1)}px)`;
+    stage.style.height = Math.round(h * P / (d + Math.cos(EDGE * deg)) * 1.08) + 'px';
   }
 
   let offset = 0;
@@ -40,17 +45,16 @@
       let a = (i * step + offset) % 360;
       if (a > 180) a -= 360;
       if (a < -180) a += 360;
-      const abs = Math.abs(a);
-      const card = cards[i];
+      const abs = Math.abs(a), card = cards[i];
+      const show = abs <= LIMIT;
+      card.style.visibility = show ? 'visible' : 'hidden';
+      if (!show) continue;
       card.style.setProperty('--a', a.toFixed(2) + 'deg');
-      card.style.opacity = abs > 78 ? 0 : abs > 58 ? ((78 - abs) / 20).toFixed(3) : 1;
-      card.style.visibility = abs > 78 ? 'hidden' : 'visible';
-      card.style.zIndex = String(200 - Math.round(abs));
+      card.style.setProperty('--dim', (0.55 * Math.max(0, 1 - abs / 45)).toFixed(3));
     }
   }
 
-  // giro automático
-  const SPEED = 4; // graus por segundo
+  const SPEED = 5; // graus por segundo
   let speed = reduce ? 0 : SPEED, targetSpeed = speed, last = 0, raf = 0, running = false;
   function tick(t) {
     const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
@@ -65,23 +69,19 @@
     if (!on && running) { running = false; cancelAnimationFrame(raf); }
   }
 
-  // gira mesmo com o mouse em cima; só pausa quando alguém navega pelos cards com o teclado
+  // só pausa quando alguém navega pelos cards com o teclado
   stage.addEventListener('focusin', e => { if (e.target.matches(':focus-visible')) targetSpeed = 0; });
   stage.addEventListener('focusout', () => { targetSpeed = reduce ? 0 : SPEED; });
 
   // arrastar para girar
   let dragX = null, moved = 0;
-  stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('.arc-content')) return;
-    dragX = e.clientX; moved = 0;
-    stage.classList.add('dragging');
-  });
+  stage.addEventListener('pointerdown', e => { dragX = e.clientX; moved = 0; stage.classList.add('dragging'); });
   addEventListener('pointermove', e => {
     if (dragX === null) return;
     const dx = e.clientX - dragX;
     dragX = e.clientX;
     moved += Math.abs(dx);
-    offset += dx * (57.3 / R); // move o arco na mesma distância do dedo/mouse
+    offset += dx * (40 / stage.clientWidth) * 2;
     if (!running) place();
   });
   addEventListener('pointerup', () => { dragX = null; stage.classList.remove('dragging'); });
@@ -91,7 +91,6 @@
   layout();
   place();
   addEventListener('resize', () => { layout(); place(); });
-  if (document.fonts) document.fonts.ready.then(layout);
 
   let visible = false;
   new IntersectionObserver(([entry]) => {
