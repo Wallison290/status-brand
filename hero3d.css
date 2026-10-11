@@ -158,6 +158,11 @@
   .sx-tile{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(155deg,#ffffff14,#ffffff03 55%),#140e22}
   .sx-tile.mid,.sx-tile.near,.sx-tile.far{filter:none}
   .sx-glow,.sx-kicker,.sx-rail,.sx-row,.sx-title,.sx-hand{will-change:auto}
+  /* Safari iOS: camadas 3D/mascaradas podem ser pintadas por cima do cabeçalho ignorando o z-index.
+     Sem 3D no toque, fileira sem a folga que subia até o topo e cabeçalho promovido à própria camada */
+  .sx-row{perspective:none;padding:70px 0}
+  .sx-tile{--r:0deg}
+  .header-inner{transform:translateZ(0);-webkit-transform:translateZ(0)}
 }
 
 
