@@ -29,8 +29,10 @@
   const deg = Math.PI / 180;
   let K = K_FULL, R = 400, EDGE = 58, LIMIT = 64;
   function layout() {
-    const W = stage.clientWidth;
-    [EDGE, LIMIT] = W < 700 ? [42, 56] : [58, 64];
+    // no celular o cilindro é calculado para uma largura maior que a tela: cards grandes, pontas saindo pelas laterais
+    const mobile = stage.clientWidth < 700;
+    const W = stage.clientWidth * (mobile ? 1.9 : 1);
+    [EDGE, LIMIT] = mobile ? [50, 60] : [58, 64];
     // o card no ângulo EDGE cai na borda do palco
     const d = P - K_FULL, sEdge = P / (d + Math.cos(EDGE * deg));
     R = W / (2 * Math.sin(EDGE * deg) * sEdge);
@@ -39,7 +41,8 @@
     stage.style.setProperty('--w', w.toFixed(1) + 'px');
     stage.style.setProperty('--h', h.toFixed(1) + 'px');
     ring.style.setProperty('--R', R.toFixed(1) + 'px');
-    stage.style.height = Math.round(h * P / (d + Math.cos(EDGE * deg)) * 1.08) + 'px';
+    // no celular os cards das pontas saem pela lateral, então o palco não precisa da altura deles
+    stage.style.height = Math.round(h * P / (d + Math.cos(EDGE * deg)) * (mobile ? 0.8 : 1.08)) + 'px';
   }
 
   // só a posição da câmera muda com K (o raio fica fixo), então abrir a curva não mexe na altura do palco
