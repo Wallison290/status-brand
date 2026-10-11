@@ -6,9 +6,10 @@
 
 /* texto acima do cilindro */
 .arc-content{position:relative;z-index:2;width:min(640px,100%);margin:0 auto;text-align:center}
-.arc-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid rgba(255,255,255,.22);border-radius:100px;font-size:10px;letter-spacing:.14em;color:#d8d2e6;background:#ffffff08}
+.arc-chip{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;padding:6px 12px;border:1px solid rgba(255,255,255,.22);border-radius:100px;font-size:10px;letter-spacing:.14em;color:#d8d2e6;background:#ffffff08}
 .arc-chip b{color:var(--lilac);font-weight:400}
-.arc-content h2{margin:22px 0 16px;font-size:clamp(32px,3.8vw,58px);line-height:1.06;font-weight:400;letter-spacing:-.035em}
+.arc-chip i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.5}
+.arc-content h2{margin:24px 0 18px;font-size:clamp(36px,4.6vw,72px);line-height:1;font-weight:400;letter-spacing:-.045em}
 .arc-content h2 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;color:var(--lilac);font-size:1.1em;letter-spacing:-.01em}
 .arc-content p{margin:0 auto 28px;max-width:460px;font-size:14px;line-height:1.65;color:#b9b3c7}
 .arc-btn{display:inline-flex;align-items:center;gap:12px;padding:12px 14px 12px 22px;border-radius:100px;background:#f1ecff;color:#1b1528;font-size:13px;font-weight:600;transition:background .3s,gap .3s}
@@ -23,13 +24,22 @@
 .arc-stage{--w:240px;--h:300px;--P:500px;position:relative;height:calc(var(--h) * 1.5);
   perspective:var(--P);perspective-origin:50% 88%;touch-action:pan-y;cursor:grab;user-select:none}
 .arc-stage.dragging{cursor:grabbing}
+/* horizonte: linha de luz onde os cards pousam, como o piso de um palco */
+.arc-stage::after{content:"";position:absolute;left:8%;right:8%;bottom:calc(12% - 1px);height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28) 30%,rgba(255,255,255,.28) 70%,transparent);
+  box-shadow:0 0 24px 2px #675aa655}
 .arc-ring{position:absolute;left:50%;bottom:12%;width:0;height:0;transform-style:preserve-3d}
 .arc-card{position:absolute;left:calc(var(--w) / -2);bottom:0;width:var(--w);height:var(--h);border-radius:16px;overflow:hidden;
   transform:rotateY(var(--a,0deg)) translateZ(calc(var(--R,900px) * -1));backface-visibility:hidden;-webkit-backface-visibility:hidden;
   box-shadow:0 20px 50px #000a,0 0 0 1px rgba(255,255,255,.12);background:#141019}
 /* cards distantes ficam mais escuros, como na tela curva */
 .arc-card::after{content:"";position:absolute;inset:0;background:#05040a;opacity:var(--dim,0);pointer-events:none}
-.arc-shot img{width:100%;height:100%;object-fit:cover;object-position:50% 0;transition:transform .6s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.arc-shot{display:flex;flex-direction:column;background:#0e0c14}
+.arc-shot::before{content:attr(data-host);flex:0 0 auto;display:block;height:calc(var(--h) * .075);min-height:12px;padding-left:calc(var(--w) * .2);
+  font-size:max(7px,calc(var(--w) * .045));line-height:calc(var(--h) * .075);color:#8f8a9c;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  background:radial-gradient(circle at calc(var(--w) * .06) 50%,#ffffff40 0 2.2px,transparent 2.6px),radial-gradient(circle at calc(var(--w) * .1) 50%,#ffffff30 0 2.2px,transparent 2.6px),radial-gradient(circle at calc(var(--w) * .14) 50%,#ffffff20 0 2.2px,transparent 2.6px),#17141f;
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.arc-shot img{flex:1;min-height:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;transition:transform .6s cubic-bezier(.16,1,.3,1);pointer-events:none}
 .arc-shot:hover img,.arc-shot:focus-visible img{transform:scale(1.05)}
 .arc-card:focus-visible{outline:2px solid var(--lilac);outline-offset:4px}
 
@@ -39,9 +49,9 @@
 .arc-card:hover .arc-cap,.arc-card:focus-visible .arc-cap{opacity:1;transform:none}
 
 /* cards de logo: fundo claro com a marca tipográfica */
-.arc-logo{display:grid;place-items:center;background:linear-gradient(160deg,#f4f2f8,#d6d2de);color:#1b1528}
+.arc-logo{display:grid;place-items:center;background:radial-gradient(ellipse 80% 60% at 50% 0%,#675aa62e,transparent 70%),linear-gradient(160deg,#1c1927,#0d0b12);color:#f1eef7}
 .arc-logo>span:first-child{font-size:30px;line-height:1.1;text-align:center}
-.arc-logo .arc-cap{background:none;color:#5a5466;text-align:center;opacity:.9;transform:none;padding-bottom:16px}
+.arc-logo .arc-cap{background:none;color:#8f8a9c;font-size:max(8px,calc(var(--w) * .05));letter-spacing:.14em;text-transform:uppercase;text-align:center;opacity:1;transform:none;padding-bottom:calc(var(--h) * .07)}
 
 /* números */
 .arc-stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);max-width:980px;margin:10px auto 0;text-align:center}

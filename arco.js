@@ -8,6 +8,9 @@
   const ring = section.querySelector('.arc-ring');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // capas de site mostram o domínio na barra de navegador desenhada no CSS
+  ring.querySelectorAll('a.arc-shot').forEach(a => { a.dataset.host = new URL(a.href).hostname.replace(/^www\./, ''); });
+
   // duplica o conjunto para fechar o cilindro sem buracos; as cópias ficam fora da navegação por teclado
   [...ring.children].forEach(card => {
     const clone = card.cloneNode(true);
@@ -21,25 +24,28 @@
   // K: quanto a câmera avança para dentro do cilindro (fração do raio); P: perspectiva (fração do raio).
   // Com P - K negativo, os cards das bordas chegam perto da câmera e crescem, e os do centro ficam longe.
   // EDGE: ângulo do card que cai na borda do palco. No celular é menor: o cilindro fica maior e os cards também.
-  const K = 0.68, P = 0.5;
+  // K_FULL é a curvatura final; arco-scroll.js anima K de mais aberto até ela conforme a seção entra na tela
+  const K_FULL = 0.68, P = 0.5;
   const deg = Math.PI / 180;
-  let R = 400, EDGE = 58, LIMIT = 64;
+  let K = K_FULL, R = 400, EDGE = 58, LIMIT = 64;
   function layout() {
     const W = stage.clientWidth;
     [EDGE, LIMIT] = W < 700 ? [46, 58] : [58, 64];
     // o card no ângulo EDGE cai na borda do palco
-    const d = P - K, sEdge = P / (d + Math.cos(EDGE * deg));
+    const d = P - K_FULL, sEdge = P / (d + Math.cos(EDGE * deg));
     R = W / (2 * Math.sin(EDGE * deg) * sEdge);
     const w = (2 * Math.PI * R / cards.length) * 0.84, h = w * 1.3;
     stage.style.setProperty('--P', (P * R).toFixed(1) + 'px');
     stage.style.setProperty('--w', w.toFixed(1) + 'px');
     stage.style.setProperty('--h', h.toFixed(1) + 'px');
     ring.style.setProperty('--R', R.toFixed(1) + 'px');
-    ring.style.transform = `translateZ(${(K * R).toFixed(1)}px)`;
     stage.style.height = Math.round(h * P / (d + Math.cos(EDGE * deg)) * 1.08) + 'px';
   }
 
-  let offset = 0;
+  // só a posição da câmera muda com K (o raio fica fixo), então abrir a curva não mexe na altura do palco
+  function applyK() { ring.style.transform = `translateZ(${(K * R).toFixed(1)}px)`; }
+
+  let offset = 0, boost = 0;
   function place() {
     for (let i = 0; i < cards.length; i++) {
       let a = (i * step + offset) % 360;
@@ -60,7 +66,8 @@
     const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
     last = t;
     speed += (targetSpeed - speed) * 0.08;
-    offset -= speed * dt;
+    offset -= (speed + boost) * dt;
+    boost *= 0.94;
     place();
     raf = requestAnimationFrame(tick);
   }
@@ -89,8 +96,15 @@
   stage.addEventListener('click', e => { if (moved > 6 && e.target.closest('.arc-card')) { e.preventDefault(); moved = 0; } }, true);
 
   layout();
+  applyK();
   place();
-  addEventListener('resize', () => { layout(); place(); });
+  addEventListener('resize', () => { layout(); applyK(); place(); });
+
+  // controles usados por arco-scroll.js (rolagem): curvatura e impulso no giro
+  section.arcControl = {
+    setOpen(v) { K = K_FULL * (0.55 + 0.45 * v); applyK(); if (!running) place(); },
+    kick(v) { boost = Math.max(-40, Math.min(40, v)); },
+  };
 
   let visible = false;
   new IntersectionObserver(([entry]) => {
