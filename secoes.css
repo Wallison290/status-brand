@@ -197,3 +197,26 @@
   .sol-glass,.sol-card:nth-child(n) .sol-glass{transform:none;height:auto}
 }
 @media(prefers-reduced-motion:reduce){.sol-glass{transition:none}}
+
+/* Núcleo do anel: poço de vidro escuro com o símbolo S aceso, na linguagem do hero */
+.hx6-symbol{--cx:-0.276;--cy:-0.961}
+.hx6-symbol::before{content:"";position:absolute;inset:-6%;z-index:-1;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,#5b3fc455,#2a1a5e33 55%,transparent 75%)}
+.hx6-core{position:absolute;left:50%;top:50%;z-index:1;width:34%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;pointer-events:none;
+  background:radial-gradient(circle at calc(50% + var(--cx) * 22%) calc(50% + var(--cy) * 22%),#4a32a0 0%,#1d1338 38%,#0b0814 72%);
+  box-shadow:inset 0 0 0 1px #c9b6ff40,inset 0 14px 34px #000d,inset 0 -8px 26px #6c4fd630,0 0 70px #6c4fd640;
+  transition:background .7s cubic-bezier(.16,1,.3,1)}
+.hx6-dial{position:absolute;inset:6%;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,#c9b6ffaa 0 .5deg,transparent .5deg 6deg);
+  -webkit-mask:radial-gradient(closest-side,transparent calc(100% - 7%),#000 calc(100% - 6.6%));mask:radial-gradient(closest-side,transparent calc(100% - 7%),#000 calc(100% - 6.6%));
+  opacity:.45;animation:hx6-spin 48s linear infinite}
+.hx6-core img{position:relative;width:44%;height:auto;filter:drop-shadow(0 0 16px #8b6cf0aa) drop-shadow(0 6px 10px #000a);animation:hx6-float 6s ease-in-out infinite}
+@keyframes hx6-spin{to{transform:rotate(360deg)}}
+@keyframes hx6-float{50%{transform:translateY(-3%)}}
+/* entrada: o núcleo acende depois que as partes se encaixam */
+.motion .hx6:not(.visible) .hx6-core{opacity:0}
+.motion .hx6.visible .hx6-core{animation:hx6-core-in 1s cubic-bezier(.16,1,.3,1) .55s backwards}
+@keyframes hx6-core-in{from{opacity:0;transform:translate(-50%,-50%) scale(.7)}}
+@media(prefers-reduced-motion:reduce){
+  .hx6-dial,.hx6-core img{animation:none}
+}

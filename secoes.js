@@ -17,6 +17,9 @@
   if (!symbol) return;
   const open = index => symbol.querySelectorAll('.hx6-line, .hx6-call').forEach(el => el.classList.toggle('open', el.dataset.call === String(index)));
   const pick = index => {
+    // a luz do núcleo se inclina na direção da parte escolhida
+    const seg = symbol.querySelector(`.hx6-seg[data-seg="${index}"]`);
+    if (seg) { symbol.style.setProperty('--cx', seg.style.getPropertyValue('--dx')); symbol.style.setProperty('--cy', seg.style.getPropertyValue('--dy')); }
     const button = symbol.querySelector(`.hx6-label[data-pillar="${index}"]`);
     if (button && button.getAttribute('aria-pressed') !== 'true') button.click();
     open(index);
