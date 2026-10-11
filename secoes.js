@@ -35,3 +35,21 @@
   });
   symbol.addEventListener('mouseleave', () => open(-1));
 })();
+
+// Seção 04: setas do carrossel de soluções (o trilho também rola com o dedo e a roda do mouse)
+(() => {
+  'use strict';
+  const track = document.querySelector('.svc-track');
+  if (!track) return;
+  const prev = document.querySelector('.svc-prev'), next = document.querySelector('.svc-next');
+  const stepSize = () => { const card = track.querySelector('.svc-card'); return card ? card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || 20) : 300; };
+  const update = () => {
+    prev.disabled = track.scrollLeft < 4;
+    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+  };
+  prev.addEventListener('click', () => track.scrollBy({ left: -stepSize() }));
+  next.addEventListener('click', () => track.scrollBy({ left: stepSize() }));
+  track.addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+})();
