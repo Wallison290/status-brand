@@ -11,10 +11,7 @@
 .arc-chip i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.5}
 .arc-content h2{margin:24px 0 18px;font-size:clamp(36px,4.6vw,72px);line-height:1;font-weight:400;letter-spacing:-.045em}
 .arc-content h2 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;color:var(--lilac);font-size:1.1em;letter-spacing:-.01em}
-.arc-content p{margin:0 auto 28px;max-width:460px;font-size:14px;line-height:1.65;color:#b9b3c7}
-.arc-btn{display:inline-flex;align-items:center;gap:12px;padding:12px 14px 12px 22px;border-radius:100px;background:#f1ecff;color:#1b1528;font-size:13px;font-weight:600;transition:background .3s,gap .3s}
-.arc-btn span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;font-size:14px}
-.arc-btn:hover{background:#fff;gap:16px}
+.arc-content p{margin:0 auto;max-width:460px;font-size:14px;line-height:1.65;color:#b9b3c7}
 
 /* palco 3D: a câmera fica dentro do cilindro; o ponto de fuga na linha de base alinha os pés dos cards */
 /* a máscara fica num invólucro: no Safari, máscara no mesmo elemento da perspectiva achata o 3D */

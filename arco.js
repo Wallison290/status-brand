@@ -30,7 +30,7 @@
   let K = K_FULL, R = 400, EDGE = 58, LIMIT = 64;
   function layout() {
     const W = stage.clientWidth;
-    [EDGE, LIMIT] = W < 700 ? [46, 58] : [58, 64];
+    [EDGE, LIMIT] = W < 700 ? [42, 56] : [58, 64];
     // o card no ângulo EDGE cai na borda do palco
     const d = P - K_FULL, sEdge = P / (d + Math.cos(EDGE * deg));
     R = W / (2 * Math.sin(EDGE * deg) * sEdge);
