@@ -55,7 +55,7 @@
 @media(max-width:900px){
   .pc-top,.pc-proof{grid-template-columns:1fr}
   .pc-word{top:auto;bottom:38%}
-  .pc-stats{grid-template-columns:1fr 1fr;gap:28px 20px}
+  .pc-stats{grid-template-columns:1fr 1fr;gap:28px 20px;justify-items:center;text-align:center;max-width:420px;width:100%;margin:0 auto}
   .pc-doodle{display:none}
 }
 @media(max-width:560px){
