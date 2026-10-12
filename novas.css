@@ -173,7 +173,7 @@
 .mx-icon svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .mx-more p{margin:0;font-size:13px;line-height:1.55;color:#b9b3c7}
 .mx-more ul{list-style:none;margin:10px 0 0;padding:0;font-size:12px;line-height:1.6;color:#cfc8de}
-.mx-more li::before{content:"✳";margin-right:7px;color:#8a7fc4;font-size:9px}
+.mx-more li::before{content:"";margin-right:7px;color:#8a7fc4;font-size:9px}
 .mx-track{display:none}
 
 /* Celular e tablet: linha do tempo. A barra lateral enche conforme a rolagem e cada pilar abre quando ela chega nele */
@@ -347,3 +347,10 @@
 .light-zone .svc-card>*{transition:opacity .6s}
 .light-zone .svc-card:not(.is-active)>*{opacity:.5}
 @media(max-width:900px){.light-zone .svc-card:not(.is-active)>*{opacity:1}}
+
+/* Estrela "✳" desenhada em vetor: o caractere vira emoji verde no celular; assim fica igual em qualquer aparelho e herda a cor do texto */
+:root{--ast:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4'/%3E%3C/svg%3E")}
+.ast,.mx-more li::before,.svc-card li::before,.hx6-call li::before,.hx6-center li::before{display:inline-block;width:.9em;height:.9em;vertical-align:-.08em;background:currentColor;
+  -webkit-mask:var(--ast) center/contain no-repeat;mask:var(--ast) center/contain no-repeat}
+.marquee .ast{width:.75em;height:.75em;vertical-align:middle}
+.team-monogram .ast{width:1em;height:1em}
