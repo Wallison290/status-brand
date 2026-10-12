@@ -151,3 +151,59 @@
   stage.addEventListener('focusout', () => { hover = false; run(); });
   document.addEventListener('visibilitychange', run);
 })();
+
+// Seção 04: cada pilar abre ao clicar/tocar no título (no desktop também abre com o mouse, via CSS).
+// No celular vira linha do tempo: a barra enche conforme a rolagem e o pilar abre quando ela chega no ponto dele.
+(() => {
+  'use strict';
+  const mx = document.querySelector('.mx');
+  if (!mx) return;
+  const nodes = [...mx.querySelectorAll('.mx-node')];
+  const track = mx.querySelector('.mx-track');
+  const mobile = matchMedia('(max-width: 900px)');
+
+  const setOpen = (node, open) => {
+    node.classList.toggle('is-open', open);
+    node.querySelector('.mx-head button').setAttribute('aria-expanded', String(open));
+  };
+  nodes.forEach(node => {
+    node.querySelector('.mx-head button').addEventListener('click', () => {
+      const open = !node.classList.contains('is-open');
+      if (!mobile.matches) nodes.forEach(n => n !== node && setOpen(n, false));
+      setOpen(node, open);
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!mobile.matches && !mx.contains(e.target)) nodes.forEach(n => setOpen(n, false));
+  });
+
+  let ticking = false, busy = false;
+  function update() {
+    ticking = false;
+    if (!mobile.matches) return;
+    const box = mx.getBoundingClientRect();
+    const dot = n => n.getBoundingClientRect().top + 32 - box.top;  // centro do ponto do pilar
+    const start = dot(nodes[0]), end = dot(nodes[nodes.length - 1]);
+    track.style.top = start + 'px';
+    track.style.height = (end - start) + 'px';
+    const line = innerHeight * .62 - box.top;                       // "agulha" a 62% da altura da tela
+    track.style.setProperty('--fill', Math.max(0, Math.min(end - start, line - start)) + 'px');
+    // abre um pilar por vez: espera o anterior terminar de abrir (ele empurra os de baixo) antes de checar o próximo
+    if (busy) return;
+    const next = nodes.find(n => !n.classList.contains('is-on'));
+    if (next && dot(next) <= line) {
+      next.classList.add('is-on'); setOpen(next, true);
+      busy = true;
+      setTimeout(() => { busy = false; queue(); }, 520);
+    }
+  }
+  const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  mobile.addEventListener('change', () => {
+    nodes.forEach(n => { n.classList.remove('is-on'); setOpen(n, false); });
+    queue();
+  });
+  new ResizeObserver(queue).observe(mx);
+  queue();
+})();
