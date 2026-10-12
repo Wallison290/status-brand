@@ -115,6 +115,12 @@
 @media(max-width:520px){.lt-row{gap:12px}.lt-slot{min-height:150px}.lt-cap{left:12px;right:12px;bottom:10px;font-size:10px}.lt-cap b{font-size:13px}.lt-tag{left:10px;top:10px;font-size:8px;padding:4px 8px}}
 
 /* ===== 04 — Método: logo no centro e conexões ===== */
+/* Começa com os cantos de cima arredondados, subindo sobre o fim da seção clara (espelho do fim da abertura) */
+.mx-section{--r:clamp(28px,4vw,56px);z-index:1;max-width:none;margin-top:calc(var(--r) * -1);background:var(--bg);
+  border-radius:var(--r) var(--r) 0 0;box-shadow:0 -30px 60px rgba(21,17,29,.18);border-top:1px solid rgba(255,255,255,.08)}
+.mx-section>*{max-width:1576px;margin-left:auto;margin-right:auto}
+.lt{padding-bottom:calc(105px + clamp(28px,4vw,56px))}
+@media(max-width:900px){.lt{padding-bottom:calc(90px + 28px)}}
 .mx-section .ecl-head{margin:0 auto}
 .mx{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(160px,220px) minmax(0,1fr);grid-template-areas:"n0 core n2" "n1 core n3" "n4 n4 n4";
   gap:28px clamp(40px,6vw,96px);align-items:center;max-width:1200px;margin:64px auto 0;padding:40px 0}
