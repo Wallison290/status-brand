@@ -53,28 +53,6 @@
       pillarTimer = setInterval(() => { current = (current + 1) % pillarButtons.length; showPillar(pillarButtons[current]); }, 4500);
     }
   }
-  const processCopy = [
-    'Começamos pelo seu negócio: contexto, público, desafios e oportunidades. O diagnóstico dá sentido às decisões que vêm depois.',
-    'Organizamos prioridades e definimos o plano. Posicionamento, canais, mensagens e objetivos passam a trabalhar na mesma direção.',
-    'Transformamos a direção em entregas. Identidade, conteúdo, campanhas e experiências digitais são construídos com alinhamento e intenção.',
-    'Acompanhamos o que foi colocado em prática, conversamos sobre os aprendizados e ajustamos os próximos passos. A marca evolui junto com o negócio.'
-  ];
-  function selectTab(button, group) {
-    $$(group).forEach(b => { b.setAttribute('aria-selected', String(b === button)); b.tabIndex = b === button ? 0 : -1; });
-  }
-  $$('[data-process]').forEach(b => b.addEventListener('click', () => {
-    selectTab(b, '[data-process]'); $('#process-panel').setAttribute('aria-labelledby', b.id); $('#process-panel p').textContent = processCopy[Number(b.dataset.process)];
-  }));
-  function keyboardTabs(group, vertical = false) {
-    $$(group).forEach(button => button.addEventListener('keydown', e => {
-      const list = $$(group), current = list.indexOf(button); let next;
-      if (e.key === (vertical ? 'ArrowDown' : 'ArrowRight')) next = (current + 1) % list.length;
-      else if (e.key === (vertical ? 'ArrowUp' : 'ArrowLeft')) next = (current - 1 + list.length) % list.length;
-      else if (e.key === 'Home') next = 0; else if (e.key === 'End') next = list.length - 1;
-      if (next !== undefined) { e.preventDefault(); list[next].click(); list[next].focus(); }
-    }));
-  }
-  keyboardTabs('[data-process]');
   $$('[data-filter]').forEach(b => b.addEventListener('click', () => {
     $$('[data-filter]').forEach(btn => { btn.classList.toggle('active', b === btn); btn.setAttribute('aria-pressed', String(b === btn)); });
     $$('.project-card').forEach(card => { card.hidden = b.dataset.filter !== 'all' && card.dataset.category !== b.dataset.filter; card.classList.add('visible'); });
