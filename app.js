@@ -74,21 +74,7 @@
       if (next !== undefined) { e.preventDefault(); list[next].click(); list[next].focus(); }
     }));
   }
-  keyboardTabs('[data-process]'); keyboardTabs('[data-niche]', true);
-  const niches = [
-    ['SAÚDE.', 'Confiança antes<br>do primeiro <em>contato.</em>', 'Para clínicas e profissionais da saúde que querem comunicar seu valor com clareza, responsabilidade e proximidade.'],
-    ['ESTÉTICA.', 'Sua essência.<br>Uma presença <em>singular.</em>', 'Uma comunicação que valoriza sua experiência, traduz seu cuidado e ajuda o público a compreender os diferenciais do seu trabalho.'],
-    ['FARMÁCIAS.', 'Cuidado que<br>se transforma em <em>conexão.</em>', 'Conteúdo, presença local e campanhas para aproximar sua farmácia da rotina e das necessidades dos seus clientes.'],
-    ['SABOR.', 'Experiências que<br>dão vontade de <em>voltar.</em>', 'Da descoberta à próxima visita: identidade, conteúdo e divulgação para restaurantes e negócios de gastronomia.'],
-    ['NEGÓCIOS.', 'Valor percebido.<br>Crescimento com <em>direção.</em>', 'Estratégia e comunicação para empresas que querem profissionalizar sua presença e fortalecer sua posição no mercado.']
-  ];
-  $$('[data-niche]').forEach(b => b.addEventListener('click', () => {
-    const index = Number(b.dataset.niche); selectTab(b, '[data-niche]'); $('#niche-panel').setAttribute('aria-labelledby', b.id);
-    $('#niche-word').textContent = niches[index][0]; $('#niche-title').innerHTML = niches[index][1]; $('#niche-desc').textContent = niches[index][2];
-    const img = $('.niche-visual img');
-    img.src = index < 3 ? 'assets/img/nichos.png' : 'assets/img/portfolio.png';
-    img.alt = index < 3 ? 'Imagem ilustrativa de uma profissional em uma clínica contemporânea' : 'Apresentação conceitual de marca e papelaria';
-  }));
+  keyboardTabs('[data-process]');
   $$('[data-filter]').forEach(b => b.addEventListener('click', () => {
     $$('[data-filter]').forEach(btn => { btn.classList.toggle('active', b === btn); btn.setAttribute('aria-pressed', String(b === btn)); });
     $$('.project-card').forEach(card => { card.hidden = b.dataset.filter !== 'all' && card.dataset.category !== b.dataset.filter; card.classList.add('visible'); });
