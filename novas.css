@@ -295,3 +295,59 @@
   .svc-cta{opacity:0;transform:translateY(8px);transition:opacity .35s,transform .45s cubic-bezier(.16,1,.3,1),gap .3s,background .3s}
   .svc-card:hover .svc-cta,.svc-card:focus-within .svc-cta,.svc-card.is-active .svc-cta{opacity:1;transform:none}
 }
+
+/* ===== 07 a 10 — bloco claro: sobe sobre a seção escura anterior com cantos arredondados; o contato (escuro) sobe sobre ele ===== */
+.light-zone{--r:clamp(28px,4vw,56px);position:relative;z-index:1;margin-top:calc(var(--r) * -1);padding:var(--r) 0 calc(var(--r) + 10px);
+  background:#f4f3f7;color:#15111d;border-radius:var(--r) var(--r) 0 0;box-shadow:0 -30px 60px rgba(0,0,0,.35)}
+.cv{padding-bottom:calc(105px + clamp(28px,4vw,56px))}
+.contact-section{--r:clamp(28px,4vw,56px);z-index:2;margin-top:calc(var(--r) * -1);padding-top:calc(60px + var(--r));border-radius:var(--r) var(--r) 0 0;
+  background:radial-gradient(ellipse at 50% 120%,#675aa686,transparent 65%),var(--bg);box-shadow:0 -30px 60px rgba(21,17,29,.18)}
+@media(max-width:760px){.contact-section{padding-top:calc(35px + var(--r))}}
+
+/* texto base no claro */
+.light-zone h2,.light-zone h3{color:#15111d}
+.light-zone em{color:#675aa6}
+.light-zone p{color:#5b5566}
+.light-zone .section-kicker{color:#6b6577;border-top-color:rgba(21,17,29,.12)}
+.light-zone .eyebrow{color:#675aa6}
+
+/* 07 serviços: os cards continuam escuros, como peças sobre o papel */
+.light-zone .svc-chip{background:#fff;box-shadow:0 1px 0 rgba(21,17,29,.06)}
+.light-zone .svc-intro>p{color:#5b5566}
+.light-zone .svc-prev{background:#fff;color:#15111d;border:1px solid rgba(21,17,29,.15)}
+.light-zone .svc-next{background:#15111d;color:#fff}
+.light-zone .svc-card h3{color:#fff}
+.light-zone .svc-card p{color:#9e98ad}
+.light-zone .svc-card.is-active{box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 30px 60px -20px rgba(21,17,29,.55),0 0 0 1px #675aa640}
+
+/* 08 portfólio */
+.light-zone .project-filters button{border-color:rgba(21,17,29,.15);color:#5b5566}
+.light-zone .project-filters button.active{background:#15111d;border-color:#15111d;color:#fff}
+.light-zone .project-filters button:hover{border-color:#675aa6}
+.light-zone .project-caption p{color:#6b6577}
+.light-zone .project-caption>span{color:#8a8396}
+.light-zone .project-image{box-shadow:0 24px 50px -24px rgba(21,17,29,.45)}
+.light-zone .project-typography{color:#fff;box-shadow:0 24px 50px -24px rgba(21,17,29,.5)}
+.light-zone .project-typography em{color:var(--lilac)}
+.light-zone .project-typography .eyebrow{color:var(--lilac)}
+.light-zone .project-typography.light{background:#fff;color:#191421;border-color:rgba(21,17,29,.08)}
+.light-zone .project-typography.light em,.light-zone .project-typography.light .eyebrow{color:#675aa6}
+
+/* 09 depoimentos */
+.light-zone blockquote{color:#3a3346}
+.light-zone .author-mark{color:#fff}
+.light-zone .quote-author p{color:#6b6577}
+.light-zone .relationship-note{background:radial-gradient(ellipse at 90% 100%,#675aa61f,transparent 70%),#fff;border-color:rgba(21,17,29,.08);box-shadow:0 24px 50px -28px rgba(21,17,29,.35)}
+.light-zone .relationship-values span{color:#675aa6;border-color:rgba(103,90,166,.35)}
+
+/* 10 fundadores: os dois cards seguem escuros */
+.light-zone .team-card{color:#fff;border-color:transparent;box-shadow:0 24px 50px -24px rgba(21,17,29,.55)}
+.light-zone .team-card h3{color:#fff}
+.light-zone .team-card em{color:var(--lilac)}
+.light-zone .team-card p{color:#b9b3c7}
+.light-zone .team-card .eyebrow{color:var(--lilac)}
+/* no claro, card inativo não fica transparente (viraria cinza): o card segue escuro e só o conteúdo esmaece */
+.light-zone .svc-card{opacity:1;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 24px 50px -24px rgba(21,17,29,.5)}
+.light-zone .svc-card>*{transition:opacity .6s}
+.light-zone .svc-card:not(.is-active)>*{opacity:.5}
+@media(max-width:900px){.light-zone .svc-card:not(.is-active)>*{opacity:1}}
