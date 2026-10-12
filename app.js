@@ -96,7 +96,7 @@
   const contact = $('#contact-dialog'), projectDialog = $('#project-dialog');
   function openDialog(dialog) { dialog.showModal(); document.body.classList.add('modal-open'); }
   $$('dialog').forEach(d => {
-    $('.dialog-close', d).addEventListener('click', () => d.close());
+    const closeBtn = $('.dialog-close', d); if (closeBtn) closeBtn.addEventListener('click', () => d.close());
     d.addEventListener('close', () => { if (!document.querySelector('dialog[open]')) document.body.classList.remove('modal-open'); });
     d.addEventListener('click', e => { const r = d.getBoundingClientRect(); if (e.target === d && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) d.close(); });
   });
