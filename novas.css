@@ -194,6 +194,59 @@
 @media(prefers-reduced-motion:reduce){.mx-lines path.flow,.mx-core-ring{animation:none}.mx-more,.mx-more>div,.mx-card{transition:none}}
 
 /* ===== 05 — Ecossistema: acesso à Status Media ===== */
+/* Frentes à esquerda ligadas por linhas a um arco que abraça o S da Status, à direita */
+.ec-stage{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:center;gap:clamp(40px,6vw,110px);
+  max-width:1240px;margin:0 auto;text-align:left}
+.ec-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+.ec-lines .arc{fill:none;stroke:rgba(185,168,241,.45);stroke-width:1.4}
+.ec-lines .link{fill:none;stroke:rgba(185,168,241,.4);stroke-width:1.4}
+.ec-lines .flow{fill:none;stroke:#d7cff7;stroke-width:1.6;stroke-dasharray:3 18;animation:ec-flow 2.4s linear infinite}
+.ec-lines .dot{fill:#fff;stroke:#675aa6;stroke-width:5;paint-order:stroke}
+.ec-lines .halo{fill:rgba(185,168,241,.18);transform-box:fill-box;transform-origin:center;animation:ec-halo 2.6s ease-out infinite}
+@keyframes ec-flow{to{stroke-dashoffset:-84}}
+@keyframes ec-halo{from{transform:scale(.6);opacity:1}to{transform:scale(1.8);opacity:0}}
+
+.ec-list{position:relative;z-index:1;display:grid;gap:clamp(22px,2.6vw,36px);margin:0;padding:0;list-style:none}
+.ec-item{display:flex;align-items:center}
+.ec-icon{flex:none;display:grid;place-items:center;width:clamp(72px,7vw,96px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#8a7fc4,#675aa6 55%,#3f3670);box-shadow:0 0 0 7px rgba(103,90,166,.16),0 0 0 8px rgba(185,168,241,.35),0 0 40px #675aa680}
+.ec-icon svg{width:42%;height:42%;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ec-arrow{position:relative;flex:none;width:clamp(28px,3vw,46px);height:2px;margin:0 10px 0 16px;background:rgba(185,168,241,.6)}
+.ec-arrow::after{content:"";position:absolute;right:0;top:50%;width:11px;height:11px;border-top:2px solid rgba(185,168,241,.8);border-right:2px solid rgba(185,168,241,.8);transform:translate(1px,-50%) rotate(45deg)}
+.ec-card{position:relative;flex:1;min-width:0;padding:18px 84px 18px 28px;border-radius:999px;
+  background:linear-gradient(120deg,rgba(185,168,241,.14),rgba(185,168,241,.04));border:1px solid rgba(185,168,241,.22);backdrop-filter:blur(8px);
+  transition:border-color .4s,background .4s,transform .5s cubic-bezier(.16,1,.3,1)}
+.ec-item:hover .ec-card{border-color:rgba(185,168,241,.55);background:linear-gradient(120deg,rgba(185,168,241,.22),rgba(185,168,241,.06));transform:translateX(4px)}
+.ec-kicker{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--lilac)}
+.ec-card h3{margin:2px 0 4px;font-size:clamp(17px,1.4vw,21px);font-weight:600;letter-spacing:-.01em;color:#fff}
+.ec-card p{margin:0;font-size:13px;line-height:1.5;color:#b9b3c7}
+.ec-num{position:absolute;right:14px;top:50%;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;transform:translateY(-50%);
+  background:#675aa6;box-shadow:0 0 24px #675aa6aa;font-size:15px;font-weight:700;color:#fff}
+
+.ec-hub{position:relative;z-index:1;justify-self:center;display:grid;place-items:center;align-content:center;gap:14px;width:clamp(240px,26vw,380px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 42%,rgba(139,108,240,.32),rgba(103,90,166,.08) 60%,transparent 72%),rgba(255,255,255,.02);
+  border:1px solid rgba(185,168,241,.28);box-shadow:inset 0 0 60px rgba(103,90,166,.25),0 0 90px rgba(103,90,166,.25)}
+.ec-hub img{width:40%;height:auto;filter:drop-shadow(0 0 22px #8b6cf0aa)}
+.ec-hub-name{font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:#d7cff7}
+.ec-hub-ring{position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(185,168,241,.3);animation:mx-pulse 3.4s ease-out infinite}
+
+@media(max-width:900px){
+  .ec-stage{grid-template-columns:1fr;gap:44px}
+  .ec-lines{display:none}
+  .ec-hub{order:-1;width:200px}
+  .ec-list{gap:18px}
+  .ec-icon{width:56px}
+  .ec-arrow{width:16px;margin:0 6px 0 12px}
+  .ec-arrow::after{width:8px;height:8px}
+  .ec-card{padding:16px 18px;border-radius:22px}
+  .ec-num{position:static;transform:none;width:30px;height:30px;font-size:11px;margin-top:10px}
+}
+@media(max-width:520px){
+  .ec-item{display:grid;grid-template-columns:auto 1fr;gap:0 14px;align-items:start}
+  .ec-arrow{display:none}
+  .ec-icon{width:48px}
+}
+@media(prefers-reduced-motion:reduce){.ec-lines .flow,.ec-lines .halo,.ec-hub-ring{animation:none}}
 .eco3-media{display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:12px 22px;border-radius:100px;border:1px solid rgba(255,255,255,.3);color:#fff;font-size:13px;font-weight:600;transition:background .3s,border-color .3s,gap .3s}
 .eco3-media:hover{background:var(--purple);border-color:var(--purple);gap:14px}
 

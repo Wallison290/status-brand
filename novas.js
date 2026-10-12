@@ -207,3 +207,45 @@
   new ResizeObserver(queue).observe(mx);
   queue();
 })();
+
+// Seção 05 (ecossistema): um arco abraça o círculo do S e cada frente se liga a um ponto desse arco.
+(() => {
+  'use strict';
+  const stage = document.querySelector('.ec-stage');
+  if (!stage) return;
+  const svg = stage.querySelector('.ec-lines'), hub = stage.querySelector('.ec-hub');
+  const nums = [...stage.querySelectorAll('.ec-num')];
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs) => {
+    const n = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+    return svg.appendChild(n);
+  };
+  function draw() {
+    svg.innerHTML = '';
+    if (getComputedStyle(svg).display === 'none') return;
+    const box = stage.getBoundingClientRect(), h = hub.getBoundingClientRect();
+    const cx = h.left + h.width / 2 - box.left, cy = h.top + h.height / 2 - box.top;
+    const ys = nums.map(n => { const r = n.getBoundingClientRect(); return { x: r.right - box.left, y: r.top + r.height / 2 - box.top }; });
+    const span = Math.max(...ys.map(p => Math.abs(p.y - cy)));
+    const R = Math.max(h.width / 2 + 46, span + 36);              // o arco sempre passa por fora do círculo e alcança todas as frentes
+    const pt = a => [cx + R * Math.cos(a), cy + R * Math.sin(a)];
+    const angles = ys.map(p => Math.PI - Math.asin(Math.max(-1, Math.min(1, (p.y - cy) / R))));
+    const a0 = Math.max(...angles) + .38, a1 = Math.min(...angles) - .38;  // passa um pouco das pontas, como na referência
+    const [x0, y0] = pt(a0), [x1, y1] = pt(a1);
+    el('path', { class: 'arc', d: `M${x0} ${y0} A${R} ${R} 0 0 0 ${x1} ${y1}` });
+    [pt(a0), pt(a1)].forEach(([x, y]) => el('circle', { class: 'dot', cx: x, cy: y, r: 4 }));
+    ys.forEach((p, i) => {
+      const [dx, dy] = pt(angles[i]);
+      const d = `M${p.x} ${p.y} H${dx}`;
+      el('path', { class: 'link', d });
+      el('path', { class: 'flow', d });
+      el('circle', { class: 'halo', cx: dx, cy: dy, r: 10, style: `animation-delay:${i * .5}s` });
+      el('circle', { class: 'dot', cx: dx, cy: dy, r: 6 });
+    });
+  }
+  draw();
+  addEventListener('resize', draw);
+  if (document.fonts) document.fonts.ready.then(draw);
+  new ResizeObserver(draw).observe(stage);
+})();
