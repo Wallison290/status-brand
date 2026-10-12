@@ -77,3 +77,77 @@
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
   }
 })();
+
+// Seção 03: esteira de imagens. A cada passo, a imagem do card grande desce para o próximo card,
+// a do quinto some e uma nova entra no card grande. Ao fim da lista, a sequência recomeça.
+(() => {
+  'use strict';
+  const stage = document.querySelector('.lt-stage');
+  if (!stage) return;
+  const slots = [stage.querySelector('.lt-slot-hero'), ...stage.querySelectorAll('.lt-row .lt-slot')];
+  const cards = [...stage.querySelectorAll('.lt-card')];
+  const S = slots.length, N = cards.length;
+  if (N < S + 1) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let step = 0, timer = null, visible = false, hover = false;
+
+  const rectOf = el => {
+    const s = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
+    return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height };
+  };
+  const place = (card, r, scale = 1) => {
+    card.style.width = r.w + 'px';
+    card.style.height = r.h + 'px';
+    card.style.transform = `translate(${r.x}px, ${r.y}px) scale(${scale})`;
+  };
+  // card que ocupa o slot i no passo t
+  const at = (t, i) => ((t - i) % N + N) % N;
+
+  function layout(instant) {
+    const rects = slots.map(rectOf);
+    const shown = new Set(slots.map((_, i) => at(step, i)));
+    cards.forEach((c, k) => {
+      if (shown.has(k)) return;
+      c.classList.remove('is-in', 'is-hero');
+      c.setAttribute('tabindex', '-1'); c.setAttribute('aria-hidden', 'true');
+    });
+    for (let i = 0; i < S; i++) {
+      const c = cards[at(step, i)];
+      if (instant) c.classList.add('no-anim');
+      place(c, rects[i]);
+      c.classList.add('is-in');
+      c.classList.toggle('is-hero', i === 0);
+      c.removeAttribute('tabindex'); c.removeAttribute('aria-hidden');
+    }
+    if (instant) { stage.offsetWidth; cards.forEach(c => c.classList.remove('no-anim')); }
+  }
+
+  function advance() {
+    const rects = slots.map(rectOf);
+    const leaving = cards[at(step, S - 1)];
+    const entering = cards[at(step + 1, 0)];
+    // a que sai encolhe e some no lugar do quinto card
+    place(leaving, rects[S - 1], .86);
+    // a que entra nasce já no card grande, um pouco ampliada, e assenta
+    entering.classList.add('no-anim');
+    place(entering, rects[0], 1.06);
+    entering.offsetWidth;
+    entering.classList.remove('no-anim');
+    step++;
+    layout(false);
+  }
+
+  const run = () => {
+    clearInterval(timer); timer = null;
+    if (!reduced && visible && !hover && !document.hidden) timer = setInterval(advance, 3000);
+  };
+
+  layout(true);
+  new ResizeObserver(() => layout(true)).observe(stage);
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; run(); }, { threshold: .2 }).observe(stage);
+  stage.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hover = true; run(); } });
+  stage.addEventListener('pointerleave', () => { hover = false; run(); });
+  stage.addEventListener('focusin', () => { hover = true; run(); });
+  stage.addEventListener('focusout', () => { hover = false; run(); });
+  document.addEventListener('visibilitychange', run);
+})();
