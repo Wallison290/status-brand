@@ -1,10 +1,15 @@
 /* ===== 01 — Abertura: hero + Inovação formam um "slide" que fecha com borda arredondada ===== */
 .opening{position:relative;z-index:1;overflow:hidden;background:#07050c;border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px);
   box-shadow:0 30px 60px #0009;border-bottom:1px solid rgba(255,255,255,.08)}
-.opening .innovation{padding-bottom:clamp(56px,7vw,100px)}
 
 /* ===== 02 — Parceiros: seção branca que passa por baixo da borda arredondada da abertura ===== */
 .opening .marquee{border:0;border-top:1px solid rgba(255,255,255,.08);background:#0b0811}
+/* Letreiro infinito: dois grupos idênticos, o trilho anda exatamente a largura de um grupo */
+.marquee>.mq-track{display:flex;width:max-content;gap:0;animation:marquee 40s linear infinite}
+.mq-group{display:flex;align-items:center;flex:none;gap:38px;padding-right:38px}
+.marquee:hover>.mq-track{animation-play-state:paused}
+@media(max-width:760px){.mq-group{gap:22px;padding-right:22px}.marquee>.mq-track{animation-duration:28s}}
+@media(prefers-reduced-motion:reduce){.marquee>.mq-track{animation:none}}
 .pc{--r:clamp(28px,4vw,56px);position:relative;z-index:0;overflow:hidden;isolation:isolate;background:#f4f3f7;color:#15111d;
   margin-top:calc(var(--r) * -1);padding:calc(var(--r) + clamp(64px,8vw,120px)) var(--gutter) clamp(80px,9vw,130px)}
 .pc-inner{position:relative;max-width:1240px;margin:0 auto}
