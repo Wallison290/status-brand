@@ -171,7 +171,6 @@
 .mx-node[data-node="4"]{grid-area:n4;justify-self:center;margin-top:24px}
 .mx-icon{flex:0 0 38px;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(160deg,#8a7fc4,#675aa6 60%,#4b4180);box-shadow:0 0 24px #675aa699}
 .mx-icon svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.mx-num{font-size:10px;letter-spacing:.18em;color:#9e98ad}
 .mx-more p{margin:0;font-size:13px;line-height:1.55;color:#b9b3c7}
 .mx-more ul{list-style:none;margin:10px 0 0;padding:0;font-size:12px;line-height:1.6;color:#cfc8de}
 .mx-more li::before{content:"✳";margin-right:7px;color:#8a7fc4;font-size:9px}
@@ -217,9 +216,6 @@
 .ec-item:nth-child(2) .ec-card{--glow:120,96,230}
 .ec-item:nth-child(3) .ec-card{--glow:165,130,255}
 .ec-card:hover{transform:translateY(-4px);box-shadow:0 30px 60px -18px #000,0 0 50px -10px rgba(var(--glow),.55),inset 0 1px 0 rgba(255,255,255,.08)}
-.ec-num{position:absolute;right:22px;top:6px;z-index:-1;font-size:clamp(64px,6vw,96px);font-weight:700;line-height:1;letter-spacing:-.06em;
-  color:transparent;-webkit-text-stroke:1px rgba(185,168,241,.22);transition:-webkit-text-stroke-color .5s}
-.ec-card:hover .ec-num{-webkit-text-stroke-color:rgba(185,168,241,.5)}
 .ec-icon{flex:none;display:grid;place-items:center;width:54px;height:54px;border-radius:16px;
   background:linear-gradient(150deg,#9284d4,#675aa6 55%,#43397a);box-shadow:0 10px 26px -6px rgba(103,90,166,.9),inset 0 1px 0 rgba(255,255,255,.3)}
 .ec-icon svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
