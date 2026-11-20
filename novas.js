@@ -285,6 +285,12 @@
   const dialog = document.getElementById('cv-dialog');
   const video = dialog && dialog.querySelector('video');
   if (!dialog) return;
+  if (!document.querySelector('.cv-list')) {
+    // ao fechar por qualquer caminho (botão, Esc ou clique fora), o vídeo para e descarrega
+    dialog.addEventListener('close', () => { video.pause(); video.removeAttribute('src'); video.load(); });
+    dialog.querySelector('.cv-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+  }
   cards.forEach((c, i) => c.querySelector('.cs-media').addEventListener('click', () => {
     activate(i, false);
     video.src = c.dataset.video;
@@ -313,4 +319,22 @@
     requestAnimationFrame(tick);
   }), { threshold: .6 });
   els.forEach(el => io.observe(el));
+})();
+
+// 20/11: Portfólio, setas passam um projeto por vez e desligam nas pontas
+(() => {
+  'use strict';
+  const track = document.getElementById('pf-track');
+  if (!track) return;
+  const prev = document.querySelector('.pf-prev'), next = document.querySelector('.pf-next');
+  const step = () => { const c = track.querySelector('.pf-card'); return c ? c.getBoundingClientRect().width + 18 : track.clientWidth; };
+  const sync = () => {
+    prev.disabled = track.scrollLeft <= 4;
+    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+  };
+  prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
+  next.addEventListener('click', () => track.scrollBy({ left: step() }));
+  track.addEventListener('scroll', sync, { passive: true });
+  addEventListener('resize', sync);
+  sync();
 })();

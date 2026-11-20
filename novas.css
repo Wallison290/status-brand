@@ -466,3 +466,110 @@
   .nm-card{flex-basis:76%}
 }
 .cv-dialog.is-wide{width:min(960px,94vw)}
+
+/* ===== 20/11 fase 2: o bloco claro agora sobe direto sobre o Ecossistema ===== */
+.eco3{padding-bottom:calc(105px + clamp(28px,4vw,56px))}
+
+/* ===== 20/11: Serviços no modelo A, espaço de foto no topo de cada card ===== */
+.svc-card{padding-top:0}
+.svc-ph{position:relative;margin:0 -22px 40px;aspect-ratio:16/10;border-radius:24px 24px 0 0;overflow:visible;
+  background:radial-gradient(circle at 50% 45%,rgba(103,90,166,.38),transparent 62%),linear-gradient(180deg,#1b1823,#0d0b11)}
+.svc-ph>img:not(.svc-ph-s){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:24px 24px 0 0}
+.svc-ph-s{position:absolute;left:50%;top:44%;width:22%;height:auto;transform:translate(-50%,-50%);opacity:.3;filter:grayscale(1)}
+.svc-ph .svc-icon{position:absolute;left:22px;bottom:-26px;margin:0}
+@media(max-width:760px){.svc-ph{margin-bottom:36px}}
+
+/* ===== 20/11: Portfólio com mockups (notebook + celular) ===== */
+.pf-panel{position:relative;overflow:hidden;isolation:isolate;padding:clamp(28px,4vw,64px);border-radius:clamp(24px,3vw,40px);background:#08070b;color:#fff;
+  box-shadow:0 40px 80px -40px rgba(21,17,29,.7)}
+.pf-glow{position:absolute;z-index:-1;right:-10%;top:-30%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(166,120,255,.45),transparent 65%);filter:blur(30px)}
+.pf-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:clamp(28px,3vw,44px)}
+.light-zone .pf-head h2{font-size:clamp(40px,5vw,82px);line-height:.98;font-weight:300;letter-spacing:-.05em;color:#fff}
+.light-zone .pf-head h2 em{font-style:normal;color:#b48cff}
+.pf-side{max-width:300px}
+.light-zone .pf-side p{font-size:13px;line-height:1.6;color:#a9a2b9}
+.pf-nav{display:flex;gap:10px;margin-top:18px}
+.pf-nav button{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:12px;background:#f4f2f8;color:#14111b;font-size:18px;cursor:pointer;transition:transform .25s,opacity .25s}
+.pf-nav button:hover:not(:disabled){transform:scale(1.08)}
+.pf-nav button:disabled{opacity:.35;cursor:default}
+.pf-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;outline:none}
+.pf-track::-webkit-scrollbar{display:none}
+.pf-card{flex:0 0 min(620px,78%);scroll-snap-align:start;display:flex;flex-direction:column;border-radius:22px;overflow:hidden;
+  background:linear-gradient(160deg,#17151d,#0c0b10);border:1px solid rgba(255,255,255,.08)}
+.pf-stage{position:relative;display:grid;place-items:center;aspect-ratio:16/10;padding:8% 14% 10% 8%;
+  background:radial-gradient(ellipse at 40% 60%,rgba(103,90,166,.3),transparent 65%)}
+.pf-laptop{width:100%;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.pf-screen{aspect-ratio:16/10;padding:2.2% 2.2% 3%;border-radius:12px 12px 0 0;background:#1d1c22;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.pf-screen img,.pf-phone-screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;border-radius:4px}
+.pf-base{height:10px;margin:0 -7%;border-radius:0 0 12px 12px;background:linear-gradient(180deg,#3a3842,#1b1a20);box-shadow:0 18px 30px -10px #000}
+.pf-phone{position:absolute;right:6%;bottom:8%;width:19%;aspect-ratio:9/19;padding:2.5%;border-radius:18px;background:#1d1c22;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 20px 40px -12px #000;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.pf-phone-screen{width:100%;height:100%;overflow:hidden;border-radius:12px}
+.pf-phone-screen img{object-position:0 0;border-radius:0}
+.pf-card:hover .pf-laptop{transform:translateY(-6px)}
+.pf-card:hover .pf-phone{transform:translateY(-12px) rotate(-2deg)}
+.pf-info{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px 22px}
+.light-zone .pf-info h3{font-size:20px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.light-zone .pf-info p{margin-top:2px;font-size:12px;color:#9e98ad}
+.pf-link{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:100px;background:var(--purple);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:gap .3s,background .3s}
+.pf-link:hover{gap:12px;background:#7b6dc4}
+@media(max-width:760px){
+  .pf-head{display:block}
+  .pf-side{margin-top:16px}
+  .pf-panel{margin:0 -8px;padding:26px 18px}
+  .pf-card{flex-basis:88%}
+  .pf-info{padding:14px 16px 18px}
+}
+@media(prefers-reduced-motion:reduce){.pf-track{scroll-behavior:auto}}
+
+/* ===== 20/11: Feedback e Resultados ===== */
+.fb-title{text-align:center;font-size:clamp(36px,4.4vw,68px);line-height:1;font-weight:600;letter-spacing:-.05em}
+.fb-title em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+.fb-reels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:clamp(32px,4vw,56px);outline:none}
+.fb-reel{position:relative;aspect-ratio:9/15;border-radius:18px;overflow:hidden;background:#15111d;box-shadow:0 24px 50px -26px rgba(21,17,29,.6)}
+.fb-ph{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,rgba(103,90,166,.4),transparent 65%),linear-gradient(180deg,#1b1823,#0d0b11)}
+.fb-ph img{width:30%;height:auto;opacity:.28;filter:grayscale(1)}
+.fb-reel>video,.fb-reel>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fb-play{position:absolute;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35)}
+.fb-play svg{width:18px;height:18px;margin-left:2px;fill:#fff}
+.fb-metrics{position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-around;padding:8px 6px;border-radius:12px;background:#fff;box-shadow:0 8px 20px -10px #000}
+.fb-metrics svg{width:15px;height:15px;fill:none;stroke:#15111d;stroke-width:1.8;stroke-linejoin:round}
+.fb-proof{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.3fr);gap:clamp(32px,5vw,80px);align-items:center;margin-top:clamp(70px,8vw,120px)}
+.fb-text h3{margin:16px 0 14px;font-size:clamp(32px,3.4vw,54px);line-height:1;font-weight:600;letter-spacing:-.045em}
+.fb-text h3 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+.fb-text p{max-width:380px;font-size:15px;line-height:1.6}
+.fb-cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:13px 22px;border:0;border-radius:100px;background:#15111d;color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:gap .3s,background .3s}
+.fb-cta:hover{gap:14px;background:var(--purple)}
+@media(max-width:900px){
+  .fb-reels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -24px;padding:0 24px 6px}
+  .fb-reels::-webkit-scrollbar{display:none}
+  .fb-reel{flex:0 0 46%;scroll-snap-align:start}
+  .fb-proof{grid-template-columns:1fr}
+}
+@media(max-width:520px){.fb-reel{flex-basis:62%}}
+
+/* ===== 20/11: Instagram, mosaico de fotos com card de chamada ===== */
+.ig-title{max-width:900px;font-size:clamp(32px,3.8vw,58px);line-height:1.04;font-weight:600;letter-spacing:-.045em}
+.light-zone .ig-title{color:#8a8396}
+.light-zone .ig-title em{font-style:normal;color:#15111d}
+.ig-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:clamp(200px,20vw,300px);gap:14px;margin-top:clamp(32px,4vw,52px)}
+.ig-card{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(22px,2.4vw,32px);border-radius:20px;color:#fff;
+  background:radial-gradient(ellipse at 100% 0%,#b48cff66,transparent 60%),linear-gradient(150deg,#7b6dc4,#4b4180)}
+.ig-pill{display:flex;align-items:center;width:max-content;padding:4px;border-radius:100px;background:#15111d}
+.ig-pill i{width:46px;height:30px}
+.ig-pill b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#15111d;font-size:16px}
+.light-zone .ig-card p{padding-top:18px;border-top:1px solid rgba(255,255,255,.35);font-size:14px;line-height:1.55;font-weight:500;color:#fff}
+a.ig-card .ig-pill b{transition:transform .3s}
+a.ig-card:hover .ig-pill b{transform:translateX(4px)}
+.ig-ph{position:relative;display:grid;place-items:center;overflow:hidden;border-radius:20px;background:radial-gradient(circle at 50% 45%,rgba(103,90,166,.3),transparent 65%),#e9e6f0}
+.ig-ph img{width:16%;height:auto;opacity:.3;filter:grayscale(1)}
+.ig-grid>img{width:100%;height:100%;object-fit:cover;border-radius:20px}
+.ig-b{grid-row:span 2}
+.ig-c{grid-column:span 2}
+.ig-d{display:none}
+@media(max-width:760px){
+  .ig-grid{grid-template-columns:1fr 1fr;grid-auto-rows:180px;gap:10px}
+  .ig-card{grid-column:span 2}
+  .ig-b{grid-row:span 1}
+  .ig-d{display:grid}
+}
