@@ -731,14 +731,7 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 }
 .mx-section{padding-bottom:calc(120px + clamp(28px,4vw,56px))}
 
-/* ===== 20/11: Nossos Clientes no modo claro (painel branco e conversas no WhatsApp claro) ===== */
-.nc{background:#fff;color:#15111d;border:1px solid rgba(21,17,29,.07);box-shadow:0 40px 80px -44px rgba(21,17,29,.3)}
-.nc-gridbg{background:linear-gradient(rgba(21,17,29,.045) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,rgba(21,17,29,.045) 1px,transparent 1px) 0 0/56px 56px}
-.nc::after{background:radial-gradient(circle,rgba(117,70,255,.13),transparent 65%)}
-.nc-pill{border-color:rgba(21,17,29,.16);color:#6b6577}
-.light-zone .nc h3{color:#15111d}
-.light-zone .nc h3 em{color:var(--purple)}
-.light-zone .nc-text p{color:#5b5566}
+/* ===== 20/11: Nossos Clientes: painel continua escuro; só as conversas ficam no WhatsApp claro ===== */
 .wa{background:#efeae2;border-color:rgba(21,17,29,.08);box-shadow:0 30px 60px -26px rgba(21,17,29,.35)}
 .wa-head{background:#f0f2f5}
 .wa-head b{color:#111b21}
@@ -751,5 +744,3 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .wa-quote b{color:#028a6a}
 .wa-quote span{color:#667781}
 .wa-react{background:#fff;border-color:#efeae2}
-.nc-dot{background:rgba(21,17,29,.16)}
-.nc-dot.is-active{background:var(--purple)}
