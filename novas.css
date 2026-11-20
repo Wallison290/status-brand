@@ -664,3 +664,10 @@ em,.client-serif{font-family:inherit!important;font-style:normal!important;font-
 
 /* 20/11: no celular a lista de nomes (rolagem lateral) alargava a coluna dos cases e cortava o título */
 @media(max-width:900px){.cs{grid-template-columns:minmax(0,1fr)}.cs-side,.cs-track{min-width:0}}
+
+/* 20/11: logos de "Quem confia" todas brancas, numa faixa escura (o fundo da seção é branco) */
+.pc-mq{background:#0b0811;-webkit-mask:none;mask:none;padding:30px 0;border-radius:0}
+.pc-mq::before,.pc-mq::after{content:"";position:absolute;top:0;bottom:0;z-index:1;width:12%;pointer-events:none}
+.pc-mq::before{left:0;background:linear-gradient(90deg,#0b0811,transparent)}
+.pc-mq::after{right:0;background:linear-gradient(-90deg,#0b0811,transparent)}
+.pc-mq .pc-logos img{filter:brightness(0) invert(1);opacity:.92}
