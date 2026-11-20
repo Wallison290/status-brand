@@ -31,11 +31,11 @@
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { trigger: hx, start: 'top top', end: '+=480%', pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true },
+      scrollTrigger: { trigger: hx, start: 'top top', end: '+=300%', pin: true, scrub: .5, anticipatePin: 1, invalidateOnRefresh: true },
     });
 
     // fundo anda o filme todo
-    tl.to(q('.hx-s'), { scale: 1.35, rotation: 8, opacity: .25, duration: 10, ease: 'none' }, 0)
+    tl.to(q('.hx-s'), { scale: 1.12, rotation: 5, opacity: .22, duration: 10, ease: 'none' }, 0)
       .to(q('.hx-fitas-a'), { x: vw(-6), y: vh(8), duration: 10, ease: 'none' }, 0)
       .to(q('.hx-fitas-b'), { x: vw(6), y: vh(-8), duration: 10, ease: 'none' }, 0)
       .to(q('.hx-glow'), { opacity: .55, duration: 5, ease: 'none' }, 0)
