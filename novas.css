@@ -648,3 +648,7 @@ a.ig-card:hover .ig-pill b{transform:translateX(4px)}
 .cs-card.is-active .cs-media{box-shadow:0 24px 50px -26px rgba(21,17,29,.6)}
 .cs-card.is-active .cs-media video{filter:saturate(.85) brightness(.9)}
 .cs-media:hover video{filter:none}
+
+/* 20/11: o site usa só a Open Sans (e a Bullish no "Status Group"). Sem a serifada em itálico:
+   as palavras em destaque ficam na mesma fonte e peso do título, sem itálico, só com a cor de destaque. */
+em,.client-serif{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;font-size:1em!important;letter-spacing:inherit!important}
