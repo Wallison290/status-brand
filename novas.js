@@ -338,3 +338,58 @@
   addEventListener('resize', sync);
   sync();
 })();
+
+// 20/11: Nossos Clientes, carrossel de conversas (meio grande, vizinhos menores). Passa sozinho, pausa no mouse/foco/aba oculta.
+(() => {
+  'use strict';
+  const stage = document.querySelector('.nc-stage');
+  if (!stage) return;
+  const track = stage.querySelector('.nc-track');
+  const slides = [...track.querySelectorAll('.nc-slide')];
+  const dots = [...stage.querySelectorAll('.nc-dot')];
+  const N = slides.length;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = 0, timer = null, paused = false, visible = false;
+
+  const show = i => {
+    cur = (i + N) % N;
+    slides.forEach((s, k) => {
+      s.classList.toggle('is-active', k === cur);
+      s.classList.toggle('is-prev', k === (cur - 1 + N) % N);
+      s.classList.toggle('is-next', k === (cur + 1) % N);
+      s.setAttribute('aria-hidden', k === cur ? 'false' : 'true');
+    });
+    dots.forEach((d, k) => { d.classList.toggle('is-active', k === cur); d.setAttribute('aria-current', k === cur); });
+  };
+  const stop = () => { clearInterval(timer); timer = null; };
+  const play = () => { stop(); if (!reduced && !paused && visible && !document.hidden) timer = setInterval(() => show(cur + 1), 6000); };
+  const go = i => { show(i); play(); };
+
+  stage.querySelector('.nc-prev').addEventListener('click', () => go(cur - 1));
+  stage.querySelector('.nc-next').addEventListener('click', () => go(cur + 1));
+  dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
+  slides.forEach((s, k) => s.addEventListener('click', () => { if (k !== cur) go(k); }));
+  track.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') go(cur - 1);
+    if (e.key === 'ArrowRight') go(cur + 1);
+  });
+
+  // arrastar com o dedo
+  let x0 = null;
+  track.addEventListener('pointerdown', e => { x0 = e.clientX; });
+  track.addEventListener('pointerup', e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+  });
+
+  stage.addEventListener('mouseenter', () => { paused = true; stop(); });
+  stage.addEventListener('mouseleave', () => { paused = false; play(); });
+  stage.addEventListener('focusin', () => { paused = true; stop(); });
+  stage.addEventListener('focusout', () => { paused = false; play(); });
+  document.addEventListener('visibilitychange', play);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; play(); }, { threshold: .3 }).observe(stage);
+  } else { visible = true; play(); }
+  show(0);
+})();

@@ -580,3 +580,65 @@ a.ig-card:hover .ig-pill b{transform:translateX(4px)}
 .pf-ph{display:grid;place-items:center;width:100%;height:100%;border-radius:4px;background:radial-gradient(circle at 50% 45%,rgba(103,90,166,.35),transparent 70%),#121017}
 .pf-ph img{width:16%;height:auto;opacity:.3;filter:grayscale(1)}
 .pf-card{padding-bottom:6px}
+
+/* ===== 20/11: Nossos Clientes, painel escuro com conversas de WhatsApp em carrossel ===== */
+.nc{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(28px,4vw,64px);align-items:center;
+  margin-top:clamp(70px,8vw,120px);padding:clamp(32px,4.5vw,72px);border-radius:clamp(24px,3vw,40px);background:#07060b;color:#fff;box-shadow:0 40px 80px -40px rgba(21,17,29,.7)}
+.nc-gridbg{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/56px 56px;
+  -webkit-mask:radial-gradient(ellipse at 60% 50%,#000 20%,transparent 75%);mask:radial-gradient(ellipse at 60% 50%,#000 20%,transparent 75%)}
+.nc::after{content:"";position:absolute;z-index:-1;right:10%;top:20%;width:40%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(103,90,166,.35),transparent 65%);filter:blur(30px)}
+.nc-pill{display:inline-block;padding:4px 13px;border:1px solid rgba(255,255,255,.22);border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#cfc9da}
+.light-zone .nc h3{margin:18px 0 16px;font-size:clamp(34px,3.6vw,58px);line-height:1;font-weight:700;letter-spacing:-.05em;color:#fff}
+.light-zone .nc h3 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:#b9a8f1}
+.light-zone .nc-text p{max-width:400px;font-size:15px;line-height:1.6;color:#b9b3c7}
+.nc-cta{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:14px 24px;border:0;border-radius:100px;background:var(--purple);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  box-shadow:0 12px 40px -8px rgba(103,90,166,.8);transition:gap .3s,background .3s}
+.nc-cta:hover{gap:14px;background:#7b6dc4}
+
+.nc-stage{position:relative;padding-bottom:44px}
+.nc-track{position:relative;height:clamp(440px,36vw,500px);outline:none;touch-action:pan-y}
+.nc-slide{position:absolute;left:50%;top:50%;width:min(320px,78%);margin:0;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;
+  transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .5s,filter .5s}
+.nc-slide.is-active{transform:translate(-50%,-50%);opacity:1;pointer-events:auto;z-index:2}
+.nc-slide.is-prev{transform:translate(-118%,-50%) scale(.82);opacity:.35;filter:blur(1px);z-index:1}
+.nc-slide.is-next{transform:translate(18%,-50%) scale(.82);opacity:.35;filter:blur(1px);z-index:1}
+
+/* conversa no estilo WhatsApp (modo escuro) */
+.wa{display:flex;flex-direction:column;max-height:clamp(420px,34vw,480px);overflow:hidden;border-radius:22px;background:#0b141a;border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 30px 60px -20px #000}
+.wa-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#1f2c34}
+.wa-av{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--c);color:#0b141a;font-size:14px;font-weight:700}
+.wa-head b{display:block;font-size:14px;font-weight:600;color:#e9edef}
+.wa-head small{display:block;font-size:11px;color:#8696a0}
+.wa-body{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:16px 12px 18px;
+  background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.025) 0 2px,transparent 3px) 0 0/22px 22px,#0b141a}
+.light-zone .wa-msg{position:relative;max-width:92%;margin:0;padding:6px 9px 7px;border-radius:0 10px 10px 10px;background:#202c33;color:#e9edef;font-size:13.5px;line-height:1.4;
+  box-shadow:0 1px 1px rgba(0,0,0,.3)}
+.wa-msg+.wa-msg{border-radius:10px}
+.wa-name{display:block;margin-bottom:2px;font-size:12.5px;font-weight:600;color:var(--c)}
+.wa-quote{display:block;margin:2px 0 6px;padding:6px 8px;border-left:4px solid #06cf9c;border-radius:6px;background:rgba(0,0,0,.25);font-size:12px;line-height:1.35}
+.wa-quote b{display:block;color:#06cf9c;font-weight:600}
+.wa-quote span{color:#aebac1}
+.wa-msg time{float:right;margin:6px 0 -4px 10px;font-size:10.5px;color:#8696a0}
+.wa-msg time:empty{display:none}
+.wa-msg:has(.wa-react){margin-bottom:14px}
+.wa-react{position:absolute;left:8px;bottom:-14px;padding:1px 5px;border-radius:12px;background:#202c33;border:2px solid #0b141a;font-size:13px;line-height:1.3}
+
+.nc-arrow{position:absolute;top:calc(50% - 22px);z-index:3;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;border:0;border-radius:50%;
+  background:#fff;color:#14111b;font-size:24px;line-height:1;cursor:pointer;box-shadow:0 10px 30px -8px #000;transition:transform .25s,background .25s}
+.nc-arrow:hover{transform:scale(1.08);background:#b9a8f1}
+.nc-prev{left:0}
+.nc-next{right:0}
+.nc-dots{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:8px}
+.nc-dot{width:8px;height:8px;padding:0;border:0;border-radius:8px;background:rgba(255,255,255,.25);cursor:pointer;transition:width .4s,background .4s}
+.nc-dot.is-active{width:26px;background:#b9a8f1}
+@media(max-width:1000px){.nc{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .nc{margin-left:-8px;margin-right:-8px;padding:30px 18px}
+  .nc-track{height:470px}
+  .nc-slide{width:86%}
+  .nc-slide.is-prev{transform:translate(-142%,-50%) scale(.82)}
+  .nc-slide.is-next{transform:translate(42%,-50%) scale(.82)}
+  .nc-arrow{width:38px;height:38px;font-size:20px}
+}
