@@ -16,13 +16,13 @@
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { trigger: hx, start: 'top top', end: '+=280%', pin: true, scrub: .6, anticipatePin: 1, invalidateOnRefresh: true },
+      scrollTrigger: { trigger: hx, start: 'top top', end: '+=200%', pin: true, scrub: .5, anticipatePin: 1, invalidateOnRefresh: true },
     });
 
     // fundo andando devagar o tempo todo (o S 3D é o foco)
-    tl.to(q('.hx-s'), { scale: 1.12, rotation: 5, duration: 7, ease: 'none' }, 0)
-      .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 7, ease: 'none' }, 0)
-      .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 7, ease: 'none' }, 0)
+    tl.to(q('.hx-s'), { scale: 1.12, rotation: 5, duration: 5.4, ease: 'none' }, 0)
+      .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 5.4, ease: 'none' }, 0)
+      .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 5.4, ease: 'none' }, 0)
 
     // 1 → 2
       .to(q('.hx-1'), { y: vh(-12), scale: .9, autoAlpha: 0, duration: .8 }, .2)
@@ -34,11 +34,10 @@
     // 3: frase + os 3 nomes, um depois do outro
       .fromTo(q('.hx-3'), { autoAlpha: 0, y: vh(6), scale: .94 }, { autoAlpha: 1, y: 0, scale: 1, duration: .8, ease: 'power3.out' }, 2.5)
       .fromTo(gsap.utils.toArray('.hx-names > *', hx), { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out' }, 2.9)
-      .to(q('.hx-3'), { y: vh(-10), autoAlpha: 0, duration: .6 }, 4.3)
+      .to(q('.hx-3'), { y: vh(-10), autoAlpha: 0, duration: .5 }, 4)
 
     // 4: "Status Brand" + frase + botão, e a faixa de logos entra embaixo
-      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.7)
-      .to({}, { duration: .9 }, 6.1);
+      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.5);
 
     return () => { hx.classList.remove('is-pin'); };
   });
