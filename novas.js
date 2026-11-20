@@ -247,3 +247,70 @@
   if (document.fonts) document.fonts.ready.then(draw);
   new ResizeObserver(draw).observe(stage);
 })();
+
+// 20/11: Cases em vídeo. Os nomes escolhem o vídeo; os vídeos curtos tocam mudos só quando aparecem na tela;
+// tocar no vídeo abre a versão completa com som no mesmo modal dos cases.
+(() => {
+  'use strict';
+  const box = document.querySelector('.cs');
+  if (!box) return;
+  const names = [...box.querySelectorAll('.cs-name')];
+  const cards = [...box.querySelectorAll('.cs-card')];
+  const track = box.querySelector('.cs-track');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const activate = (i, scroll) => {
+    names.forEach((n, k) => { n.classList.toggle('is-active', k === i); n.setAttribute('aria-pressed', k === i); });
+    cards.forEach((c, k) => c.classList.toggle('is-active', k === i));
+    if (scroll) track.scrollTo({ left: cards[i].offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: reduced ? 'auto' : 'smooth' });
+  };
+  names.forEach((n, i) => {
+    n.addEventListener('click', () => activate(i, true));
+    n.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) activate(i, true); });
+  });
+  cards.forEach((c, i) => c.addEventListener('mouseenter', () => activate(i, false)));
+
+  // vídeo curto: só carrega e toca quando está visível
+  if (!reduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) {
+        if (!v.src) v.src = v.dataset.src;
+        v.play().catch(() => {});
+      } else v.pause();
+    }), { threshold: .35 });
+    cards.forEach(c => io.observe(c.querySelector('video')));
+  }
+
+  const dialog = document.getElementById('cv-dialog');
+  const video = dialog && dialog.querySelector('video');
+  if (!dialog) return;
+  cards.forEach((c, i) => c.querySelector('.cs-media').addEventListener('click', () => {
+    activate(i, false);
+    video.src = c.dataset.video;
+    video.poster = c.dataset.poster || '';
+    dialog.classList.toggle('is-wide', c.dataset.wide === '1');
+    dialog.showModal();
+    video.play().catch(() => {});
+  }));
+})();
+
+// 20/11: Números contam até o valor quando o painel aparece
+(() => {
+  'use strict';
+  const els = [...document.querySelectorAll('.nm [data-count]')];
+  if (!els.length || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  const fmt = el => n => (el.dataset.prefix || '') + n + (el.dataset.suffix || '');
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    io.unobserve(e.target);
+    const el = e.target, to = +el.dataset.count, f = fmt(el), t0 = performance.now(), dur = 1200;
+    const tick = now => {
+      const p = Math.min(1, (now - t0) / dur), ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = f(Math.max(1, Math.round(to * ease)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }), { threshold: .6 });
+  els.forEach(el => io.observe(el));
+})();
