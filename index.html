@@ -22,34 +22,68 @@
 <main id="conteudo">
 <section class="hx" id="inicio" aria-labelledby="hx-title">
   <div class="hx-stage">
-    <canvas class="hx-film" data-frames-d="240" data-frames-m="160" aria-hidden="true"></canvas>
-    <span class="hx-shade" aria-hidden="true"></span>
+    <div class="hx-bg" aria-hidden="true">
+      <span class="hx-glow"></span>
+      <img class="hx-s" src="assets/img/hero/hx-s.webp" alt="" width="1376" height="768" fetchpriority="high">
+      <img class="hx-fitas hx-fitas-a" src="assets/img/hero/hx-fitas.webp" alt="" width="690" height="680">
+      <img class="hx-fitas hx-fitas-b" src="assets/img/hero/hx-fitas.webp" alt="" width="690" height="680">
+    </div>
 
     <div class="hx-step hx-1">
       <span class="hx-eyebrow">Status Group</span>
-      <h1 id="hx-title" class="hx-title">Sua marca em <span class="hx-accent">outro status.</span></h1>
+      <h1 id="hx-title" class="hx-title">
+        <span class="hx-line"><span class="hx-w">Sua</span> <span class="hx-w">marca</span> <span class="hx-chip hx-w" aria-hidden="true"><img src="assets/img/simbolo-s.webp" alt="" width="640" height="857"></span> <span class="hx-w">em</span></span>
+        <span class="hx-line"><span class="hx-w">outro</span> <span class="hx-chip hx-chip-g hx-w" aria-hidden="true"><b class="ast"></b></span> <span class="hx-w hx-accent">status.</span></span>
+      </h1>
       <span class="hx-hint" aria-hidden="true"><i></i>Role para conhecer</span>
     </div>
 
-    <div class="hx-step hx-pilar hx-p1">
-      <span class="hx-pilar-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></span>
-      <span class="hx-pilar-tag">Status Brand <i>/</i> Serviços</span>
-      <p>Posicionamento, identidade, conteúdo e tráfego pago para a sua marca ser percebida à altura do que entrega.</p>
-    </div>
-    <div class="hx-step hx-pilar hx-p2">
-      <span class="hx-pilar-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
-      <span class="hx-pilar-tag">Status Media <i>/</i> Tecnologia</span>
-      <p>Sistemas personalizados, automações e IA para a sua operação acompanhar o crescimento.</p>
-    </div>
-    <div class="hx-step hx-pilar hx-p3">
-      <span class="hx-pilar-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5-10-5Z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg></span>
-      <span class="hx-pilar-tag">Status Academy <i>/</i> Educação</span>
-      <p>Conhecimento e prática para desenvolver habilidades e apoiar as decisões do seu negócio.</p>
+    <div class="hx-step hx-2">
+      <p class="hx-lead">A Status une <b>marca, tecnologia e educação</b> para levar o seu negócio ao próximo passo, do primeiro contato à fidelização.</p>
+      <p class="hx-tag"><span class="hx-chip hx-chip-g" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v5M12 15.5v5M3.5 12h5M15.5 12h5"/></svg></span>Ecossistema</p>
     </div>
 
-    <div class="hx-step hx-end">
-      <h2 class="hx-big">Três frentes. <span class="hx-accent">Um ecossistema.</span></h2>
-      <p class="hx-end-sub">Sua marca, sua operação e seu conhecimento evoluindo juntos.</p>
+    <div class="hx-step hx-3">
+      <h2 class="hx-big"><span>Três frentes.</span><span>Um <span class="hx-accent">ecossistema.</span></span></h2>
+    </div>
+
+    <ul class="hx-cards" aria-label="As três frentes da Status">
+      <li class="hx-card hx-card-1">
+        <span class="hx-card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></span>
+        <span class="hx-card-name"><b>Status Brand</b><small>Serviços</small></span>
+        <p>Posicionamento, identidade, conteúdo e tráfego pago para a sua marca ser percebida à altura do que entrega.</p>
+      </li>
+      <li class="hx-card hx-card-2">
+        <span class="hx-card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+        <span class="hx-card-name"><b>Status Media</b><small>Tecnologia</small></span>
+        <p>Sistemas personalizados, automações e IA para a sua operação acompanhar o crescimento.</p>
+      </li>
+      <li class="hx-card hx-card-3">
+        <span class="hx-card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5-10-5Z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg></span>
+        <span class="hx-card-name"><b>Status Academy</b><small>Educação</small></span>
+        <p>Conhecimento e prática para desenvolver habilidades e apoiar as decisões do seu negócio.</p>
+      </li>
+    </ul>
+
+    <div class="hx-panel">
+      <div class="hx-panel-text">
+        <span class="hx-panel-kicker">Status Media <i>/</i> Tecnologia</span>
+        <h2 id="hx-panel-title">O seu negócio está crescendo. <span>Sua operação acompanha?</span></h2>
+        <p>Sistemas personalizados e automações para conectar etapas e reduzir tarefas manuais.</p>
+      </div>
+      <div class="hx-phone" aria-hidden="true">
+        <div class="hx-phone-screen">
+          <div class="hx-app-top"><img src="assets/img/simbolo-s.webp" alt="" width="640" height="857"><span>Visão geral</span><i></i></div>
+          <div class="hx-app-row"><div class="hx-app-card"><small>Atendimentos</small><b class="hx-bar" style="--v:.78"></b></div><div class="hx-app-card"><small>Agenda</small><b class="hx-bar" style="--v:.56"></b></div></div>
+          <div class="hx-app-chart"><i style="--h:.35"></i><i style="--h:.5"></i><i style="--h:.42"></i><i style="--h:.68"></i><i style="--h:.6"></i><i style="--h:.86"></i><i style="--h:.74"></i></div>
+          <div class="hx-app-list"><span><em></em>Novo contato pelo site</span><span><em></em>Proposta enviada</span><span><em></em>Reunião confirmada</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hx-step hx-5">
+      <p class="hx-word" aria-hidden="true">Status Brand</p>
+      <p class="hx-word-sub">Sua marca, sua operação e seu conhecimento evoluindo juntos.</p>
       <button class="hx-cta" data-contact>Vamos conversar <span aria-hidden="true">→</span></button>
     </div>
   </div>
