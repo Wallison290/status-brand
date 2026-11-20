@@ -573,3 +573,10 @@ a.ig-card:hover .ig-pill b{transform:translateX(4px)}
   .ig-b{grid-row:span 1}
   .ig-d{display:grid}
 }
+
+/* 20/11: sem a seção de autoridade, o painel de números sobe direto sobre Parceiros */
+.pc{padding-bottom:calc(var(--r) + clamp(80px,9vw,130px))}
+/* Portfólio: espaço reservado até chegarem os projetos da Status */
+.pf-ph{display:grid;place-items:center;width:100%;height:100%;border-radius:4px;background:radial-gradient(circle at 50% 45%,rgba(103,90,166,.35),transparent 70%),#121017}
+.pf-ph img{width:16%;height:auto;opacity:.3;filter:grayscale(1)}
+.pf-card{padding-bottom:6px}
