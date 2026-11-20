@@ -671,3 +671,9 @@ em,.client-serif{font-family:inherit!important;font-style:normal!important;font-
 .pc-mq::before{left:0;background:linear-gradient(90deg,#0b0811,transparent)}
 .pc-mq::after{right:0;background:linear-gradient(-90deg,#0b0811,transparent)}
 .pc-mq .pc-logos img{filter:brightness(0) invert(1);opacity:.92}
+
+/* 20/11: a faixa depois do hero agora passa as logos dos clientes, todas brancas (no lugar das palavras) */
+.mq-logos{padding:26px 0}
+.mq-logos .mq-group{gap:clamp(48px,5vw,88px);padding-right:clamp(48px,5vw,88px)}
+.mq-logos img{display:block;width:auto;height:clamp(30px,3vw,46px);max-width:190px;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+@media(max-width:760px){.mq-logos{padding:18px 0}.mq-logos img{height:28px;max-width:130px}}
