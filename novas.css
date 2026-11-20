@@ -713,3 +713,43 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 }
 .nm-card.nm-light{background:#efebe4;border-color:transparent}
 .nm-light .nm-num{color:#15111d}
+
+/* ===== 20/11: Ecossistema com as 3 frentes: Academy à esquerda, Media à direita, Brand embaixo (seta) ===== */
+@media(min-width:901px){
+  .mx.mx-3{grid-template-areas:"n0 core n2" "n4 n4 n4";row-gap:0}
+  .mx-3 .mx-node{width:min(100%,360px);height:78px}
+  .mx-3 .mx-node[data-node="4"]{margin-top:72px}
+}
+.mx-3 .mx-head{height:76px}
+.mx-3 .mx-head h3 button{display:block}
+.mx-3 .mx-head h3 small{display:block;margin-top:2px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#b9a8f1}
+.mx-3 .mx-more>div{padding-left:68px}
+.mx-link{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;font-weight:700;color:#d9ccff;transition:gap .3s,color .3s}
+.mx-link:hover{gap:12px;color:#fff}
+@media(min-width:901px){
+  .mx-3 .mx-node[data-node="4"]::after{content:"";position:absolute;left:50%;top:-13px;width:11px;height:11px;border-right:2px solid #c9c2ef;border-bottom:2px solid #c9c2ef;transform:translateX(-50%) rotate(45deg)}
+}
+.mx-section{padding-bottom:calc(120px + clamp(28px,4vw,56px))}
+
+/* ===== 20/11: Nossos Clientes no modo claro (painel branco e conversas no WhatsApp claro) ===== */
+.nc{background:#fff;color:#15111d;border:1px solid rgba(21,17,29,.07);box-shadow:0 40px 80px -44px rgba(21,17,29,.3)}
+.nc-gridbg{background:linear-gradient(rgba(21,17,29,.045) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,rgba(21,17,29,.045) 1px,transparent 1px) 0 0/56px 56px}
+.nc::after{background:radial-gradient(circle,rgba(117,70,255,.13),transparent 65%)}
+.nc-pill{border-color:rgba(21,17,29,.16);color:#6b6577}
+.light-zone .nc h3{color:#15111d}
+.light-zone .nc h3 em{color:var(--purple)}
+.light-zone .nc-text p{color:#5b5566}
+.wa{background:#efeae2;border-color:rgba(21,17,29,.08);box-shadow:0 30px 60px -26px rgba(21,17,29,.35)}
+.wa-head{background:#f0f2f5}
+.wa-head b{color:#111b21}
+.wa-head small{color:#667781}
+.wa-body{background:radial-gradient(circle at 20% 10%,rgba(0,0,0,.035) 0 2px,transparent 3px) 0 0/22px 22px,#efeae2}
+.light-zone .wa-msg{background:#fff;color:#111b21;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+.wa-name{filter:brightness(.78) saturate(1.3)}
+.wa-msg time{color:#667781}
+.wa-quote{background:#f5f6f6;border-left-color:#06cf9c}
+.wa-quote b{color:#028a6a}
+.wa-quote span{color:#667781}
+.wa-react{background:#fff;border-color:#efeae2}
+.nc-dot{background:rgba(21,17,29,.16)}
+.nc-dot.is-active{background:var(--purple)}
