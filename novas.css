@@ -654,3 +654,10 @@ a.ig-card:hover .ig-pill b{transform:translateX(4px)}
 em,.client-serif{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;font-size:1em!important;letter-spacing:inherit!important}
 .wa-av{overflow:hidden}
 .wa-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* 20/11: logos de "Quem confia" soltas, sem os quadrados brancos, passando em esteira infinita */
+.pc-mq{padding:26px 0}
+.pc-mq .pc-logos{gap:clamp(48px,5.5vw,96px);padding-right:clamp(48px,5.5vw,96px);align-items:center}
+.pc-mq .pc-logos li,.pc-mq .pc-logos li:hover{width:clamp(150px,13vw,200px);height:clamp(52px,4.6vw,68px);aspect-ratio:auto;padding:0;background:none;box-shadow:none;border-radius:0;transform:none}
+.pc-mq .pc-logos img{width:100%;height:100%;object-fit:contain}
+@media(max-width:760px){.pc-mq .pc-logos li,.pc-mq .pc-logos li:hover{width:130px;height:46px;aspect-ratio:auto}}
