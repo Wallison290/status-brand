@@ -379,8 +379,29 @@ const autoRoll = (track, speed = 30) => {
   els.forEach(el => io.observe(el));
 })();
 
-// 20/11: esteiras automáticas dos cards de números, do portfólio e dos vídeos de resultados (no celular)
-autoRoll(document.querySelector('.nm-cards'), 26);
+// 20/11: carrossel de um cartão por vez, em loop infinito: desliza um cartão, o que saiu vai para o fim da fila.
+// Só anda quando os cartões não cabem todos na tela (no computador os 3 cartões de números ficam parados).
+function stepLoop(track, ms) {
+  if (!track || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let parado = false, visivel = false;
+  const gap = () => parseFloat(getComputedStyle(track).columnGap) || 0;
+  const passo = () => {
+    if (parado || !visivel || document.hidden || track.scrollWidth <= track.clientWidth + 2) return;
+    const first = track.firstElementChild, w = first.getBoundingClientRect().width + gap();
+    track.classList.add('is-rolling');
+    track.scrollTo({ left: track.scrollLeft + w, behavior: 'smooth' });
+    setTimeout(() => { track.appendChild(first); track.scrollLeft -= w; }, 750);
+  };
+  setInterval(passo, ms);
+  track.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') parado = true; });
+  track.addEventListener('pointerleave', () => { parado = false; });
+  track.addEventListener('touchstart', () => { parado = true; }, { passive: true });
+  track.addEventListener('touchend', () => setTimeout(() => { parado = false; }, 2500), { passive: true });
+  new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }, { threshold: .3 }).observe(track);
+}
+stepLoop(document.querySelector('.nm-cards'), 3200);
+
+// 20/11: esteiras automáticas do portfólio e dos vídeos de resultados (no celular)
 autoRoll(document.getElementById('pf-track'), 34);
 autoRoll(document.querySelector('.fb-reels'), 28);
 
