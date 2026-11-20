@@ -642,3 +642,9 @@ a.ig-card:hover .ig-pill b{transform:translateX(4px)}
   .nc-slide.is-next{transform:translate(42%,-50%) scale(.82)}
   .nc-arrow{width:38px;height:38px;font-size:20px}
 }
+
+/* 20/11: trilhos que andam sozinhos (autoRoll em novas.js): sem encaixe, para a esteira deslizar contínua */
+.is-rolling{scroll-snap-type:none!important;scroll-behavior:auto!important}
+.cs-card.is-active .cs-media{box-shadow:0 24px 50px -26px rgba(21,17,29,.6)}
+.cs-card.is-active .cs-media video{filter:saturate(.85) brightness(.9)}
+.cs-media:hover video{filter:none}

@@ -54,8 +54,8 @@
   }
   const pause = on => { paused = on; if (on) { clearTimeout(timer); cards.forEach(c => c.classList.remove('is-timing')); } else restart(); };
 
-  prev.addEventListener('click', () => show(active - 1));
-  next.addEventListener('click', () => show(active + 1));
+  if (prev) prev.addEventListener('click', () => show(active - 1));
+  if (next) next.addEventListener('click', () => show(active + 1));
   cards.forEach((c, k) => c.addEventListener('mouseenter', () => { if (!mobile.matches) show(k); }));
   track.addEventListener('mouseenter', () => pause(true));
   track.addEventListener('mouseleave', () => pause(false));

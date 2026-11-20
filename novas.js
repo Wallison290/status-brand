@@ -248,27 +248,85 @@
   new ResizeObserver(draw).observe(stage);
 })();
 
-// 20/11: Cases em vídeo. Os nomes escolhem o vídeo; os vídeos curtos tocam mudos só quando aparecem na tela;
-// tocar no vídeo abre a versão completa com som no mesmo modal dos cases.
+// 20/11: esteira automática. Duplica os itens do trilho e o faz andar devagar da direita para a esquerda, sem fim.
+// A pessoa ainda pode arrastar/rolar para os lados; o mouse em cima ou o toque pausam e depois ela volta a andar.
+const autoRoll = (track, speed = 30) => {
+  if (!track || matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+  if (track.scrollWidth <= track.clientWidth + 2) return null; // tudo cabe na tela: não precisa andar
+  const originals = [...track.children];
+  originals.forEach(el => {
+    const c = el.cloneNode(true);
+    c.setAttribute('aria-hidden', 'true');
+    c.classList.add('is-clone');
+    c.querySelectorAll('[id]').forEach(x => x.removeAttribute('id'));
+    c.querySelectorAll('[data-count]').forEach(x => x.removeAttribute('data-count'));
+    c.querySelectorAll('a,button,[tabindex]').forEach(x => x.setAttribute('tabindex', '-1'));
+    track.appendChild(c);
+  });
+  track.classList.add('is-rolling');
+  const period = () => track.children[originals.length].offsetLeft - track.children[0].offsetLeft;
+  let pos = track.scrollLeft, last = 0, holdUntil = 0, visible = false;
+  const hold = ms => { holdUntil = performance.now() + ms; };
+  const frame = t => {
+    requestAnimationFrame(frame);
+    const dt = last ? Math.min(t - last, 50) : 0; last = t;
+    if (!visible || document.hidden || t < holdUntil) return;
+    pos += speed * dt / 1000;
+    const p = period();
+    if (pos >= p) pos -= p;
+    track.scrollLeft = pos;
+  };
+  // rolagem feita pela pessoa: a esteira continua dali, e dá a volta nas pontas
+  track.addEventListener('scroll', () => {
+    if (Math.abs(track.scrollLeft - pos) < 2) return;
+    const p = period();
+    pos = track.scrollLeft;
+    if (pos >= p) { pos -= p; track.scrollLeft = pos; }
+    else if (pos <= 0) { pos += p; track.scrollLeft = pos; }
+  }, { passive: true });
+  track.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hold(1e9); });
+  track.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hold(500); });
+  track.addEventListener('touchstart', () => hold(1e9), { passive: true });
+  track.addEventListener('touchend', () => hold(2500), { passive: true });
+  track.addEventListener('wheel', () => hold(2500), { passive: true });
+  track.addEventListener('focusin', () => hold(1e9));
+  track.addEventListener('focusout', () => hold(500));
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: .1 }).observe(track);
+  requestAnimationFrame(frame);
+  return { hold, goTo: el => { pos = el.offsetLeft - track.children[0].offsetLeft; track.scrollLeft = pos; } };
+};
+
+// 20/11: Cases em vídeo. A esteira passa sozinha; o nome em destaque acompanha o vídeo que está na frente;
+// clicar no nome leva até o vídeo; tocar no vídeo abre a versão completa com som.
 (() => {
   'use strict';
   const box = document.querySelector('.cs');
   if (!box) return;
   const names = [...box.querySelectorAll('.cs-name')];
-  const cards = [...box.querySelectorAll('.cs-card')];
   const track = box.querySelector('.cs-track');
+  const roll = autoRoll(track, 32);
+  const cards = [...track.querySelectorAll('.cs-card')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const activate = (i, scroll) => {
-    names.forEach((n, k) => { n.classList.toggle('is-active', k === i); n.setAttribute('aria-pressed', k === i); });
-    cards.forEach((c, k) => c.classList.toggle('is-active', k === i));
-    if (scroll) track.scrollTo({ left: cards[i].offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: reduced ? 'auto' : 'smooth' });
+  const mark = i => names.forEach((n, k) => { n.classList.toggle('is-active', k === i); n.setAttribute('aria-pressed', k === i); });
+  // o vídeo mais à esquerda (inteiro na tela) define o nome em destaque
+  let ticking = false;
+  const sync = () => {
+    ticking = false;
+    const left = track.getBoundingClientRect().left;
+    let best = cards[0], d = Infinity;
+    cards.forEach(c => { const x = Math.abs(c.getBoundingClientRect().left - left - 8); if (x < d) { d = x; best = c; } });
+    mark(+best.dataset.i);
   };
-  names.forEach((n, i) => {
-    n.addEventListener('click', () => activate(i, true));
-    n.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) activate(i, true); });
-  });
-  cards.forEach((c, i) => c.addEventListener('mouseenter', () => activate(i, false)));
+  track.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+  mark(0);
+
+  names.forEach((n, i) => n.addEventListener('click', () => {
+    const target = cards.find(c => +c.dataset.i === i && !c.classList.contains('is-clone'));
+    if (roll) { roll.goTo(target); roll.hold(4000); }
+    else track.scrollTo({ left: target.offsetLeft - track.children[0].offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
+    mark(i);
+  }));
 
   // vídeo curto: só carrega e toca quando está visível
   if (!reduced && 'IntersectionObserver' in window) {
@@ -278,27 +336,27 @@
         if (!v.src) v.src = v.dataset.src;
         v.play().catch(() => {});
       } else v.pause();
-    }), { threshold: .35 });
+    }), { threshold: .2 });
     cards.forEach(c => io.observe(c.querySelector('video')));
   }
 
   const dialog = document.getElementById('cv-dialog');
-  const video = dialog && dialog.querySelector('video');
   if (!dialog) return;
-  if (!document.querySelector('.cv-list')) {
-    // ao fechar por qualquer caminho (botão, Esc ou clique fora), o vídeo para e descarrega
-    dialog.addEventListener('close', () => { video.pause(); video.removeAttribute('src'); video.load(); });
-    dialog.querySelector('.cv-close').addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
-  }
-  cards.forEach((c, i) => c.querySelector('.cs-media').addEventListener('click', () => {
-    activate(i, false);
+  const video = dialog.querySelector('video');
+  dialog.addEventListener('close', () => { video.pause(); video.removeAttribute('src'); video.load(); });
+  dialog.querySelector('.cv-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+  track.addEventListener('click', e => {
+    const c = e.target.closest('.cs-card');
+    if (!c || !e.target.closest('.cs-media')) return;
+    if (roll) roll.hold(1e9);
     video.src = c.dataset.video;
     video.poster = c.dataset.poster || '';
     dialog.classList.toggle('is-wide', c.dataset.wide === '1');
     dialog.showModal();
     video.play().catch(() => {});
-  }));
+  });
+  dialog.addEventListener('close', () => { if (roll) roll.hold(800); });
 })();
 
 // 20/11: Números contam até o valor quando o painel aparece
@@ -321,25 +379,13 @@
   els.forEach(el => io.observe(el));
 })();
 
-// 20/11: Portfólio, setas passam um projeto por vez e desligam nas pontas
-(() => {
-  'use strict';
-  const track = document.getElementById('pf-track');
-  if (!track) return;
-  const prev = document.querySelector('.pf-prev'), next = document.querySelector('.pf-next');
-  const step = () => { const c = track.querySelector('.pf-card'); return c ? c.getBoundingClientRect().width + 18 : track.clientWidth; };
-  const sync = () => {
-    prev.disabled = track.scrollLeft <= 4;
-    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-  };
-  prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
-  next.addEventListener('click', () => track.scrollBy({ left: step() }));
-  track.addEventListener('scroll', sync, { passive: true });
-  addEventListener('resize', sync);
-  sync();
-})();
+// 20/11: esteiras automáticas dos cards de números, do portfólio e dos vídeos de resultados (no celular)
+autoRoll(document.querySelector('.nm-cards'), 26);
+autoRoll(document.getElementById('pf-track'), 34);
+autoRoll(document.querySelector('.fb-reels'), 28);
 
-// 20/11: Nossos Clientes, carrossel de conversas (meio grande, vizinhos menores). Passa sozinho, pausa no mouse/foco/aba oculta.
+// 20/11: Nossos Clientes, carrossel de conversas (meio grande, vizinhos menores).
+// Troca sozinho a cada 5 s; dá para arrastar para os lados ou tocar nas bolinhas. Mouse em cima ou foco pausam.
 (() => {
   'use strict';
   const stage = document.querySelector('.nc-stage');
@@ -362,11 +408,9 @@
     dots.forEach((d, k) => { d.classList.toggle('is-active', k === cur); d.setAttribute('aria-current', k === cur); });
   };
   const stop = () => { clearInterval(timer); timer = null; };
-  const play = () => { stop(); if (!reduced && !paused && visible && !document.hidden) timer = setInterval(() => show(cur + 1), 6000); };
+  const play = () => { stop(); if (!reduced && !paused && visible && !document.hidden) timer = setInterval(() => show(cur + 1), 5000); };
   const go = i => { show(i); play(); };
 
-  stage.querySelector('.nc-prev').addEventListener('click', () => go(cur - 1));
-  stage.querySelector('.nc-next').addEventListener('click', () => go(cur + 1));
   dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
   slides.forEach((s, k) => s.addEventListener('click', () => { if (k !== cur) go(k); }));
   track.addEventListener('keydown', e => {
@@ -374,7 +418,7 @@
     if (e.key === 'ArrowRight') go(cur + 1);
   });
 
-  // arrastar com o dedo
+  // arrastar com o dedo ou o mouse
   let x0 = null;
   track.addEventListener('pointerdown', e => { x0 = e.clientX; });
   track.addEventListener('pointerup', e => {
