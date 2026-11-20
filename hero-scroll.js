@@ -1,67 +1,82 @@
-// Hero "filme na rolagem" (20/11/2026). No computador com animação ligada, a seção fica presa
-// e as etapas trocam conforme a rolagem: título → texto → "Três frentes" com os cartões voando em volta
-// → cartões lado a lado → "Status Brand" gigante. No celular ou sem animação, fica tudo empilhado (CSS).
+// Hero "filme na rolagem" (20/11/2026). O filme (4 vídeos do Veo emendados) virou uma sequência de quadros
+// em assets/hero/d (computador) e assets/hero/m (celular). A seção fica presa enquanto a rolagem avança o filme
+// quadro a quadro num <canvas>; os textos de cada pilar entram por cima na cena dele.
+// Com animação desligada no aparelho: fica o último quadro parado (CSS) e os textos empilhados.
 (() => {
   'use strict';
   const hx = document.querySelector('.hx');
   if (!hx || !window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
   const q = s => hx.querySelector(s);
-  const cards = gsap.utils.toArray('.hx-card', hx);
+  const canvas = q('.hx-film');
+  const ctx = canvas.getContext('2d');
   const mm = gsap.matchMedia();
 
-  mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+  mm.add({ desk: '(min-width: 768px)', motion: '(prefers-reduced-motion: no-preference)' }, c => {
+    if (!c.conditions.motion) return;
+    const kind = c.conditions.desk ? 'd' : 'm';
+    const N = +canvas.dataset[kind === 'd' ? 'framesD' : 'framesM'] || 0;
+    if (!N) return;
     hx.classList.add('is-pin');
-    const vw = v => () => innerWidth * v / 100, vh = v => () => innerHeight * v / 100;
-    // posições "em órbita" em volta do título (relativas à posição final de cada cartão na grade)
-    const orbit = [
-      { x: vw(-4), y: vh(-30), rotation: -8, scale: .86 },
-      { x: vw(30), y: vh(6), rotation: 7, scale: .86 },
-      { x: vw(-50), y: vh(26), rotation: -5, scale: .86 },
-    ];
-    const fora = [
-      { x: vw(-60), y: vh(-80), rotation: -25 },
-      { x: vw(70), y: vh(10), rotation: 25 },
-      { x: vw(-90), y: vh(80), rotation: -20 },
-    ];
 
-    gsap.set([q('.hx-2'), q('.hx-3'), q('.hx-cards'), q('.hx-5')], { autoAlpha: 0 });
-    gsap.set(q('.hx-cards'), { autoAlpha: 1 });
-    cards.forEach((c, i) => gsap.set(c, { ...fora[i], autoAlpha: 0 }));
+    const src = i => `assets/hero/${kind}/${String(i + 1).padStart(4, '0')}.webp`;
+    const imgs = new Array(N);
+    let cur = 0, alive = true;
+    const ok = im => im && im.complete && im.naturalWidth;
+    const load = i => {
+      if (imgs[i]) return imgs[i];
+      const im = new Image();
+      im.decoding = 'async';
+      im.onload = () => { if (alive && i === cur) draw(); };
+      im.src = src(i);
+      return (imgs[i] = im);
+    };
+    // desenha o quadro atual; se ainda não chegou, usa o mais próximo que já carregou
+    function draw() {
+      let im = imgs[cur];
+      if (!ok(im)) for (let d = 1; d < N; d++) { if (ok(imgs[cur - d])) { im = imgs[cur - d]; break; } if (ok(imgs[cur + d])) { im = imgs[cur + d]; break; } }
+      if (!ok(im)) return;
+      const cw = canvas.width, ch = canvas.height, r = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const w = im.naturalWidth * r, h = im.naturalHeight * r;
+      ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+    }
+    const size = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
+      draw();
+    };
+    // primeiro quadro na hora; o resto em lotes pequenos para não travar a página
+    load(0);
+    let next = 1;
+    const pump = () => { if (!alive) return; for (let k = 0; k < 8 && next < N; k++) load(next++); if (next < N) setTimeout(pump, 50); };
+    setTimeout(pump, 300);
 
+    const state = { f: 0 };
     const tl = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { trigger: hx, start: 'top top', end: '+=300%', pin: true, scrub: .5, anticipatePin: 1, invalidateOnRefresh: true },
+      defaults: { ease: 'power2.out' },
+      scrollTrigger: { trigger: hx, start: 'top top', end: kind === 'd' ? '+=350%' : '+=300%', pin: true, scrub: .4, anticipatePin: 1, invalidateOnRefresh: true },
     });
+    tl.to(state, { f: N - 1, duration: 10, ease: 'none', onUpdate: () => {
+      const i = Math.round(state.f);
+      if (i !== cur) { cur = i; load(i); draw(); }
+    } }, 0);
 
-    // fundo anda o filme todo
-    tl.to(q('.hx-s'), { scale: 1.12, rotation: 5, opacity: .22, duration: 10, ease: 'none' }, 0)
-      .to(q('.hx-fitas-a'), { x: vw(-6), y: vh(8), duration: 10, ease: 'none' }, 0)
-      .to(q('.hx-fitas-b'), { x: vw(6), y: vh(-8), duration: 10, ease: 'none' }, 0)
-      .to(q('.hx-glow'), { opacity: .55, duration: 5, ease: 'none' }, 0)
-      .to(q('.hx-glow'), { opacity: 1, duration: 5, ease: 'none' }, 5)
+    // textos: cada vídeo ocupa ~2,5 da linha do tempo; o pilar aparece quando a cena dele chega
+    const p1 = q('.hx-p1'), p2 = q('.hx-p2'), p3 = q('.hx-p3'), fim = q('.hx-end');
+    tl.to(q('.hx-1'), { autoAlpha: 0, y: -40, duration: .8, ease: 'power2.in' }, .3)
+      .fromTo(p1, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: .6 }, 1.8)
+      .to(p1, { autoAlpha: 0, y: -30, duration: .5, ease: 'power2.in' }, 3.6)
+      .fromTo(p2, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: .6 }, 4.3)
+      .to(p2, { autoAlpha: 0, y: -30, duration: .5, ease: 'power2.in' }, 6.1)
+      .fromTo(p3, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: .6 }, 6.8)
+      .to(p3, { autoAlpha: 0, y: -30, duration: .5, ease: 'power2.in' }, 8.5)
+      .fromTo(fim, { autoAlpha: 0, scale: .96 }, { autoAlpha: 1, scale: 1, duration: .7 }, 9.1)
+      .to({}, { duration: .5 }, 9.8);
 
-    // 1 → 2: título sobe e some; texto e "Ecossistema" entram dos lados
-      .to(q('.hx-1'), { y: vh(-14), scale: .9, autoAlpha: 0, duration: 1 }, .2)
-      .fromTo(q('.hx-lead'), { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1 }, .9)
-      .fromTo(q('.hx-tag'), { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 1 }, .9)
-      .set(q('.hx-2'), { autoAlpha: 1 }, .9)
-      .to(q('.hx-2'), { y: vh(-10), autoAlpha: 0, duration: .8 }, 2.6)
-
-    // 3: "Três frentes. Um ecossistema." com os cartões chegando em órbita
-      .fromTo(q('.hx-3'), { autoAlpha: 0, y: vh(8), scale: .94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1 }, 3.1);
-    cards.forEach((c, i) => tl.to(c, { ...orbit[i], autoAlpha: 1, duration: 1.3, ease: 'power3.out' }, 3.3 + i * .15));
-
-    // 4: a frase sai e os cartões se encaixam lado a lado
-    tl.to(q('.hx-3'), { autoAlpha: 0, scale: .9, duration: .8 }, 5.4);
-    cards.forEach((c, i) => tl.to(c, { x: 0, y: 0, rotation: 0, scale: 1, duration: 1.1, ease: 'power3.inOut' }, 5.4 + i * .08));
-
-    // 5: cartões sobem e a marca gigante aparece
-    tl.to(cards, { y: vh(-30), autoAlpha: 0, stagger: .06, duration: .9 }, 7.4)
-      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.12 }, { autoAlpha: 1, scale: 1, duration: 1.2, ease: 'power3.out' }, 7.9)
-      .to({}, { duration: .8 }, 9.1);
-
-    return () => hx.classList.remove('is-pin');
+    addEventListener('resize', size);
+    size();
+    return () => { alive = false; hx.classList.remove('is-pin'); removeEventListener('resize', size); };
   });
 
   addEventListener('load', () => ScrollTrigger.refresh());
