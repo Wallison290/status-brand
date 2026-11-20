@@ -130,5 +130,4 @@
 .hx-names i{width:6px;height:6px;border-radius:50%;background:#b49cff}
 .hx .hx-logos{border:0;background:transparent;margin:0 calc(var(--gutter) * -1)}
 .hx.is-pin .hx-logos{position:absolute;left:0;right:0;bottom:clamp(20px,4vh,44px);margin:0;visibility:hidden}
-.hx.is-pin .hx-5{padding-bottom:90px}
 @media(max-width:767px){.hx .hx-logos{margin:0 -20px}}

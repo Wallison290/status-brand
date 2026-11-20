@@ -1,6 +1,5 @@
 // Hero animado na rolagem (20/11/2026, no estilo da referência do Pinterest), versão curta:
 // título → texto + "Ecossistema" → "Três frentes. Um ecossistema." com os 3 nomes → "Status Brand" + frase + botão,
-// com a faixa de logos brancas entrando embaixo, no mesmo fundo do hero.
 // Computador: a seção fica presa durante as etapas. Celular: etapas empilhadas que entram ao aparecer na tela.
 (() => {
   'use strict';
@@ -13,7 +12,7 @@
 
   mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
     hx.classList.add('is-pin');
-    gsap.set([q('.hx-2'), q('.hx-3'), q('.hx-5'), q('.hx-logos')], { autoAlpha: 0 });
+    gsap.set([q('.hx-2'), q('.hx-3'), q('.hx-5')], { autoAlpha: 0 });
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
@@ -39,7 +38,6 @@
 
     // 4: "Status Brand" + frase + botão, e a faixa de logos entra embaixo
       .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.7)
-      .fromTo(q('.hx-logos'), { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: .7, ease: 'power3.out' }, 5.1)
       .to({}, { duration: .9 }, 6.1);
 
     return () => { hx.classList.remove('is-pin'); };
