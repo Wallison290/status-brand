@@ -652,3 +652,5 @@ a.ig-card:hover .ig-pill b{transform:translateX(4px)}
 /* 20/11: o site usa só a Open Sans (e a Bullish no "Status Group"). Sem a serifada em itálico:
    as palavras em destaque ficam na mesma fonte e peso do título, sem itálico, só com a cor de destaque. */
 em,.client-serif{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;font-size:1em!important;letter-spacing:inherit!important}
+.wa-av{overflow:hidden}
+.wa-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
