@@ -3,19 +3,19 @@
 /* ===== Hero animado na rolagem (20/11/2026, ref. Pinterest pin.it/7nojPjpe3)
    Celular ou animação desligada: as etapas ficam uma embaixo da outra.
    Computador (.hx.is-pin, hero-scroll.js): a seção fica presa e as etapas trocam conforme a rolagem. ===== */
-.hx{position:relative;z-index:2;background:#07050c;color:#fff;overflow:hidden}
+.hx{--r:clamp(28px,4vw,56px);position:relative;z-index:2;background:#07050c;color:#fff;overflow:hidden;border-radius:0 0 var(--r) var(--r);box-shadow:0 30px 60px #0009}
 .hx-stage{position:relative;min-height:100svh;padding:140px var(--gutter) 90px;display:flex;flex-direction:column;gap:80px;isolation:isolate}
 
 /* fundo */
 .hx-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .hx-glow{position:absolute;left:50%;bottom:-38%;width:130%;height:80%;transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(ellipse at 50% 50%,rgba(117,70,255,.5),rgba(80,40,190,.16) 45%,transparent 70%);filter:blur(20px)}
-.hx-s{position:absolute;left:50%;top:50%;width:min(1000px,105vw);height:auto;transform:translate(-50%,-50%);opacity:.38;
+.hx-s{position:absolute;left:50%;top:50%;width:min(1000px,105vw);height:auto;transform:translate(-50%,-50%);opacity:.5;
   -webkit-mask:radial-gradient(ellipse 48% 52% at 50% 50%,#000 30%,transparent 72%);mask:radial-gradient(ellipse 48% 52% at 50% 50%,#000 30%,transparent 72%)}
-.hx-fitas{position:absolute;width:min(520px,42vw);height:auto;opacity:.7;
+.hx-fitas{position:absolute;width:min(360px,26vw);height:auto;opacity:.38;
   -webkit-mask:radial-gradient(ellipse at 55% 45%,#000 28%,transparent 70%);mask:radial-gradient(ellipse at 55% 45%,#000 28%,transparent 70%)}
-.hx-fitas-a{left:-9%;bottom:-16%;transform:rotate(180deg)}
-.hx-fitas-b{right:-9%;top:-12%}
+.hx-fitas-a{left:-11%;bottom:-20%;transform:rotate(180deg)}
+.hx-fitas-b{right:-11%;top:-16%}
 
 .hx-step{display:flex;flex-direction:column}
 
@@ -124,3 +124,11 @@
   .hx-word{font-size:11.5vw}
   .hx-title{font-size:10.5vw}
 }
+
+/* 20/11 ajustes: nomes das 3 frentes embaixo da frase, faixa de logos no mesmo fundo do hero */
+.hx-names{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 16px;margin-top:26px;font-size:clamp(14px,1.25vw,18px);font-weight:600;letter-spacing:.02em;color:#d9d2ea}
+.hx-names i{width:6px;height:6px;border-radius:50%;background:#b49cff}
+.hx .hx-logos{border:0;background:transparent;margin:0 calc(var(--gutter) * -1)}
+.hx.is-pin .hx-logos{position:absolute;left:0;right:0;bottom:clamp(20px,4vh,44px);margin:0;visibility:hidden}
+.hx.is-pin .hx-5{padding-bottom:90px}
+@media(max-width:767px){.hx .hx-logos{margin:0 -20px}}
