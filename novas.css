@@ -1032,3 +1032,11 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 /* 21/11: a capa se dissolve em degradê até o preto dos Cases (como na referência que vai do azul ao branco), sem faixa roxa nem corte */
 .hx-stage::after{height:42%;background:linear-gradient(rgba(7,5,12,0),rgba(7,5,12,.55) 45%,#07050c)}
 .pc{background:#07050c}
+
+/* ===== 21/11: Resultados = prints reais dos insights (recortados até Visualizações) dentro de molduras de celular, todos do mesmo tamanho ===== */
+.fb-insights{align-items:end}
+.fb-insight{margin:0;padding:8px;border-radius:30px;background:#15111d;box-shadow:0 30px 60px -30px rgba(21,17,29,.6),inset 0 0 0 1px rgba(255,255,255,.08);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+.fb-insight img{display:block;width:100%;height:auto;aspect-ratio:600/800;object-fit:cover;object-position:50% 100%;border-radius:22px;background:#fff}
+.fb-insight:hover{transform:translateY(-8px);box-shadow:0 40px 70px -30px rgba(82,50,201,.55),inset 0 0 0 1px rgba(255,255,255,.08)}
+@media(max-width:900px){.fb-insights .fb-insight{flex:0 0 46%;scroll-snap-align:start}}
+@media(max-width:520px){.fb-insights .fb-insight{flex-basis:64%}}
