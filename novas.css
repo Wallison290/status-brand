@@ -1028,3 +1028,7 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .pt-card{break-inside:avoid;margin-bottom:clamp(18px,2.2vw,30px)}
 .pt-card img{aspect-ratio:auto}
 @media(max-width:700px){.pt-grid{columns:1}}
+
+/* 21/11: a capa se dissolve em degradê até o preto dos Cases (como na referência que vai do azul ao branco), sem faixa roxa nem corte */
+.hx-stage::after{height:42%;background:linear-gradient(rgba(7,5,12,0),rgba(7,5,12,.55) 45%,#07050c)}
+.pc{background:#07050c}
