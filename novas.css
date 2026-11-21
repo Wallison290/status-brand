@@ -841,3 +841,10 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 
 /* 21/11 teste: Cases sem o painel (só o fundo preto) */
 .pc .cs{padding:0;border:0;border-radius:0;background:none}
+
+/* 21/11: o fundo da capa continua nos Cases (mesmo tom escuro com o brilho roxo descendo), sem a borda arredondada entre eles */
+.hx{border-radius:0;box-shadow:none}
+.pc{background:linear-gradient(#180e34 0,#0d0920 360px,#07050c 720px)}
+/* a capa termina num roxo escuro uniforme (#180e34), o mesmo tom em que os Cases começam: sem emenda */
+.hx-stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20%;z-index:-1;pointer-events:none;background:linear-gradient(rgba(24,14,52,0),#180e34)}
+.rs{background:#07050c}
