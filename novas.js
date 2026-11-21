@@ -477,3 +477,18 @@ autoRoll(document.querySelector('.fb-reels'), 28);
     t.addEventListener('focusin', () => abre(t));
   });
 })();
+
+// 21/11: crachá dos Serviços inclina acompanhando o mouse (o balanço da fita é CSS)
+(() => {
+  'use strict';
+  const area = document.querySelector('.cr');
+  const card = area && area.querySelector('.cr-cartao');
+  if (!card || !matchMedia('(hover: hover) and (pointer: fine)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  area.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width / 2)) / r.width, y = (e.clientY - (r.top + r.height / 2)) / r.height;
+    card.style.setProperty('--ry', (x * 18).toFixed(1) + 'deg');
+    card.style.setProperty('--rx', (-y * 14).toFixed(1) + 'deg');
+  });
+  area.addEventListener('pointerleave', () => { card.style.setProperty('--ry', '0deg'); card.style.setProperty('--rx', '0deg'); });
+})();
