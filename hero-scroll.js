@@ -14,6 +14,16 @@
     hx.classList.add('is-pin');
     gsap.set([q('.hx-2'), q('.hx-3'), q('.hx-5')], { autoAlpha: 0 });
 
+    // construção do S: os traços começam escondidos (dash do tamanho do traço) e se desenham
+    const tracos = gsap.utils.toArray('.hx-tracos path', hx);
+    tracos.forEach(t => { const L = t.getTotalLength(); gsap.set(t, { strokeDasharray: L, strokeDashoffset: L, attr: { 'data-l': L } }); });
+    const guias = gsap.utils.toArray('.hx-guias > *', hx);
+    gsap.set(q('.hx-s'), { opacity: 0 });
+    gsap.set(q('.hx-build'), { xPercent: -50, yPercent: -50 });
+    // ao abrir a página: guias aparecem e o S fica uns 40% desenhado
+    gsap.fromTo(guias, { opacity: 0, scale: .9, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: 1.4, stagger: .08, ease: 'power3.out' });
+    gsap.to(tracos, { strokeDashoffset: (i, t) => +t.getAttribute('data-l') * .6, duration: 2.2, stagger: .12, ease: 'power2.out', delay: .3 });
+
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
       scrollTrigger: { trigger: hx, start: 'top top', end: '+=200%', pin: true, scrub: .5, anticipatePin: 1, invalidateOnRefresh: true },
@@ -23,6 +33,13 @@
     tl.to(q('.hx-s'), { scale: 1.12, rotation: 5, duration: 5.4, ease: 'none' }, 0)
       .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 5.4, ease: 'none' }, 0)
       .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 5.4, ease: 'none' }, 0)
+
+    // o S termina de ser desenhado, acende, e o S 3D aparece no lugar do traço
+      .to(tracos, { strokeDashoffset: 0, duration: 2, stagger: .06, ease: 'none' }, .1)
+      .to(guias, { opacity: 0, duration: .8 }, 2.2)
+      .to(tracos, { stroke: '#ffffff', duration: .4 }, 2.2)
+      .to(q('.hx-s'), { opacity: .5, duration: 1, ease: 'power2.out' }, 2.5)
+      .to(q('.hx-build'), { opacity: 0, scale: 1.04, duration: .9 }, 2.8)
 
     // 1 → 2
       .to(q('.hx-1'), { y: vh(-12), scale: .9, autoAlpha: 0, duration: .8 }, .2)

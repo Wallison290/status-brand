@@ -131,3 +131,10 @@
 .hx .hx-logos{border:0;background:transparent;margin:0 calc(var(--gutter) * -1)}
 .hx.is-pin .hx-logos{position:absolute;left:0;right:0;bottom:clamp(20px,4vh,44px);margin:0;visibility:hidden}
 @media(max-width:767px){.hx .hx-logos{margin:0 -20px}}
+
+/* 20/11: o S é "construído" na rolagem: linhas-guia + contorno do S oficial se desenhando, depois entra o S 3D */
+.hx-build{display:none;position:absolute;left:50%;top:50%;height:min(64vh,620px);width:auto;aspect-ratio:732/864;overflow:visible}
+.hx-guias{fill:none;stroke:rgba(185,168,241,.22);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.hx-guias .tr{stroke-dasharray:6 8}
+.hx-tracos path{fill:none;stroke:#b49cff;stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.hx.is-pin .hx-build{display:block}
