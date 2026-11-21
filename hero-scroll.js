@@ -14,15 +14,44 @@
     hx.classList.add('is-pin');
     gsap.set([q('.hx-2'), q('.hx-3'), q('.hx-5')], { autoAlpha: 0 });
 
-    // construção do S: os traços começam escondidos (dash do tamanho do traço) e se desenham
-    const tracos = gsap.utils.toArray('.hx-tracos path', hx);
-    tracos.forEach(t => { const L = t.getTotalLength(); gsap.set(t, { strokeDasharray: L, strokeDashoffset: L, attr: { 'data-l': L } }); });
-    const guias = gsap.utils.toArray('.hx-guias > *', hx);
-    gsap.set(q('.hx-s'), { opacity: 0 });
-    gsap.set(q('.hx-build'), { xPercent: -50, yPercent: -50 });
-    // ao abrir a página: guias aparecem e o S fica uns 40% desenhado
-    gsap.fromTo(guias, { opacity: 0, scale: .9, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: 1.4, stagger: .08, ease: 'power3.out' });
-    gsap.to(tracos, { strokeDashoffset: (i, t) => +t.getAttribute('data-l') * .6, duration: 2.2, stagger: .12, ease: 'power2.out', delay: .3 });
+    // o S sendo construído: quadros do vídeo do Flow (assets/hero/s) desenhados num canvas conforme a rolagem
+    const canvas = q('.hx-film'), ctx = canvas.getContext('2d');
+    const N = +canvas.dataset.frames || 0;
+    const src = i => `assets/hero/s/${String(i + 1).padStart(3, '0')}.webp`;
+    const imgs = [];
+    let cur = 0;
+    const ok = im => im && im.complete && im.naturalWidth;
+    const load = i => {
+      if (imgs[i]) return imgs[i];
+      const im = new Image();
+      im.decoding = 'async';
+      im.onload = () => { if (i === cur) draw(); };
+      im.src = src(i);
+      return (imgs[i] = im);
+    };
+    // desenha o quadro atual; se ainda não chegou, usa o mais próximo que já carregou
+    function draw() {
+      let im = imgs[cur];
+      if (!ok(im)) for (let d = 1; d < N; d++) { if (ok(imgs[cur - d])) { im = imgs[cur - d]; break; } if (ok(imgs[cur + d])) { im = imgs[cur + d]; break; } }
+      if (!ok(im)) return;
+      const cw = canvas.width, ch = canvas.height, r = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const w = im.naturalWidth * r, h = im.naturalHeight * r;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+    }
+    const size = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
+      draw();
+    };
+    load(0);
+    let next = 1;
+    const pump = () => { for (let k = 0; k < 10 && next < N; k++) load(next++); if (next < N) setTimeout(pump, 40); };
+    setTimeout(pump, 200);
+    addEventListener('resize', size);
+    size();
+    const film = { f: 0 };
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
@@ -30,16 +59,10 @@
     });
 
     // fundo andando devagar o tempo todo (o S 3D é o foco)
-    tl.to(q('.hx-s'), { scale: 1.12, rotation: 5, duration: 5.4, ease: 'none' }, 0)
+    tl.to(film, { f: N - 1, duration: 3.8, ease: 'none', onUpdate: () => { const i = Math.round(film.f); if (i !== cur) { cur = i; load(i); draw(); } } }, 0)
+      .to(canvas, { scale: 1.08, duration: 5.4, ease: 'none' }, 0)
       .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 5.4, ease: 'none' }, 0)
       .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 5.4, ease: 'none' }, 0)
-
-    // o S termina de ser desenhado, acende, e o S 3D aparece no lugar do traço
-      .to(tracos, { strokeDashoffset: 0, duration: 2, stagger: .06, ease: 'none' }, .1)
-      .to(guias, { opacity: 0, duration: .8 }, 2.2)
-      .to(tracos, { stroke: '#ffffff', duration: .4 }, 2.2)
-      .to(q('.hx-s'), { opacity: .5, duration: 1, ease: 'power2.out' }, 2.5)
-      .to(q('.hx-build'), { opacity: 0, scale: 1.04, duration: .9 }, 2.8)
 
     // 1 → 2
       .to(q('.hx-1'), { y: vh(-12), scale: .9, autoAlpha: 0, duration: .8 }, .2)
@@ -56,7 +79,7 @@
     // 4: "Status Brand" + frase + botão, e a faixa de logos entra embaixo
       .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.5);
 
-    return () => { hx.classList.remove('is-pin'); };
+    return () => { hx.classList.remove('is-pin'); removeEventListener('resize', size); };
   });
 
   // celular / telas menores: cada etapa entra quando aparece
