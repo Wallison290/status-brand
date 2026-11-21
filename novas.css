@@ -902,3 +902,7 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .sv-tab.is-open{background:radial-gradient(ellipse 85% 70% at 25% 112%,rgba(117,70,255,.7),transparent 70%),radial-gradient(ellipse 55% 45% at 100% 0%,rgba(185,168,241,.2),transparent 60%),linear-gradient(160deg,#120b24,#22145a);border-color:rgba(185,168,241,.35)}
 .sv-tab::after{display:none}
 .sv-ico{background:rgba(185,168,241,.12);border-color:rgba(185,168,241,.22)}
+
+/* 21/11: título e subtítulo dos Serviços centralizados (não há nada à direita) */
+.svc-intro{max-width:820px;margin:0 auto;text-align:center}
+.svc-intro>p{margin-left:auto;margin-right:auto;max-width:560px}
