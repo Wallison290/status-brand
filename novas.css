@@ -1040,3 +1040,21 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .fb-insight:hover{transform:translateY(-8px);box-shadow:0 40px 70px -30px rgba(82,50,201,.55),inset 0 0 0 1px rgba(255,255,255,.08)}
 @media(max-width:900px){.fb-insights .fb-insight{flex:0 0 46%;scroll-snap-align:start}}
 @media(max-width:520px){.fb-insights .fb-insight{flex-basis:64%}}
+
+/* ===== 21/11: Resultados sem moldura: cantos arredondados + sombra para dar profundidade, cartas em leque (ref. Aurelis "From information to insight") ===== */
+.fb-insight{padding:0;background:none;border-radius:20px;box-shadow:none}
+.fb-insight img{border-radius:20px;box-shadow:0 34px 60px -22px rgba(21,17,29,.5),0 12px 24px -12px rgba(82,50,201,.35)}
+.fb-insight:hover{box-shadow:none}
+@media(min-width:901px){
+  .fb-insights{display:flex;justify-content:center;align-items:flex-end;gap:0;padding:30px 0 20px}
+  .fb-insights .fb-insight{position:relative;flex:0 0 clamp(190px,17vw,250px);margin:0 -14px;transform-origin:50% 100%;
+    transform:translateY(var(--up,0px)) rotate(var(--rot,0deg)) translateY(var(--baixo,0px));transition:transform .6s cubic-bezier(.16,1,.3,1)}
+  .fb-insights .fb-insight:nth-child(1){--rot:-11deg;--baixo:34px;z-index:1}
+  .fb-insights .fb-insight:nth-child(2){--rot:-5deg;--baixo:10px;z-index:2}
+  .fb-insights .fb-insight:nth-child(3){--rot:0deg;--baixo:0px;z-index:3}
+  .fb-insights .fb-insight:nth-child(4){--rot:5deg;--baixo:10px;z-index:2}
+  .fb-insights .fb-insight:nth-child(5){--rot:11deg;--baixo:34px;z-index:1}
+  .fb-insights .fb-insight:hover{--up:-18px;z-index:4}
+}
+@media(min-width:901px){.fb-insights .fb-insight{margin:0 4px}.fb-insights .fb-insight:nth-child(1){--rot:-8deg;--baixo:28px}.fb-insights .fb-insight:nth-child(5){--rot:8deg;--baixo:28px}.fb-insights .fb-insight:nth-child(2){--rot:-4deg}.fb-insights .fb-insight:nth-child(4){--rot:4deg}}
+@media(min-width:901px){.fb-insights{overflow:visible}.fb-insights .fb-insight{flex:0 1 230px;min-width:0}}
