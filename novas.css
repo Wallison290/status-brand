@@ -1058,3 +1058,11 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 }
 @media(min-width:901px){.fb-insights .fb-insight{margin:0 4px}.fb-insights .fb-insight:nth-child(1){--rot:-8deg;--baixo:28px}.fb-insights .fb-insight:nth-child(5){--rot:8deg;--baixo:28px}.fb-insights .fb-insight:nth-child(2){--rot:-4deg}.fb-insights .fb-insight:nth-child(4){--rot:4deg}}
 @media(min-width:901px){.fb-insights{overflow:visible}.fb-insights .fb-insight{flex:0 1 230px;min-width:0}}
+
+/* 21/11: números do Nível de atuação em negrito */
+.rs-num strong{font-weight:800}
+/* 21/11: menos espaço entre o painel do Nível de atuação e o Ecossistema */
+.rs{padding-bottom:clamp(20px,2.4vw,36px)}
+.rs+.mx-section{padding-top:clamp(30px,3.5vw,56px)}
+/* 21/11: resultados = só o leque (sem cópia do carrossel no computador); margem branca por dentro para o arredondado não cortar o print */
+.fb-insight img{box-sizing:border-box;padding:10px 8px;background:#fff;object-fit:contain;aspect-ratio:auto;height:auto}

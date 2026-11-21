@@ -403,7 +403,7 @@ stepLoop(document.querySelector('.rs-fotos'), 2600);
 
 // 20/11: esteiras automáticas do portfólio e dos vídeos de resultados (no celular)
 autoRoll(document.getElementById('pf-track'), 34);
-autoRoll(document.querySelector('.fb-reels'), 28);
+if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.fb-reels'), 28); // no computador fica o leque parado
 
 // 20/11: Nossos Clientes, carrossel de conversas (meio grande, vizinhos menores).
 // Troca sozinho a cada 5 s; dá para arrastar para os lados ou tocar nas bolinhas. Mouse em cima ou foco pausam.
