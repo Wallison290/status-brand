@@ -458,3 +458,22 @@ autoRoll(document.querySelector('.fb-reels'), 28);
   } else { visible = true; play(); }
   show(0);
 })();
+
+// 21/11: Serviços em abas verticais. Passar o mouse (ou tocar) abre uma aba e fecha as outras; uma fica sempre aberta.
+(() => {
+  'use strict';
+  const tabs = [...document.querySelectorAll('.sv-tab')];
+  if (!tabs.length) return;
+  const abre = t => tabs.forEach(x => {
+    const on = x === t;
+    x.classList.toggle('is-open', on);
+    x.querySelector('.sv-head').setAttribute('aria-expanded', String(on));
+  });
+  const mouse = matchMedia('(hover: hover) and (pointer: fine)');
+  tabs.forEach(t => {
+    // só abre quando o mouse se mexe em cima da aba (se abrisse ao "entrar", a troca de largura das abas faria o mouse cair em outra e ficar trocando sozinho)
+    t.addEventListener('pointermove', e => { if (mouse.matches && e.pointerType === 'mouse' && (e.movementX || e.movementY) && !t.classList.contains('is-open')) abre(t); });
+    t.querySelector('.sv-head').addEventListener('click', () => abre(t));
+    t.addEventListener('focusin', () => abre(t));
+  });
+})();
