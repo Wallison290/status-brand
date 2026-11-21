@@ -1077,3 +1077,4 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
   .rs-fotos li:nth-child(1){transform-origin:left center}
   .rs-fotos li:nth-child(6){transform-origin:right center}
 }
+.fb-sub{max-width:none}
