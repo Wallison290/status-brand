@@ -838,3 +838,6 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
   .pc .cs-name{border-color:rgba(255,255,255,.18)}
   .pc .cs-name.is-active{background:#fff;color:#15111d;border-color:#fff}
 }
+
+/* 21/11 teste: Cases sem o painel (só o fundo preto) */
+.pc .cs{padding:0;border:0;border-radius:0;background:none}
