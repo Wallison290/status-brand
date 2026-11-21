@@ -45,21 +45,27 @@
       canvas.height = Math.round(canvas.clientHeight * dpr);
       draw();
     };
-    load(0);
-    let next = 1;
+    cur = N - 1;
+    load(N - 1);
+    let next = 0;
     const pump = () => { for (let k = 0; k < 10 && next < N; k++) load(next++); if (next < N) setTimeout(pump, 40); };
     setTimeout(pump, 200);
     addEventListener('resize', size);
     size();
-    const film = { f: 0 };
+    const film = { f: N - 1 };
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { trigger: hx, start: 'top top', end: '+=200%', pin: true, scrub: .5, anticipatePin: 1, invalidateOnRefresh: true },
+      scrollTrigger: { trigger: hx, start: 'top top', end: '+=150%', pin: true, scrub: .3, anticipatePin: 1, invalidateOnRefresh: true,
+        // cada gesto de rolagem leva para a próxima etapa
+        snap: { snapTo: 'labelsDirectional', inertia: false, duration: { min: .25, max: .6 }, delay: .08, ease: 'power1.inOut' } },
     });
 
     // fundo andando devagar o tempo todo (o S 3D é o foco)
-    tl.to(film, { f: N - 1, duration: 3.8, ease: 'none', onUpdate: () => { const i = Math.round(film.f); if (i !== cur) { cur = i; load(i); draw(); } } }, 0)
+    const mostra = () => { const i = Math.round(film.f); if (i !== cur) { cur = i; load(i); draw(); } };
+    tl.addLabel('inicio', 0)
+      .to(film, { f: Math.round(N * .3), duration: 1.7, ease: 'power1.inOut', onUpdate: mostra }, 0)
+      .to(film, { f: N - 1, duration: 2, ease: 'power1.inOut', onUpdate: mostra }, 1.7)
       .to(canvas, { scale: 1.08, duration: 5.4, ease: 'none' }, 0)
       .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 5.4, ease: 'none' }, 0)
       .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 5.4, ease: 'none' }, 0)
@@ -69,15 +75,18 @@
       .set(q('.hx-2'), { autoAlpha: 1 }, .8)
       .fromTo(q('.hx-lead'), { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: .8, ease: 'power3.out' }, .8)
       .fromTo(q('.hx-tag'), { x: 70, opacity: 0 }, { x: 0, opacity: 1, duration: .8, ease: 'power3.out' }, .9)
+      .addLabel('texto', 1.7)
       .to(q('.hx-2'), { y: vh(-10), autoAlpha: 0, duration: .6 }, 2.1)
 
     // 3: frase + os 3 nomes, um depois do outro
       .fromTo(q('.hx-3'), { autoAlpha: 0, y: vh(6), scale: .94 }, { autoAlpha: 1, y: 0, scale: 1, duration: .8, ease: 'power3.out' }, 2.5)
       .fromTo(gsap.utils.toArray('.hx-names > *', hx), { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out' }, 2.9)
+      .addLabel('frentes', 3.7)
       .to(q('.hx-3'), { y: vh(-10), autoAlpha: 0, duration: .5 }, 4)
 
     // 4: "Status Brand" + frase + botão, e a faixa de logos entra embaixo
-      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.5);
+      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.5)
+      .addLabel('fim', 5.4);
 
     return () => { hx.classList.remove('is-pin'); removeEventListener('resize', size); };
   });
