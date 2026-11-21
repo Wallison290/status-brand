@@ -362,7 +362,7 @@ const autoRoll = (track, speed = 30) => {
 // 20/11: Números contam até o valor quando o painel aparece
 (() => {
   'use strict';
-  const els = [...document.querySelectorAll('.nm [data-count]')];
+  const els = [...document.querySelectorAll('.rs [data-count]')];
   if (!els.length || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
   const fmt = el => n => (el.dataset.prefix || '') + n + (el.dataset.suffix || '');
   const io = new IntersectionObserver(entries => entries.forEach(e => {
@@ -399,7 +399,7 @@ function stepLoop(track, ms) {
   track.addEventListener('touchend', () => setTimeout(() => { parado = false; }, 2500), { passive: true });
   new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }, { threshold: .3 }).observe(track);
 }
-stepLoop(document.querySelector('.nm-cards'), 3200);
+stepLoop(document.querySelector('.rs-fotos'), 2600);
 
 // 20/11: esteiras automáticas do portfólio e dos vídeos de resultados (no celular)
 autoRoll(document.getElementById('pf-track'), 34);
