@@ -891,3 +891,14 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
   .sv-cta{right:20px;bottom:20px}
 }
 @media(prefers-reduced-motion:reduce){.sv-tab,.sv-body{transition:none}}
+
+/* 21/11: menos espaço entre o Ecossistema (escuro) e os Serviços (claro) */
+.mx-section{padding-bottom:calc(40px + clamp(28px,4vw,56px))}
+.light-zone>.solutions{padding-top:clamp(28px,3vw,44px)}
+.light-zone>.solutions .section-kicker{margin-bottom:40px}
+
+/* 21/11: abas dos Serviços com o roxo da capa (brilho violeta subindo de baixo), não mais preto acinzentado */
+.sv-tab{background:radial-gradient(ellipse 140% 55% at 50% 108%,rgba(117,70,255,.6),transparent 70%),linear-gradient(180deg,#110b20,#1b1236);border-color:rgba(185,168,241,.16)}
+.sv-tab.is-open{background:radial-gradient(ellipse 85% 70% at 25% 112%,rgba(117,70,255,.7),transparent 70%),radial-gradient(ellipse 55% 45% at 100% 0%,rgba(185,168,241,.2),transparent 60%),linear-gradient(160deg,#120b24,#22145a);border-color:rgba(185,168,241,.35)}
+.sv-tab::after{display:none}
+.sv-ico{background:rgba(185,168,241,.12);border-color:rgba(185,168,241,.22)}
