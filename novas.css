@@ -819,3 +819,22 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
   .rs{padding-left:16px;padding-right:16px}
   .rs-dados{grid-template-columns:1fr 1fr;margin-top:-40px}
 }
+
+/* ===== 21/11: Cases no mesmo fundo escuro da capa e do Nível de atuação (seção preta + painel com toque roxo) ===== */
+.pc{background:var(--bg);color:#fff;padding-bottom:clamp(30px,4vw,56px)}
+.pc+.rs{margin-top:0;border-radius:0;box-shadow:none;border-top:0;padding-top:clamp(10px,2vw,30px)}
+.pc .cs{padding:clamp(26px,3.6vw,56px);border-radius:clamp(22px,2.4vw,34px);border:1px solid rgba(185,168,241,.18);
+  background:radial-gradient(ellipse 60% 70% at 85% 15%,rgba(117,70,255,.2),transparent 60%),radial-gradient(ellipse 50% 60% at 5% 100%,rgba(117,70,255,.12),transparent 60%),linear-gradient(160deg,#130e22,#0a0812)}
+.pc .cs-side h3{color:#fff}
+.pc .cs-side h3 em{color:#b49cff}
+.pc .cs-name{color:#8f88a0}
+.pc .cs-name:hover,.pc .cs-name.is-active{color:#fff}
+.pc .cs-name:focus-visible{outline-color:#b49cff}
+.pc .cs-hint{color:#a9a2b9}
+.pc .cs-meta h4{color:#fff}
+.pc .cs-tag{border-color:rgba(255,255,255,.2);color:#cfc9da}
+.pc .cs-media{box-shadow:0 24px 50px -24px #000}
+@media(max-width:900px){
+  .pc .cs-name{border-color:rgba(255,255,255,.18)}
+  .pc .cs-name.is-active{background:#fff;color:#15111d;border-color:#fff}
+}
