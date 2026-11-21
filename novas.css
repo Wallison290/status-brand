@@ -1022,3 +1022,9 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
   .rs-fotos li:hover img{transform:none}
 }
 .pt-card img{height:auto}
+
+/* 21/11: Portfólio em 2 colunas, peças grandes; altura natural de cada imagem (alvenaria) */
+.pt-grid{display:block;columns:2;column-gap:clamp(14px,1.8vw,26px)}
+.pt-card{break-inside:avoid;margin-bottom:clamp(18px,2.2vw,30px)}
+.pt-card img{aspect-ratio:auto}
+@media(max-width:700px){.pt-grid{columns:1}}
