@@ -492,3 +492,20 @@ autoRoll(document.querySelector('.fb-reels'), 28);
   });
   area.addEventListener('pointerleave', () => { card.style.setProperty('--ry', '0deg'); card.style.setProperty('--rx', '0deg'); });
 })();
+
+// 21/11: Portfólio, as abas filtram os cards (Todos, Redes sociais, Identidade visual, Sites e páginas)
+(() => {
+  'use strict';
+  const tabs = [...document.querySelectorAll('.pt-tabs button')];
+  const cards = [...document.querySelectorAll('.pt-card')];
+  if (!tabs.length) return;
+  tabs.forEach(b => b.addEventListener('click', () => {
+    tabs.forEach(x => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+    const f = b.dataset.f;
+    cards.forEach(c => {
+      const mostra = f === 'todos' || c.dataset.cat === f;
+      c.hidden = !mostra;
+      if (mostra) { c.style.animation = 'none'; void c.offsetWidth; c.style.animation = ''; }
+    });
+  }));
+})();
