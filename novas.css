@@ -906,3 +906,12 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 /* 21/11: título e subtítulo dos Serviços centralizados (não há nada à direita) */
 .svc-intro{max-width:820px;margin:0 auto;text-align:center}
 .svc-intro>p{margin-left:auto;margin-right:auto;max-width:560px}
+
+/* 21/11: Serviços com imagem: texto à esquerda, crachá/celular da marca à direita (imagem do Flow no mesmo fundo claro) */
+.svc{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,3vw,48px);align-items:center}
+.svc-intro{max-width:560px;margin:0;text-align:left}
+.svc-intro>p{margin-left:0;margin-right:0}
+.svc-arte{position:relative}
+.svc-arte img{display:block;width:100%;height:auto;
+  -webkit-mask:radial-gradient(ellipse 62% 66% at 55% 50%,#000 55%,transparent 82%);mask:radial-gradient(ellipse 62% 66% at 55% 50%,#000 55%,transparent 82%)}
+@media(max-width:900px){.svc{grid-template-columns:1fr}.svc-arte{margin:-10px -10px 0}}
