@@ -12,7 +12,7 @@
 
   mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
     hx.classList.add('is-pin');
-    gsap.set([q('.hx-2'), q('.hx-3'), q('.hx-5')], { autoAlpha: 0 });
+    gsap.set([q('.hx-3'), q('.hx-5')], { autoAlpha: 0 });
 
     // o S sendo construído: quadros do vídeo do Flow (assets/hero/s) desenhados num canvas conforme a rolagem
     const canvas = q('.hx-film'), ctx = canvas.getContext('2d');
@@ -56,7 +56,7 @@
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { trigger: hx, start: 'top top', end: '+=150%', pin: true, scrub: .3, anticipatePin: 1, invalidateOnRefresh: true,
+      scrollTrigger: { trigger: hx, start: 'top top', end: '+=110%', pin: true, scrub: .3, anticipatePin: 1, invalidateOnRefresh: true,
         // cada gesto de rolagem leva para a próxima etapa
         snap: { snapTo: 'labelsDirectional', inertia: false, duration: { min: .25, max: .6 }, delay: .08, ease: 'power1.inOut' } },
     });
@@ -64,36 +64,27 @@
     // fundo andando devagar o tempo todo (o S 3D é o foco)
     const mostra = () => { const i = Math.round(film.f); if (i !== cur) { cur = i; load(i); draw(); } };
     tl.addLabel('inicio', 0)
-      .to(film, { f: Math.round(N * .3), duration: 1.7, ease: 'power1.inOut', onUpdate: mostra }, 0)
-      .to(film, { f: N - 1, duration: 2, ease: 'power1.inOut', onUpdate: mostra }, 1.7)
-      .to(canvas, { scale: 1.08, duration: 5.4, ease: 'none' }, 0)
-      .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 5.4, ease: 'none' }, 0)
-      .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 5.4, ease: 'none' }, 0)
+      .to(film, { f: Math.round(N * .3), duration: 1.9, ease: 'power1.inOut', onUpdate: mostra }, 0)
+      .to(film, { f: N - 1, duration: 1.7, ease: 'power1.inOut', onUpdate: mostra }, 1.9)
+      .to(canvas, { scale: 1.08, duration: 3.6, ease: 'none' }, 0)
+      .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 3.6, ease: 'none' }, 0)
+      .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 3.6, ease: 'none' }, 0)
 
-    // 1 → 2
+    // 22/11: sem a etapa do texto + "Ecossistema" (ele quer mais fluido): título → três frentes → Status Brand
       .to(q('.hx-1'), { y: vh(-12), scale: .9, autoAlpha: 0, duration: .8 }, .2)
-      .set(q('.hx-2'), { autoAlpha: 1 }, .8)
-      .fromTo(q('.hx-lead'), { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: .8, ease: 'power3.out' }, .8)
-      .fromTo(q('.hx-tag'), { x: 70, opacity: 0 }, { x: 0, opacity: 1, duration: .8, ease: 'power3.out' }, .9)
-      .addLabel('texto', 1.7)
-      .to(q('.hx-2'), { y: vh(-10), autoAlpha: 0, duration: .6 }, 2.1)
-
-    // 3: frase + os 3 nomes, um depois do outro
-      .fromTo(q('.hx-3'), { autoAlpha: 0, y: vh(6), scale: .94 }, { autoAlpha: 1, y: 0, scale: 1, duration: .8, ease: 'power3.out' }, 2.5)
-      .fromTo(gsap.utils.toArray('.hx-names > *', hx), { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out' }, 2.9)
-      .addLabel('frentes', 3.7)
-      .to(q('.hx-3'), { y: vh(-10), autoAlpha: 0, duration: .5 }, 4)
-
-    // 4: "Status Brand" + frase + botão, e a faixa de logos entra embaixo
-      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 4.5)
-      .addLabel('fim', 5.4);
+      .fromTo(q('.hx-3'), { autoAlpha: 0, y: vh(6), scale: .94 }, { autoAlpha: 1, y: 0, scale: 1, duration: .8, ease: 'power3.out' }, .8)
+      .fromTo(gsap.utils.toArray('.hx-names > *', hx), { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out' }, 1.1)
+      .addLabel('frentes', 1.9)
+      .to(q('.hx-3'), { y: vh(-10), autoAlpha: 0, duration: .5 }, 2.2)
+      .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 2.7)
+      .addLabel('fim', 3.6);
 
     return () => { hx.classList.remove('is-pin'); removeEventListener('resize', size); };
   });
 
   // celular / telas menores: cada etapa entra quando aparece
   mm.add('(max-width: 899px) and (prefers-reduced-motion: no-preference)', () => {
-    [q('.hx-2'), q('.hx-3'), q('.hx-5')].forEach(el => gsap.from(el, {
+    [q('.hx-3'), q('.hx-5')].forEach(el => gsap.from(el, {
       y: 50, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' },
     }));
   });
