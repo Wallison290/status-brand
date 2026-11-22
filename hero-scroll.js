@@ -45,14 +45,14 @@
       canvas.height = Math.round(canvas.clientHeight * dpr);
       draw();
     };
-    cur = N - 1;
-    load(N - 1);
+    cur = 0;
+    load(0);
     let next = 0;
     const pump = () => { for (let k = 0; k < 10 && next < N; k++) load(next++); if (next < N) setTimeout(pump, 40); };
     setTimeout(pump, 200);
     addEventListener('resize', size);
     size();
-    const film = { f: N - 1 };
+    const film = { f: 0 }; // 22/11: começa no início do vídeo (só a névoa) e o S se forma com a rolagem
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
@@ -65,8 +65,7 @@
     // fundo andando devagar o tempo todo (o S 3D é o foco)
     const mostra = () => { const i = Math.round(film.f); if (i !== cur) { cur = i; load(i); draw(); } };
     tl.addLabel('inicio', 0)
-      .to(film, { f: Math.round(N * .3), duration: 1.9, ease: 'power1.inOut', onUpdate: mostra }, 0)
-      .to(film, { f: N - 1, duration: 1.7, ease: 'power1.inOut', onUpdate: mostra }, 1.9)
+      .to(film, { f: N - 1, duration: 3.6, ease: 'none', onUpdate: mostra }, 0)
       .to(canvas, { scale: 1.08, duration: 3.6, ease: 'none' }, 0)
       .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 3.6, ease: 'none' }, 0)
       .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 3.6, ease: 'none' }, 0)
