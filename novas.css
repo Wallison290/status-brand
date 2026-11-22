@@ -1224,3 +1224,22 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .eq-chip{background:rgba(7,5,12,.55)}
 @media(max-width:800px){.ig-mosaico>.ig-card{grid-column:1/-1;aspect-ratio:auto;min-height:170px;transform:none!important}.ig-mosaico>.ig-foto:nth-child(2n+1){transform:translateY(30px)}.ig-mosaico>.ig-foto:nth-child(2n){transform:none}}
 @media(max-width:900px){.dg-side{padding-bottom:360px}.dg-side .ph-deco{height:340px}}
+
+/* 22/11: Instagram de volta ao formato antigo, agora com os posts do STATUS BRAND preenchendo cada espaço */
+.ig-ph.ig-com-foto{display:block;background:#0c0818}
+.ig-ph.ig-com-foto img{width:100%;height:100%;object-fit:cover;opacity:1;filter:none;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.ig-ph.ig-com-foto:hover img{transform:scale(1.04)}
+.ig-c.ig-com-foto img{object-position:50% 55%}
+
+/* 22/11: Equipe. Cabeças inteiras (saindo do quadro, como no Canva) e só nome + função à vista; descrição no mouse ou no toque */
+.eq-card{background:#000;cursor:pointer}
+.eq-foto>img{object-position:50% 0}
+@media(hover:none){
+  .eq-info p,.eq-info .eq-at{max-height:0;margin:0;opacity:0;transform:translateY(10px)}
+  .eq-card::after{background:linear-gradient(180deg,transparent 45%,rgba(7,5,12,.95))}
+}
+.eq-card.is-aberto::after{background:linear-gradient(180deg,rgba(7,5,12,.15) 10%,rgba(18,10,40,.97) 62%)}
+.eq-card.is-aberto .eq-info p{max-height:160px;margin-top:10px;opacity:1;transform:none}
+.eq-card.is-aberto .eq-info .eq-at{max-height:30px;margin-top:6px;opacity:1;transform:none}
+.eq-card.is-aberto .eq-arw{transform:rotate(45deg)}
+.ig-a.ig-com-foto img{object-position:50% 88%}

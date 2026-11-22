@@ -602,3 +602,14 @@ document.addEventListener('click', e => {
     }
   });
 })();
+
+// 22/11: Equipe, no celular/tablet a descrição abre com um toque no card (no computador abre ao passar o mouse)
+(() => {
+  'use strict';
+  const cards = [...document.querySelectorAll('.eq-card')];
+  const alterna = c => { const abrir = !c.classList.contains('is-aberto'); cards.forEach(x => x.classList.remove('is-aberto')); c.classList.toggle('is-aberto', abrir); };
+  cards.forEach(c => {
+    c.addEventListener('click', () => { if (matchMedia('(hover: none)').matches) alterna(c); });
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(c); } });
+  });
+})();
