@@ -526,21 +526,46 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   document.querySelectorAll('.pt-tabs button').forEach(b => b.addEventListener('click', () => setTimeout(montar, 0)));
 })();
 
-// 22/11: Jornada do cliente, as etapas se acendem uma por vez (pausa quando a pessoa passa o mouse ou escolhe uma)
+// 22/11: Jornada do cliente em LINHA DO TEMPO. No computador o painel fica preso na tela e as etapas avançam conforme a pessoa rola;
+// no celular cada etapa acende quando chega ao meio da tela.
 (() => {
   'use strict';
+  const rolo = document.querySelector('.jr-rolo');
   const lista = document.querySelector('.jr-passos');
-  if (!lista) return;
+  if (!rolo || !lista) return;
   const itens = [...lista.children];
-  let i = 0, parado = false, t;
-  const marca = k => { i = k; itens.forEach((li, n) => li.classList.toggle('is-on', n === k)); };
-  const roda = () => { clearInterval(t); if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; t = setInterval(() => { if (!parado && !document.hidden) marca((i + 1) % itens.length); }, 3200); };
-  itens.forEach((li, k) => {
-    li.addEventListener('mouseenter', () => { parado = true; marca(k); });
-    li.addEventListener('click', () => { marca(k); roda(); });
-  });
-  lista.addEventListener('mouseleave', () => { parado = false; roda(); });
-  roda();
+  const N = itens.length;
+  const marca = (k, p) => {
+    itens.forEach((li, n) => { li.classList.toggle('is-on', n === k); li.classList.toggle('is-feito', n < k); });
+    lista.style.setProperty('--jr-p', String(p));
+  };
+  const desk = matchMedia('(min-width: 901px)');
+  const calmo = matchMedia('(prefers-reduced-motion: reduce)');
+  const preso = () => desk.matches && !calmo.matches;
+  const atualiza = () => {
+    if (preso()) {
+      const r = rolo.getBoundingClientRect();
+      const total = rolo.offsetHeight - innerHeight;
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, total)));
+      marca(Math.min(N - 1, Math.floor(p * N)), Math.min(1, p * N / (N - 1)));
+    } else {
+      const meio = innerHeight * 0.55;
+      let k = 0;
+      itens.forEach((li, n) => { if (li.getBoundingClientRect().top < meio) k = n; });
+      marca(k, k / (N - 1));
+    }
+  };
+  const modo = () => { rolo.classList.toggle('is-preso', preso()); atualiza(); };
+  itens.forEach((li, k) => li.addEventListener('click', () => {
+    if (!preso()) return marca(k, k / (N - 1));
+    const total = rolo.offsetHeight - innerHeight;
+    scrollTo({ top: rolo.getBoundingClientRect().top + scrollY + total * (k + 0.5) / N, behavior: 'smooth' });
+  }));
+  let pend = false;
+  addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(() => { pend = false; atualiza(); }); } }, { passive: true });
+  desk.addEventListener('change', modo);
+  addEventListener('resize', atualiza);
+  modo();
 })();
 
 // 21/11: Equipe, as abas filtram por frente (Status Brand, Media, Academy)
