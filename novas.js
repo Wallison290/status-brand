@@ -669,3 +669,20 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   new MutationObserver(() => requestAnimationFrame(ajusta)).observe(mx, { subtree: true, attributes: true, attributeFilter: ['class'] });
   addEventListener('resize', ajusta);
 })();
+
+// 22/11: Resultados, as cartas do leque sobem sozinhas em sequência (pausa quando a pessoa passa o mouse)
+(() => {
+  'use strict';
+  const box = document.querySelector('.fb-insights');
+  if (!box || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cartas = [...box.querySelectorAll('.fb-insight')];
+  let i = 0, pausa = false, visivel = false;
+  new IntersectionObserver(es => es.forEach(e => { visivel = e.isIntersecting; }), { threshold: .3 }).observe(box);
+  box.addEventListener('mouseenter', () => { pausa = true; cartas.forEach(c => c.classList.remove('is-up')); });
+  box.addEventListener('mouseleave', () => { pausa = false; });
+  setInterval(() => {
+    if (pausa || !visivel || document.hidden || !matchMedia('(min-width: 901px)').matches) return;
+    cartas.forEach((c, n) => c.classList.toggle('is-up', n === i));
+    i = (i + 1) % cartas.length;
+  }, 1500);
+})();

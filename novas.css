@@ -1517,3 +1517,10 @@ html.tema-escuro .contact-section{box-shadow:none}
 /* serviços sem o botão; etiquetas numa linha só */
 .sv-body li{white-space:nowrap}
 .jr-capa::after{background:linear-gradient(180deg,rgba(7,5,12,.1) 0,rgba(7,5,12,.35) 35%,rgba(7,5,12,.85) 62%,rgba(7,5,12,.97) 100%),radial-gradient(ellipse 90% 60% at 20% 100%,rgba(7,5,12,.6),transparent 70%)}
+
+/* 22/11: mensagens do WhatsApp com texto preto (no tema escuro herdavam o cinza) */
+.wa-msg .wa-txt{color:#111b21!important}
+/* 22/11: resultados, as cartas sobem sozinhas uma de cada vez (como no mouse) */
+@media(min-width:901px){.fb-insights .fb-insight.is-up{--up:-18px;z-index:4}}
+/* 22/11: Instagram clicável */
+a.ig-ph{display:block;cursor:pointer}
