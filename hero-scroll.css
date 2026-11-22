@@ -137,3 +137,11 @@
   -webkit-mask:radial-gradient(ellipse 52% 58% at 50% 50%,#000 38%,transparent 78%);mask:radial-gradient(ellipse 52% 58% at 50% 50%,#000 38%,transparent 78%)}
 .hx.is-pin .hx-film{display:block}
 .hx.is-pin .hx-s{display:none}
+
+/* 22/11: animação da capa também no celular (presa, o S se forma com o dedo) */
+@media(max-width:899px){
+  .hx.is-pin .hx-stage{height:100svh;min-height:560px}
+  .hx.is-pin .hx-step{margin:auto 20px}
+  .hx.is-pin .hx-1{padding-top:40px}
+  .hx-film{-webkit-mask:radial-gradient(ellipse 80% 45% at 50% 50%,#000 40%,transparent 80%);mask:radial-gradient(ellipse 80% 45% at 50% 50%,#000 40%,transparent 80%);opacity:.75}
+}

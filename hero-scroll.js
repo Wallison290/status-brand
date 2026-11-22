@@ -14,7 +14,7 @@
   const mm = gsap.matchMedia();
   const vw = v => () => innerWidth * v / 100, vh = v => () => innerHeight * v / 100;
 
-  mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+  mm.add('(prefers-reduced-motion: no-preference)', () => { // 22/11: computador E celular
     hx.classList.add('is-pin');
     gsap.set([q('.hx-3'), q('.hx-5')], { autoAlpha: 0 });
 
@@ -38,7 +38,9 @@
       let im = imgs[cur];
       if (!ok(im)) for (let d = 1; d < N; d++) { if (ok(imgs[cur - d])) { im = imgs[cur - d]; break; } if (ok(imgs[cur + d])) { im = imgs[cur + d]; break; } }
       if (!ok(im)) return;
-      const cw = canvas.width, ch = canvas.height, r = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const cw = canvas.width, ch = canvas.height;
+      // tela em pé (celular): o S cabe inteiro na largura; deitada: o vídeo cobre tudo
+      const r = cw < ch ? Math.max(cw * 2 / im.naturalWidth, ch * .75 / im.naturalHeight) : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
       const w = im.naturalWidth * r, h = im.naturalHeight * r;
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
@@ -104,12 +106,6 @@
     return () => { hx.classList.remove('is-pin'); removeEventListener('resize', size); };
   });
 
-  // celular / telas menores: cada etapa entra quando aparece
-  mm.add('(max-width: 899px) and (prefers-reduced-motion: no-preference)', () => {
-    [q('.hx-3'), q('.hx-5')].forEach(el => gsap.from(el, {
-      y: 50, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' },
-    }));
-  });
 
   addEventListener('load', () => ScrollTrigger.refresh());
 })();
