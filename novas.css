@@ -1282,3 +1282,148 @@ dialog.dg .dg-form{padding-top:clamp(56px,5vw,64px)}
 }
 dialog.dg[open]{position:fixed;inset:0}
 @media(max-width:900px){dialog.dg .ph-deco{display:none}dialog.dg .dg-side{padding-bottom:clamp(24px,6vw,36px)}}
+
+/* ===== 22/11: PORTFÓLIO só Emunati, sem bordas: site grande à esquerda, identidade e redes empilhadas à direita ===== */
+@media(min-width:701px){
+  .pt-grid{grid-template-columns:2fr 1fr;align-items:stretch}
+  .pt-grid[data-n="2"]{grid-template-columns:1fr 1fr}
+  .pt-grid[data-n="1"]{grid-template-columns:minmax(0,980px);justify-content:center}
+  .pt-card,.pt-card.pt-g{grid-column:auto}
+  .pt-card.pt-g{grid-row:span 2}
+  .pt-card figure{display:flex;flex-direction:column;height:100%}
+  .pt-card img,.pt-card img.pt-contem{flex:none;height:auto;aspect-ratio:3/2;object-fit:cover;padding:0;background:none}
+  .pt-card.pt-g img{flex:1 1 auto;min-height:0;aspect-ratio:auto;height:100%}
+}
+@media(max-width:700px){.pt-card img{aspect-ratio:3/2;object-fit:cover}}
+
+/* ===== 22/11: JORNADA DO CLIENTE (ref. focuslab + runrate) e serviços em faixas animadas (ref. Liber) ===== */
+.jr-painel{position:relative;margin-top:clamp(28px,3vw,44px);padding:clamp(18px,2vw,28px);border-radius:clamp(24px,2.6vw,36px);overflow:hidden;color:#fff;
+  background:radial-gradient(ellipse 60% 50% at 85% 0,rgba(117,70,255,.28),transparent 70%),linear-gradient(180deg,#120c24,#07050c);box-shadow:0 40px 80px -40px rgba(21,17,29,.7)}
+.jr-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,3vw,48px);align-items:stretch}
+.jr-capa{position:relative;margin:0;min-height:clamp(380px,40vw,560px);border-radius:clamp(18px,2vw,26px);overflow:hidden}
+.jr-capa img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.jr-capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(7,5,12,.92))}
+.jr-capa figcaption{position:absolute;left:clamp(20px,2.4vw,36px);right:clamp(20px,2.4vw,36px);bottom:clamp(20px,2.4vw,36px);z-index:1}
+.jr-capa h2{margin:0;font-size:clamp(30px,3.4vw,50px);line-height:1.02;color:#fff}
+.jr-capa h2 em{color:#b49cff}
+.jr-capa p{margin:12px 0 0;max-width:420px;font-size:15px;line-height:1.55;color:#cfc8de}
+.jr-passos{display:flex;flex-direction:column;justify-content:center;gap:0;margin:0;padding:clamp(8px,1vw,16px) clamp(4px,1vw,12px) clamp(8px,1vw,16px) 0;list-style:none}
+.jr-passos li{display:grid;grid-template-columns:clamp(64px,6vw,86px) minmax(0,1fr);gap:clamp(16px,2vw,28px);align-items:center;cursor:pointer}
+.jr-n{display:grid;place-items:center;aspect-ratio:1;width:100%;border:0;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.04);color:rgba(255,255,255,.28);
+  font:inherit;font-size:clamp(28px,2.8vw,40px);font-weight:700;cursor:pointer;transition:background .5s,color .5s,box-shadow .5s,transform .5s}
+.jr-passos li:first-child .jr-n{border-radius:14px 14px 0 0}
+.jr-passos li:last-child .jr-n{border-radius:0 0 14px 14px;border-bottom:0}
+.jr-passos b{display:block;font-size:clamp(15px,1.3vw,18px);font-weight:600;color:rgba(255,255,255,.55);transition:color .4s}
+.jr-passos p{margin:6px 0 0;max-width:440px;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.32);transition:color .4s}
+.jr-passos li.is-on .jr-n{position:relative;z-index:1;border-radius:14px;background:linear-gradient(150deg,#8a6dff,#5232c9);color:#fff;
+  box-shadow:0 0 0 6px rgba(138,109,255,.12),0 20px 50px -10px rgba(117,70,255,.9);transform:scale(1.06)}
+.jr-passos li.is-on b{color:#fff}
+.jr-passos li.is-on p{color:#bdb5d4}
+.jr-n:focus-visible{outline:2px solid #b49cff;outline-offset:3px}
+.jr-servicos{display:flex;flex-direction:column;gap:14px;margin:clamp(26px,3vw,44px) calc(clamp(18px,2vw,28px) * -1) 0;padding:6px 0 8px;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.jr-linha{overflow:hidden}
+.jr-trilho{display:flex;width:max-content;gap:14px;animation:jr-anda 38s linear infinite}
+.jr-copia{display:flex;gap:14px}
+.jr-volta .jr-trilho{animation-direction:reverse;animation-duration:44s}
+.jr-linha:nth-child(3) .jr-trilho{animation-duration:34s}
+.jr-servicos:hover .jr-trilho{animation-play-state:paused}
+@keyframes jr-anda{to{transform:translateX(calc(-50% - 7px))}}
+.jr-chip{display:inline-flex;align-items:center;gap:12px;flex:none;padding:16px 24px;border-radius:14px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  font-size:clamp(14px,1.15vw,17px);font-weight:600;color:#fff;white-space:nowrap}
+.jr-chip svg{width:22px;height:22px;fill:none;stroke:#a58bff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:900px){.jr-grid{grid-template-columns:1fr}.jr-capa{min-height:340px}.jr-passos{padding:0}}
+@media(prefers-reduced-motion:reduce){.jr-trilho{animation:none}.jr-copia{display:none}.jr-linha{overflow-x:auto}}
+
+/* ===== 22/11: ECOSSISTEMA, caixa aberta fica BRANCA e mostra uma animação da frente ===== */
+.mx-node.is-open .mx-card{background:#fff;border-color:#fff;box-shadow:0 30px 70px -20px rgba(117,70,255,.55)}
+.mx-node.is-open .mx-head h3{color:#15111d}
+.mx-node.is-open .mx-head h3 small{color:#6b4fe0}
+.mx-node.is-open .mx-more p{color:#4a4458}
+.mx-node.is-open .mx-link{color:#5232c9}
+.mx-node.is-open .mx-plus{background:#15111d;border-color:#15111d}
+@media(hover:hover){
+  .mx-node:hover .mx-card{background:#fff;border-color:#fff}
+  .mx-node:hover .mx-head h3{color:#15111d}
+  .mx-node:hover .mx-head h3 small{color:#6b4fe0}
+  .mx-node:hover .mx-more p{color:#4a4458}
+  .mx-node:hover .mx-link{color:#5232c9}
+  .mx:has(.mx-node.is-open) .mx-node:not(.is-open):hover .mx-card{background:linear-gradient(160deg,#17141f,#0b0a10);border-color:rgba(255,255,255,.12)}
+  .mx:has(.mx-node.is-open) .mx-node:not(.is-open):hover .mx-head h3{color:#fff}
+  .mx:has(.mx-node.is-open) .mx-node:not(.is-open):hover .mx-head h3 small{color:#b9a8f1}
+}
+.mx-card,.mx-head h3,.mx-more p{transition:background .4s,border-color .4s,box-shadow .4s,color .4s}
+.mx-more ul{display:none}
+.mx-anim{position:relative;height:150px;margin:2px 0 14px;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#f4f0ff,#e7defd)}
+
+/* Status Brand: identidade se montando */
+.ab{display:grid;grid-template-columns:86px 1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;padding:12px}
+.ab>*{border-radius:10px;background:#fff;box-shadow:0 10px 24px -14px rgba(82,50,201,.6);animation:ab-entra 6s cubic-bezier(.16,1,.3,1) infinite both}
+.ab-logo{grid-row:span 2;display:grid;place-items:center;background:linear-gradient(160deg,#1d1436,#07050c)}
+.ab-logo img{width:70%;animation:ab-gira 6s ease-in-out infinite}
+.ab-tipo{display:flex;align-items:center;gap:8px;padding:0 12px;animation-delay:.25s}
+.ab-tipo b{font-size:26px;font-weight:700;color:#15111d;letter-spacing:-.04em}
+.ab-tipo i{height:6px;flex:1;border-radius:4px;background:#e2dcf3}
+.ab-tipo i+i{flex:.6}
+.ab-cores{display:flex;gap:6px;padding:10px;animation-delay:.5s}
+.ab-cores i{flex:1;border-radius:6px;background:#5232c9;transform-origin:bottom;animation:ab-cor 6s cubic-bezier(.16,1,.3,1) infinite both}
+.ab-cores i:nth-child(2){background:#8a6dff;animation-delay:.1s}.ab-cores i:nth-child(3){background:#c9bcff;animation-delay:.2s}.ab-cores i:nth-child(4){background:#15111d;animation-delay:.3s}
+.ab-post{grid-column:span 2;display:flex;align-items:center;gap:8px;padding:0 12px;animation-delay:.75s}
+.ab-post span{width:34px;height:34px;flex:none;border-radius:8px;background:linear-gradient(150deg,#8a6dff,#3d1fa6)}
+.ab-post i{height:6px;flex:1;border-radius:4px;background:#e2dcf3}
+.ab-post em{flex:none;padding:5px 10px;border-radius:999px;background:#15111d;color:#fff;font-size:10.5px!important;font-weight:600;white-space:nowrap}
+@keyframes ab-entra{0%{opacity:0;transform:translateY(14px) scale(.96)}12%,88%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px)}}
+@keyframes ab-cor{0%,10%{transform:scaleY(0)}25%,90%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@keyframes ab-gira{0%,15%{transform:rotate(-20deg) scale(.7);opacity:0}30%,85%{transform:none;opacity:1}100%{opacity:0}}
+
+/* Status Media: sistema funcionando */
+.am{padding:12px}
+.am-janela{position:relative;height:100%;border-radius:10px;background:#fff;box-shadow:0 14px 30px -16px rgba(82,50,201,.6);overflow:hidden}
+.am-topo{display:flex;align-items:center;gap:5px;height:22px;padding:0 10px;border-bottom:1px solid #efeaf9}
+.am-topo i{width:7px;height:7px;border-radius:50%;background:#e2dcf3}
+.am-topo span{margin-left:8px;font-size:9.5px;font-weight:700;color:#5232c9}
+.am-corpo{display:flex;height:calc(100% - 22px)}
+.am-lado{display:flex;flex-direction:column;gap:7px;width:42px;padding:9px 8px;background:#15111d}
+.am-lado i{height:6px;border-radius:3px;background:rgba(255,255,255,.18)}
+.am-lado i.on{background:#8a6dff}
+.am-meio{flex:1;display:flex;flex-direction:column;gap:8px;padding:8px 10px}
+.am-cards{display:flex;gap:6px}
+.am-cards span{flex:1;display:flex;flex-direction:column;padding:5px 7px;border-radius:7px;background:#f4f0ff}
+.am-cards small{font-size:8px;color:#8a8496}
+.am-cards b{font-size:13px;color:#15111d}
+.am-cards .am-ok{color:#22a06b}
+.am-graf{flex:1;display:flex;align-items:flex-end;gap:5px;padding:0 2px}
+.am-graf i{flex:1;height:calc(var(--h) * 100%);border-radius:4px 4px 0 0;background:linear-gradient(180deg,#8a6dff,#5232c9);transform-origin:bottom;animation:am-sobe 5s cubic-bezier(.16,1,.3,1) infinite both}
+.am-graf i:nth-child(2){animation-delay:.1s}.am-graf i:nth-child(3){animation-delay:.2s}.am-graf i:nth-child(4){animation-delay:.3s}.am-graf i:nth-child(5){animation-delay:.4s}.am-graf i:nth-child(6){animation-delay:.5s}
+.am-aviso{position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:9px;background:#15111d;color:#fff;font-size:10px;font-weight:600;
+  box-shadow:0 12px 24px -10px rgba(0,0,0,.5);animation:am-aviso 5s cubic-bezier(.16,1,.3,1) infinite both}
+.am-aviso b{display:grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#22a06b;font-size:9px}
+@keyframes am-sobe{0%,8%{transform:scaleY(0)}30%,88%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@keyframes am-aviso{0%,40%{opacity:0;transform:translateY(16px)}52%,88%{opacity:1;transform:none}100%{opacity:0}}
+
+/* Status Academy: trilha de aprendizado */
+.aa{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:14px 16px}
+.aa-trilha{display:flex;gap:8px}
+.aa-passo{flex:1;display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#fff;box-shadow:0 10px 22px -14px rgba(82,50,201,.6);font-size:11px;font-weight:600;color:#15111d}
+.aa-passo i{display:grid;place-items:center;flex:none;width:18px;height:18px;border-radius:50%;background:#e2dcf3;color:transparent;font-size:10px;font-style:normal;animation:aa-check 6s infinite both}
+.aa-passo:nth-child(2) i{animation-delay:.9s}.aa-passo:nth-child(3) i{animation-delay:1.8s}
+.aa-barra{height:8px;border-radius:8px;background:#fff;overflow:hidden}
+.aa-barra span{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#8a6dff,#5232c9);transform-origin:left;animation:aa-barra 6s cubic-bezier(.65,0,.35,1) infinite both}
+.aa-selo{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#15111d;color:#fff;font-size:11px;font-weight:600;animation:aa-selo 6s cubic-bezier(.16,1,.3,1) infinite both}
+.aa-selo svg{width:16px;height:16px;fill:none;stroke:#b49cff;stroke-width:1.8;stroke-linejoin:round}
+@keyframes aa-check{0%,10%{background:#e2dcf3;color:transparent;transform:scale(.8)}18%,90%{background:#8a6dff;color:#fff;transform:none}100%{background:#e2dcf3;color:transparent}}
+@keyframes aa-barra{0%,8%{transform:scaleX(0)}45%,90%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes aa-selo{0%,48%{opacity:0;transform:translateY(10px) scale(.9)}58%,90%{opacity:1;transform:none}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.mx-anim *{animation:none!important;opacity:1!important;transform:none!important}}
+/* 22/11: ao abrir Academy ou Media, a caixa do Status Brand desce para não ficar por baixo */
+@media(min-width:901px){
+  .mx-3 .mx-node[data-node="4"]{transition:margin-top .5s cubic-bezier(.16,1,.3,1)}
+  .mx-3:has(.mx-node[data-node="0"].is-open) .mx-node[data-node="4"],
+  .mx-3:has(.mx-node[data-node="2"].is-open) .mx-node[data-node="4"]{margin-top:var(--mx-desce,320px)}
+}
+.aa{gap:8px;padding:10px 14px}
+.aa-trilha{flex-direction:column;gap:5px}
+.aa-passo{padding:4px 8px;font-size:11px}
+.aa-passo i{width:16px;height:16px}
+.aa-selo{padding:5px 11px}
+.mx-anim.aa{height:auto;min-height:150px}

@@ -510,38 +510,37 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   }));
 })();
 
-// 21/11: Portfólio em blocos alternados. Cada linha tem um card grande (3/5) e um pequeno (2/5), invertendo a cada linha.
-// A imagem mais "deitada" da dupla vai para o espaço grande; se o formato não combinar com o espaço, ela aparece inteira sobre fundo lilás.
+// 22/11: Portfólio. Com 3 peças: a primeira grande à esquerda e as outras duas empilhadas à direita (sem bordas, sem cortes forçados)
 (() => {
   'use strict';
   const grid = document.querySelector('.pt-grid');
   if (!grid) return;
-  const desk = matchMedia('(min-width: 701px)');
-  const ratio = c => { const i = c.querySelector('img'); return i ? (+i.getAttribute('width') || 4) / (+i.getAttribute('height') || 5) : .8; };
   const montar = () => {
     const cards = [...grid.querySelectorAll('.pt-card')];
-    cards.forEach(c => { c.classList.remove('pt-g', 'pt-cheio'); c.style.order = ''; const i = c.querySelector('img'); if (i) i.classList.remove('pt-contem'); });
-    if (!desk.matches) return;
+    cards.forEach(c => c.classList.remove('pt-g', 'pt-cheio'));
     const vis = cards.filter(c => !c.hidden);
-    for (let k = 0; k < vis.length; k += 2) {
-      const a = vis[k], b = vis[k + 1], linha = k / 2;
-      if (!b) { a.classList.add('pt-cheio'); a.style.order = k; continue; }
-      const grande = ratio(a) >= ratio(b) ? a : b, pequeno = grande === a ? b : a;
-      grande.classList.add('pt-g');
-      const grandePrimeiro = linha % 2 === 0;
-      grande.style.order = grandePrimeiro ? k : k + 1;
-      pequeno.style.order = grandePrimeiro ? k + 1 : k;
-    }
-    requestAnimationFrame(() => vis.forEach(c => {
-      const i = c.querySelector('img'); if (!i || !i.clientHeight) return;
-      const caixa = i.clientWidth / i.clientHeight, r = ratio(c);
-      if (Math.abs(r - caixa) / caixa > .22) i.classList.add('pt-contem');
-    }));
+    grid.dataset.n = String(Math.min(vis.length, 3));
+    if (vis.length >= 3) vis[0].classList.add('pt-g');
   };
   montar();
   document.querySelectorAll('.pt-tabs button').forEach(b => b.addEventListener('click', () => setTimeout(montar, 0)));
-  desk.addEventListener('change', montar);
-  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(montar, 150); });
+})();
+
+// 22/11: Jornada do cliente, as etapas se acendem uma por vez (pausa quando a pessoa passa o mouse ou escolhe uma)
+(() => {
+  'use strict';
+  const lista = document.querySelector('.jr-passos');
+  if (!lista) return;
+  const itens = [...lista.children];
+  let i = 0, parado = false, t;
+  const marca = k => { i = k; itens.forEach((li, n) => li.classList.toggle('is-on', n === k)); };
+  const roda = () => { clearInterval(t); if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; t = setInterval(() => { if (!parado && !document.hidden) marca((i + 1) % itens.length); }, 3200); };
+  itens.forEach((li, k) => {
+    li.addEventListener('mouseenter', () => { parado = true; marca(k); });
+    li.addEventListener('click', () => { marca(k); roda(); });
+  });
+  lista.addEventListener('mouseleave', () => { parado = false; roda(); });
+  roda();
 })();
 
 // 21/11: Equipe, as abas filtram por frente (Status Brand, Media, Academy)
@@ -622,4 +621,20 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
     c.addEventListener('click', () => { if (matchMedia('(hover: none)').matches) alterna(c); });
     c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(c); } });
   });
+})();
+
+// 22/11: Ecossistema, a caixa de baixo desce exatamente o quanto a caixa aberta do lado precisa
+(() => {
+  'use strict';
+  const mx = document.querySelector('.mx-3');
+  if (!mx) return;
+  const ajusta = () => {
+    const lado = mx.querySelector('.mx-node[data-node="0"].is-open, .mx-node[data-node="2"].is-open');
+    if (!lado) return;
+    const head = lado.querySelector('.mx-head').offsetHeight, corpo = lado.querySelector('.mx-more > div').scrollHeight;
+    const extra = head + corpo - lado.offsetHeight + 48;
+    mx.style.setProperty('--mx-desce', Math.max(72, extra) + 'px');
+  };
+  new MutationObserver(() => requestAnimationFrame(ajusta)).observe(mx, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  addEventListener('resize', ajusta);
 })();
