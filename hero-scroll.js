@@ -24,12 +24,13 @@
     const src = i => `assets/hero/s/${String(i + 1).padStart(3, '0')}.webp`;
     const imgs = [];
     let cur = 0;
+    const ini = { a: 1 }; // opacidade do S pronto por cima no início
     const ok = im => im && im.complete && im.naturalWidth;
     const load = i => {
       if (imgs[i]) return imgs[i];
       const im = new Image();
       im.decoding = 'async';
-      im.onload = () => { if (i === cur) draw(); };
+      im.onload = () => { if (i === cur || i === N - 1) draw(); };
       im.src = src(i);
       return (imgs[i] = im);
     };
@@ -44,6 +45,9 @@
       const w = im.naturalWidth * r, h = im.naturalHeight * r;
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+      // 22/11: no topo aparece o S pronto (último quadro); ao começar a rolar ele se dissolve e a construção começa
+      const fim = imgs[N - 1];
+      if (ini.a > 0 && ok(fim)) { ctx.globalAlpha = ini.a; ctx.drawImage(fim, (cw - w) / 2, (ch - h) / 2, w, h); ctx.globalAlpha = 1; }
     }
     const size = () => {
       const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -52,6 +56,7 @@
       draw();
     };
     cur = 0;
+    load(N - 1);
     load(0);
     let next = 0;
     const pump = () => { for (let k = 0; k < 10 && next < N; k++) load(next++); if (next < N) setTimeout(pump, 40); };
@@ -72,6 +77,7 @@
     const mostra = () => { const i = Math.round(film.f); if (i !== cur) { cur = i; load(i); draw(); } };
     tl.addLabel('inicio', 0)
       .to(film, { f: N - 1, duration: 3.6, ease: 'none', onUpdate: mostra }, 0)
+      .to(ini, { a: 0, duration: .7, ease: 'power1.out', onUpdate: draw }, 0)
       .to(canvas, { scale: 1.08, duration: 3.6, ease: 'none' }, 0)
       .to(q('.hx-fitas-a'), { x: vw(-3), y: vh(4), duration: 3.6, ease: 'none' }, 0)
       .to(q('.hx-fitas-b'), { x: vw(3), y: vh(-4), duration: 3.6, ease: 'none' }, 0)
