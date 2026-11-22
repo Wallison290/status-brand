@@ -1526,3 +1526,10 @@ html.tema-escuro .contact-section{box-shadow:none}
 a.ig-ph{display:block;cursor:pointer}
 /* 22/11: Nível de atuação, as fotos do arco sobem sozinhas uma de cada vez (como os resultados) */
 @media(min-width:901px){.rs-fotos li.is-up{--up:-22px;z-index:2;box-shadow:0 40px 60px -20px rgba(82,50,201,.6)}}
+
+/* 22/11: rolagem suave do computador (Lenis); sem o scroll-behavior nativo, que brigava com as partes presas */
+html.rolagem-suave{scroll-behavior:auto!important}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}

@@ -565,7 +565,8 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   itens.forEach((li, k) => li.addEventListener('click', () => {
     if (!preso()) return marca(k, k / (N - 1));
     const total = rolo.offsetHeight - innerHeight;
-    scrollTo({ top: rolo.getBoundingClientRect().top + scrollY + total * (k + 0.5) / N, behavior: 'smooth' });
+    const y = rolo.getBoundingClientRect().top + scrollY + total * (k + 0.5) / N;
+    window.lenis ? window.lenis.scrollTo(y, { duration: 1 }) : scrollTo({ top: y, behavior: 'smooth' });
   }));
   let pend = false;
   addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(() => { pend = false; atualiza(); }); } }, { passive: true });

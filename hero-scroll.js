@@ -58,7 +58,8 @@
       defaults: { ease: 'power2.inOut' },
       scrollTrigger: { trigger: hx, start: 'top top', end: '+=110%', pin: true, scrub: .3, anticipatePin: 1, invalidateOnRefresh: true,
         // cada gesto de rolagem leva para a próxima etapa
-        snap: { snapTo: 'labelsDirectional', inertia: false, duration: { min: .25, max: .6 }, delay: .08, ease: 'power1.inOut' } },
+        // com a rolagem suave (Lenis) o encaixe é feito abaixo; sem ela, usa o snap do GSAP
+        snap: window.lenis ? false : { snapTo: 'labelsDirectional', inertia: false, duration: { min: .25, max: .6 }, delay: .08, ease: 'power1.inOut' } },
     });
 
     // fundo andando devagar o tempo todo (o S 3D é o foco)
@@ -78,6 +79,24 @@
       .to(q('.hx-3'), { y: vh(-10), autoAlpha: 0, duration: .5 }, 2.2)
       .fromTo(q('.hx-5'), { autoAlpha: 0, scale: 1.1 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'power3.out' }, 2.7)
       .addLabel('fim', 3.6);
+
+    // encaixe por etapa com o Lenis: parou de rolar dentro da capa, segue até a próxima etapa na direção do gesto
+    if (window.lenis) {
+      const st = tl.scrollTrigger, lenis = window.lenis;
+      let espera, dir = 1;
+      lenis.on('scroll', e => {
+        if (e.direction) dir = e.direction;
+        clearTimeout(espera);
+        espera = setTimeout(() => {
+          const y = lenis.scroll, a = st.start, b = st.end;
+          if (y <= a + 2 || y >= b - 2) return;
+          const marcas = Object.values(tl.labels).map(t => a + (b - a) * (t / tl.duration())).sort((m, n) => m - n);
+          if (marcas.some(m => Math.abs(m - y) < 3)) return;
+          const alvo = dir > 0 ? marcas.find(m => m > y) : [...marcas].reverse().find(m => m < y);
+          if (alvo !== undefined) lenis.scrollTo(alvo, { duration: .7, easing: t => 1 - Math.pow(1 - t, 3) });
+        }, 90);
+      });
+    }
 
     return () => { hx.classList.remove('is-pin'); removeEventListener('resize', size); };
   });
