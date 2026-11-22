@@ -555,14 +555,24 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   }));
 })();
 
-// 21/11: todo botão "Vamos conversar / Quero ser o próximo" leva ao formulário de diagnóstico (no lugar da janela antiga)
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-contact]');
-  const f = document.getElementById('diagnostico');
-  if (!b || !f) return;
-  e.preventDefault(); e.stopPropagation();
-  f.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-}, true);
+// 22/11: "Solicite seu orçamento" (cabeçalho, contato e demais botões de conversar) abre o formulário de diagnóstico em janela
+(() => {
+  'use strict';
+  const dlg = document.getElementById('diagnostico');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+  const abrir = () => { dlg.showModal(); document.documentElement.classList.add('dg-aberto'); dlg.scrollTop = 0; };
+  const fechar = () => dlg.close();
+  dlg.addEventListener('close', () => document.documentElement.classList.remove('dg-aberto'));
+  dlg.querySelector('.dg-fechar').addEventListener('click', fechar);
+  dlg.addEventListener('click', e => { if (e.target === dlg) fechar(); }); // clique fora fecha
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-contact],[data-orcamento]');
+    if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    document.querySelector('.mobile-nav.is-open, .mobile-nav.open') && document.querySelector('.menu-toggle')?.click();
+    abrir();
+  }, true);
+})();
 
 // 21/11: Diagnóstico. Monta a mensagem com as respostas e abre o WhatsApp da Status.
 // WHATSAPP: colocar o número da Status só com dígitos, com 55 e DDD (ex.: '5511999999999').

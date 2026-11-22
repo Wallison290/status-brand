@@ -1243,3 +1243,42 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .eq-card.is-aberto .eq-info .eq-at{max-height:30px;margin-top:6px;opacity:1;transform:none}
 .eq-card.is-aberto .eq-arw{transform:rotate(45deg)}
 .ig-a.ig-com-foto img{object-position:50% 88%}
+
+/* ===== 22/11: Diagnóstico em janela (pop-up) aberta pelos botões "Solicite seu orçamento" ===== */
+dialog.dg{width:min(1240px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:clamp(14px,1.6vw,22px);border:0;border-radius:clamp(22px,2.4vw,32px);
+  background:#07050c;color:#fff;overflow:auto;overscroll-behavior:contain;box-shadow:0 40px 120px -20px rgba(82,50,201,.55),inset 0 0 0 1px rgba(255,255,255,.08)}
+dialog.dg:not([open]){display:none}
+dialog.dg::backdrop{background:rgba(7,5,12,.72);backdrop-filter:blur(8px)}
+dialog.dg[open]{animation:dg-in .45s cubic-bezier(.16,1,.3,1)}
+@keyframes dg-in{from{opacity:0;transform:translateY(24px) scale(.98)}}
+html.dg-aberto{overflow:hidden}
+.dg-fechar{position:sticky;top:0;float:right;z-index:5;display:grid;place-items:center;width:42px;height:42px;margin:0 0 -42px;border:0;border-radius:50%;
+  background:#fff;color:#15111d;font-size:24px;line-height:1;cursor:pointer;box-shadow:0 10px 24px -8px #000}
+.dg-fechar:hover{background:#d9cfff}
+dialog.dg .dg-wrap{align-items:stretch}
+dialog.dg .dg-form,dialog.dg .dg-side{margin:0!important;transform:none!important;align-self:stretch}
+dialog.dg .dg-form{padding-top:clamp(56px,5vw,64px)}
+@media(max-width:900px){dialog.dg{width:calc(100vw - 16px);max-height:calc(100dvh - 16px);padding:8px}}
+
+/* ===== 22/11: Equipe sem etiqueta de cargo; topo do card escurece para esconder a emenda do fundo ===== */
+.eq-card{background:#0c0818}
+.eq-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,8,24,.55),transparent 26%);pointer-events:none}
+
+/* ===== 22/11: Instagram, logo do bloco preto inteiro no espaço largo ===== */
+.ig-c.ig-com-foto img{object-position:50% 46%}
+
+/* ===== 22/11: Ecossistema, caixas não se sobrepõem e a de baixo empurra a página ao abrir ===== */
+@media(min-width:901px){
+  .mx-3 .mx-node[data-node="4"]{height:auto;width:min(100%,520px)}
+  .mx-3 .mx-node[data-node="4"] .mx-card{position:relative}
+}
+@media(hover:hover){
+  .mx:has(.mx-node.is-open) .mx-node:not(.is-open):hover .mx-more{grid-template-rows:0fr}
+  .mx:has(.mx-node.is-open) .mx-node:not(.is-open):hover .mx-more>div{opacity:0;padding-bottom:0}
+}
+@media(hover:none),(pointer:coarse){
+  .mx-node:not(.is-open):hover .mx-more{grid-template-rows:0fr}
+  .mx-node:not(.is-open):hover .mx-more>div{opacity:0;padding-bottom:0}
+}
+dialog.dg[open]{position:fixed;inset:0}
+@media(max-width:900px){dialog.dg .ph-deco{display:none}dialog.dg .dg-side{padding-bottom:clamp(24px,6vw,36px)}}

@@ -15,10 +15,10 @@
   <a href="#inicio" class="brand-crop" aria-label="Status Brand — início"><img src="assets/img/logo-transparente.webp" alt="Status Brand co."></a>
   <nav class="desktop-nav" aria-label="Menu principal"><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a></nav>
   <div class="header-right">
-    <a class="header-cta" href="#diagnostico" aria-label="Solicite seu orçamento"><span class="lbl">Solicite seu orçamento</span> <span class="arw" aria-hidden="true">→</span><svg class="chat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12Z"/></svg></a>
+    <a class="header-cta" href="#diagnostico" data-orcamento aria-label="Solicite seu orçamento"><span class="lbl">Solicite seu orçamento</span> <span class="arw" aria-hidden="true">→</span><svg class="chat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12Z"/></svg></a>
     <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
-</div><nav id="mobile-menu" class="mobile-nav" aria-label="Menu mobile"><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a><a class="mobile-cta" href="#diagnostico">Solicite seu orçamento <span class="arw" aria-hidden="true">→</span></a></nav></header>
+</div><nav id="mobile-menu" class="mobile-nav" aria-label="Menu mobile"><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a><a class="mobile-cta" href="#diagnostico" data-orcamento>Solicite seu orçamento <span class="arw" aria-hidden="true">→</span></a></nav></header>
 <main id="conteudo">
 <section class="hx" id="inicio" aria-labelledby="hx-title">
   <div class="hx-stage">
@@ -309,7 +309,6 @@
     <div class="ig-ph ig-a ig-com-foto"><img src="assets/img/portfolio/redes-7.webp" alt="Post: Três frentes conectadas ao próximo passo do seu negócio" width="720" height="900" loading="lazy"></div>
     <div class="ig-ph ig-b ig-com-foto"><img src="assets/img/portfolio/identidade-3.webp" alt="Mão segurando o símbolo S da Status" width="720" height="900" loading="lazy"></div>
     <div class="ig-ph ig-c ig-com-foto"><img src="assets/img/portfolio/identidade-1.webp" alt="Logo Status Brand aplicado em peça preta" width="720" height="900" loading="lazy"></div>
-    <div class="ig-ph ig-d ig-com-foto"><img src="assets/img/portfolio/identidade-2.webp" alt="Símbolo S da Status em 3D" width="720" height="900" loading="lazy"></div>
   </div>
 </section>
 
@@ -323,25 +322,27 @@
   <ul class="eq-grid">
     <li class="eq-card" tabindex="0">
       <div class="eq-foto"><img src="assets/img/equipe/carol-dias.webp" alt="Carol Dias" width="900" height="920" loading="lazy"></div>
-      <span class="eq-chip">CEO</span>
       <div class="eq-info"><b>Carol Dias</b><small>Estrategista de marcas e negócios</small><p>Palestrante, escritora e estrategista de marcas e negócios. Expertise em copywriting, storytelling e vendas: transforma ideias em posicionamento e lucro.</p><em class="eq-at">@caroldiasd</em></div>
       <span class="eq-arw" aria-hidden="true">↗</span>
     </li>
     <li class="eq-card" tabindex="0">
       <div class="eq-foto"><img src="assets/img/equipe/andrei-medrado.webp" alt="Andrei Medrado" width="900" height="920" loading="lazy"></div>
-      <span class="eq-chip">Sócio</span>
       <div class="eq-info"><b>Andrei Medrado</b><small>Gestor de tráfego</small><p>Gestor de tráfego e empreendedor. Especialista em alavancagem de negócios, ajudando marcas a acelerarem sua presença e seus resultados.</p><em class="eq-at">@andremedrado_</em></div>
       <span class="eq-arw" aria-hidden="true">↗</span>
     </li>
     <li class="eq-card" tabindex="0">
       <div class="eq-foto"><img src="assets/img/equipe/larissa-dias.webp" alt="Larissa Dias" width="900" height="920" loading="lazy"></div>
-      <span class="eq-chip">Co-fundadora</span>
       <div class="eq-info"><b>Larissa Dias</b><small>Estrategista de marcas e negócios</small><p>Palestrante, escritora e estrategista de marcas e negócios. Especialista em posicionamento digital e criação de conteúdos que conectam e convertem.</p><em class="eq-at">@larissadiasb_</em></div>
       <span class="eq-arw" aria-hidden="true">↗</span>
     </li>
   </ul>
 </section>
-<section class="dg" id="diagnostico" aria-labelledby="dg-title">
+<section class="contact-section" id="contato"><div class="section-kicker"><span>PRONTO PARA O PRÓXIMO PASSO?</span><span>VAMOS CONSTRUIR JUNTOS</span></div><h2>Sua marca tem potencial.<br><em>Vamos dar direção?</em></h2><button class="button white" data-orcamento>Solicite seu orçamento</button><p>Uma boa conversa pode mudar o próximo capítulo.</p></section>
+
+</main>
+<footer><div class="footer-top"><a href="#inicio" class="brand-crop" aria-label="Status Brand — voltar ao início"><img src="assets/img/logo-oficial.jpeg" alt="Status Brand co."></a><p>Marcas com essência.<br>Presença com propósito.</p><nav aria-label="Menu do rodapé"><a href="#ecossistema">Ecossistema</a><a href="#projetos">Projetos</a><a href="#depoimentos">Clientes</a></nav></div><div class="footer-bottom"><span>© <span id="year">2026</span> Status Brand. Todos os direitos reservados.</span><span>BRANDING · PERFORMANCE · TECNOLOGIA</span></div></footer>
+<dialog class="dg" id="diagnostico" aria-labelledby="dg-title">
+  <button type="button" class="dg-fechar" aria-label="Fechar formulário">×</button>
   <div class="dg-wrap">
     <div class="dg-side">
       <span class="dg-kicker"><i aria-hidden="true"></i>Diagnóstico</span>
@@ -373,10 +374,7 @@
       <p class="dg-status" role="status"></p>
     </form>
   </div>
-</section>
-
-</main>
-<footer><div class="footer-top"><a href="#inicio" class="brand-crop" aria-label="Status Brand — voltar ao início"><img src="assets/img/logo-oficial.jpeg" alt="Status Brand co."></a><p>Marcas com essência.<br>Presença com propósito.</p><nav aria-label="Menu do rodapé"><a href="#ecossistema">Ecossistema</a><a href="#projetos">Projetos</a><a href="#depoimentos">Clientes</a></nav></div><div class="footer-bottom"><span>© <span id="year">2026</span> Status Brand. Todos os direitos reservados.</span><span>BRANDING · PERFORMANCE · TECNOLOGIA</span></div></footer>
+</dialog>
 <dialog id="contact-dialog" aria-labelledby="contact-title"><button class="dialog-close" aria-label="Fechar formulário">×</button><div id="brief-intro"><span class="eyebrow">O PRÓXIMO CAPÍTULO COMEÇA AQUI</span><h2 id="contact-title">Conte sobre<br><em>sua marca.</em></h2><p>Prepare um resumo do seu projeto para compartilhar com a equipe Status Brand.</p><form id="brief-form"><label>Seu nome<input name="name" autocomplete="name" required maxlength="100" placeholder="Como podemos chamar você?"></label><label>Empresa ou marca<input name="company" autocomplete="organization" required maxlength="120" placeholder="Nome da sua marca"></label><label>Do que você precisa?<select name="service" id="brief-service"><option>Quero entender por onde começar</option><option>Marca e posicionamento</option><option>Conteúdo e performance</option><option>Experiência e tecnologia</option></select></label><label>Qual é o seu principal desafio?<textarea name="goal" required minlength="10" maxlength="1500" rows="3" placeholder="Conte o que você quer transformar no seu negócio."></textarea></label><button type="submit" class="button primary">Gerar meu briefing</button><small>Os dados ficam apenas nesta página. Nenhuma mensagem é enviada automaticamente.</small></form></div><div id="brief-result" hidden><span class="eyebrow">PRONTO PARA COMPARTILHAR</span><h2>Seu próximo<br><em>passo está aqui.</em></h2><pre id="brief-text"></pre><div class="result-actions"><button class="button primary" id="copy-brief">Copiar briefing</button><button class="button" id="download-brief">Baixar resumo</button><button class="text-link" id="edit-brief">Editar informações</button></div><p id="copy-status" role="status">Copie ou baixe o resumo e compartilhe com a equipe Status Brand.</p></div></dialog>
 <dialog id="project-dialog" aria-labelledby="project-title"><button class="dialog-close" aria-label="Fechar detalhes">×</button><span class="eyebrow" id="project-eyebrow"></span><h2 id="project-title"></h2><p id="project-description"></p><div id="project-deliverables" class="project-deliverables"></div><button class="button primary" id="project-contact">Quero algo para minha marca</button></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script><script src="hero-scroll.js" defer></script>
