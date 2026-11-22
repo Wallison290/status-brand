@@ -1516,3 +1516,4 @@ html.tema-escuro .contact-section{box-shadow:none}
 .jr-rolo.is-preso .jr-passos li p{color:color-mix(in srgb,#bdb5d4 calc(40% + var(--luz,0) * 60%),transparent)}
 /* serviços sem o botão; etiquetas numa linha só */
 .sv-body li{white-space:nowrap}
+.jr-capa::after{background:linear-gradient(180deg,rgba(7,5,12,.1) 0,rgba(7,5,12,.35) 35%,rgba(7,5,12,.85) 62%,rgba(7,5,12,.97) 100%),radial-gradient(ellipse 90% 60% at 20% 100%,rgba(7,5,12,.6),transparent 70%)}
