@@ -15,10 +15,10 @@
   <a href="#inicio" class="brand-crop" aria-label="Status Brand — início"><img src="assets/img/logo-transparente.webp" alt="Status Brand co."></a>
   <nav class="desktop-nav" aria-label="Menu principal"><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a></nav>
   <div class="header-right">
-    <button class="header-cta" data-contact aria-label="Vamos conversar"><span class="lbl">Vamos conversar</span> <span class="arw" aria-hidden="true">→</span><svg class="chat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12Z"/></svg></button>
+    <a class="header-cta" href="#diagnostico" aria-label="Solicite seu orçamento"><span class="lbl">Solicite seu orçamento</span> <span class="arw" aria-hidden="true">→</span><svg class="chat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12Z"/></svg></a>
     <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
-</div><nav id="mobile-menu" class="mobile-nav" aria-label="Menu mobile"><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a><button class="mobile-cta" data-contact>Começar meu projeto <span class="arw" aria-hidden="true">→</span></button></nav></header>
+</div><nav id="mobile-menu" class="mobile-nav" aria-label="Menu mobile"><a href="#sobre">Sobre</a><a href="#ecossistema">Ecossistema</a><a href="#solucoes">Soluções</a><a href="#projetos">Projetos</a><a class="mobile-cta" href="#diagnostico">Solicite seu orçamento <span class="arw" aria-hidden="true">→</span></a></nav></header>
 <main id="conteudo">
 <section class="hx" id="inicio" aria-labelledby="hx-title">
   <div class="hx-stage">
@@ -314,7 +314,75 @@
 </section>
 
 </div>
-<section class="contact-section" id="contato"><div class="section-kicker"><span>PRONTO PARA O PRÓXIMO PASSO?</span><span>VAMOS CONSTRUIR JUNTOS</span></div><h2>Sua marca tem potencial.<br><em>Vamos dar direção?</em></h2><button class="button white" data-contact>Começar meu projeto</button><p>Uma boa conversa pode mudar o próximo capítulo.</p></section>
+<section class="eq" id="equipe" aria-labelledby="eq-title">
+  <div class="section-kicker"><span>EQUIPE</span><span>QUEM FAZ ACONTECER</span></div>
+  <div class="eq-head">
+    <h2 id="eq-title" class="reveal">Pessoas por trás <em>do status.</em></h2>
+    <div class="eq-tabs" role="group" aria-label="Filtrar equipe por frente">
+      <button type="button" data-f="todos" class="is-on" aria-pressed="true">Todos</button><i aria-hidden="true"></i>
+      <button type="button" data-f="brand" aria-pressed="false">Status Brand</button><i aria-hidden="true"></i>
+      <button type="button" data-f="media" aria-pressed="false">Status Media</button><i aria-hidden="true"></i>
+      <button type="button" data-f="academy" aria-pressed="false">Status Academy</button>
+    </div>
+  </div>
+  <ul class="eq-grid">
+    <li class="eq-card" data-f="brand">
+      <!-- FOTO: trocar o .eq-sem-foto por <img src="assets/img/equipe/....webp" alt="Nome da pessoa"> -->
+      <div class="eq-foto"><span class="eq-sem-foto" aria-hidden="true"><img src="assets/img/simbolo-s.webp" alt="" loading="lazy"></span></div>
+      <span class="eq-chip">Cargo</span><span class="eq-frente">Status Brand</span>
+      <div class="eq-info"><b>Nome da pessoa</b><small>Função na Status</small></div>
+      <span class="eq-arw" aria-hidden="true">↗</span>
+    </li>
+    <li class="eq-card" data-f="media">
+      <!-- FOTO: trocar o .eq-sem-foto por <img src="assets/img/equipe/....webp" alt="Nome da pessoa"> -->
+      <div class="eq-foto"><span class="eq-sem-foto" aria-hidden="true"><img src="assets/img/simbolo-s.webp" alt="" loading="lazy"></span></div>
+      <span class="eq-chip">Cargo</span><span class="eq-frente">Status Media</span>
+      <div class="eq-info"><b>Nome da pessoa</b><small>Função na Status</small></div>
+      <span class="eq-arw" aria-hidden="true">↗</span>
+    </li>
+    <li class="eq-card" data-f="academy">
+      <!-- FOTO: trocar o .eq-sem-foto por <img src="assets/img/equipe/....webp" alt="Nome da pessoa"> -->
+      <div class="eq-foto"><span class="eq-sem-foto" aria-hidden="true"><img src="assets/img/simbolo-s.webp" alt="" loading="lazy"></span></div>
+      <span class="eq-chip">Cargo</span><span class="eq-frente">Status Academy</span>
+      <div class="eq-info"><b>Nome da pessoa</b><small>Função na Status</small></div>
+      <span class="eq-arw" aria-hidden="true">↗</span>
+    </li>
+  </ul>
+</section>
+<section class="dg" id="diagnostico" aria-labelledby="dg-title">
+  <div class="dg-wrap">
+    <div class="dg-side">
+      <span class="dg-kicker"><i aria-hidden="true"></i>Diagnóstico</span>
+      <h2 id="dg-title">Solicite seu <em>orçamento.</em></h2>
+      <p>Responda em poucos minutos. Assim a equipe Status já chega na conversa entendendo o momento da sua marca.</p>
+      <ol class="dg-passos">
+        <li><span>1</span><div><b>Você conta sobre a sua marca</b><small>Serviços, prazo e o que quer mudar.</small></div></li>
+        <li><span>2</span><div><b>Nossa equipe analisa</b><small>Olhamos o seu momento com estratégia.</small></div></li>
+        <li><span>3</span><div><b>Conversamos sobre o caminho</b><small>Você recebe a direção ideal para crescer.</small></div></li>
+      </ol>
+    <div class="ph-deco" aria-hidden="true">
+      <span class="ph-word">Status</span>
+      <span class="ph-icon"><img src="assets/img/hero/hx-s.webp" alt="" loading="lazy"></span>
+      <div class="ph-phone"><div class="ph-screen">
+        <span class="ph-time">9:41</span>
+        <div class="ph-apps"><i class="ph-app-s"><img src="assets/img/hero/hx-s.webp" alt="" loading="lazy"><b>Status</b></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div></div>
+    </div>
+    </div>
+    <form class="dg-form" id="dg-form" novalidate>
+      <label class="dg-campo">Nome:<input name="nome" autocomplete="name" required maxlength="100" placeholder="Digite seu nome"></label>
+      <label class="dg-campo">E-mail:<input name="email" type="email" autocomplete="email" required maxlength="120" placeholder="Digite seu e-mail"></label>
+      <label class="dg-campo">WhatsApp:<input name="whatsapp" type="tel" autocomplete="tel" required maxlength="20" placeholder="(00) 0 0000-0000"></label>
+      <label class="dg-campo">Empresa ou @ do Instagram:<input name="empresa" maxlength="120" placeholder="Nome da sua marca"></label>
+      <fieldset class="dg-grupo"><legend>Quais serviços você está buscando?</legend><div class="dg-chips"><label class="dg-chip"><input type="checkbox" name="servicos" value="Identidade visual"><span>Identidade visual</span></label><label class="dg-chip"><input type="checkbox" name="servicos" value="Redes sociais"><span>Redes sociais</span></label><label class="dg-chip"><input type="checkbox" name="servicos" value="Tráfego pago"><span>Tráfego pago</span></label><label class="dg-chip"><input type="checkbox" name="servicos" value="Site ou landing page"><span>Site ou landing page</span></label><label class="dg-chip"><input type="checkbox" name="servicos" value="Sistemas e automação"><span>Sistemas e automação</span></label><label class="dg-chip"><input type="checkbox" name="servicos" value="Mentoria e educação"><span>Mentoria e educação</span></label></div></fieldset>
+      <fieldset class="dg-grupo"><legend>Em quanto tempo você quer começar?</legend><div class="dg-chips"><label class="dg-chip"><input type="radio" name="prazo" value="Estou com urgência"><span>Estou com urgência</span></label><label class="dg-chip"><input type="radio" name="prazo" value="15 dias"><span>15 dias</span></label><label class="dg-chip"><input type="radio" name="prazo" value="30 dias"><span>30 dias</span></label><label class="dg-chip"><input type="radio" name="prazo" value="60 dias"><span>60 dias</span></label><label class="dg-chip"><input type="radio" name="prazo" value="Sem urgência"><span>Sem urgência</span></label></div></fieldset>
+      <label class="dg-campo">Conte um pouco sobre o seu negócio:<textarea name="sobre" rows="3" maxlength="1500" placeholder="O que você quer transformar na sua marca?"></textarea></label>
+      <button type="submit" class="dg-enviar">Enviar diagnóstico <span aria-hidden="true">→</span></button>
+      <p class="dg-status" role="status"></p>
+    </form>
+  </div>
+</section>
+
 </main>
 <footer><div class="footer-top"><a href="#inicio" class="brand-crop" aria-label="Status Brand — voltar ao início"><img src="assets/img/logo-oficial.jpeg" alt="Status Brand co."></a><p>Marcas com essência.<br>Presença com propósito.</p><nav aria-label="Menu do rodapé"><a href="#ecossistema">Ecossistema</a><a href="#projetos">Projetos</a><a href="#depoimentos">Clientes</a></nav></div><div class="footer-bottom"><span>© <span id="year">2026</span> Status Brand. Todos os direitos reservados.</span><span>BRANDING · PERFORMANCE · TECNOLOGIA</span></div></footer>
 <dialog id="contact-dialog" aria-labelledby="contact-title"><button class="dialog-close" aria-label="Fechar formulário">×</button><div id="brief-intro"><span class="eyebrow">O PRÓXIMO CAPÍTULO COMEÇA AQUI</span><h2 id="contact-title">Conte sobre<br><em>sua marca.</em></h2><p>Prepare um resumo do seu projeto para compartilhar com a equipe Status Brand.</p><form id="brief-form"><label>Seu nome<input name="name" autocomplete="name" required maxlength="100" placeholder="Como podemos chamar você?"></label><label>Empresa ou marca<input name="company" autocomplete="organization" required maxlength="120" placeholder="Nome da sua marca"></label><label>Do que você precisa?<select name="service" id="brief-service"><option>Quero entender por onde começar</option><option>Marca e posicionamento</option><option>Conteúdo e performance</option><option>Experiência e tecnologia</option></select></label><label>Qual é o seu principal desafio?<textarea name="goal" required minlength="10" maxlength="1500" rows="3" placeholder="Conte o que você quer transformar no seu negócio."></textarea></label><button type="submit" class="button primary">Gerar meu briefing</button><small>Os dados ficam apenas nesta página. Nenhuma mensagem é enviada automaticamente.</small></form></div><div id="brief-result" hidden><span class="eyebrow">PRONTO PARA COMPARTILHAR</span><h2>Seu próximo<br><em>passo está aqui.</em></h2><pre id="brief-text"></pre><div class="result-actions"><button class="button primary" id="copy-brief">Copiar briefing</button><button class="button" id="download-brief">Baixar resumo</button><button class="text-link" id="edit-brief">Editar informações</button></div><p id="copy-status" role="status">Copie ou baixe o resumo e compartilhe com a equipe Status Brand.</p></div></dialog>

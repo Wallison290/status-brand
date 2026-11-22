@@ -509,3 +509,96 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
     });
   }));
 })();
+
+// 21/11: Portfólio em blocos alternados. Cada linha tem um card grande (3/5) e um pequeno (2/5), invertendo a cada linha.
+// A imagem mais "deitada" da dupla vai para o espaço grande; se o formato não combinar com o espaço, ela aparece inteira sobre fundo lilás.
+(() => {
+  'use strict';
+  const grid = document.querySelector('.pt-grid');
+  if (!grid) return;
+  const desk = matchMedia('(min-width: 701px)');
+  const ratio = c => { const i = c.querySelector('img'); return i ? (+i.getAttribute('width') || 4) / (+i.getAttribute('height') || 5) : .8; };
+  const montar = () => {
+    const cards = [...grid.querySelectorAll('.pt-card')];
+    cards.forEach(c => { c.classList.remove('pt-g', 'pt-cheio'); c.style.order = ''; const i = c.querySelector('img'); if (i) i.classList.remove('pt-contem'); });
+    if (!desk.matches) return;
+    const vis = cards.filter(c => !c.hidden);
+    for (let k = 0; k < vis.length; k += 2) {
+      const a = vis[k], b = vis[k + 1], linha = k / 2;
+      if (!b) { a.classList.add('pt-cheio'); a.style.order = k; continue; }
+      const grande = ratio(a) >= ratio(b) ? a : b, pequeno = grande === a ? b : a;
+      grande.classList.add('pt-g');
+      const grandePrimeiro = linha % 2 === 0;
+      grande.style.order = grandePrimeiro ? k : k + 1;
+      pequeno.style.order = grandePrimeiro ? k + 1 : k;
+    }
+    requestAnimationFrame(() => vis.forEach(c => {
+      const i = c.querySelector('img'); if (!i || !i.clientHeight) return;
+      const caixa = i.clientWidth / i.clientHeight, r = ratio(c);
+      if (Math.abs(r - caixa) / caixa > .22) i.classList.add('pt-contem');
+    }));
+  };
+  montar();
+  document.querySelectorAll('.pt-tabs button').forEach(b => b.addEventListener('click', () => setTimeout(montar, 0)));
+  desk.addEventListener('change', montar);
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(montar, 150); });
+})();
+
+// 21/11: Equipe, as abas filtram por frente (Status Brand, Media, Academy)
+(() => {
+  'use strict';
+  const tabs = [...document.querySelectorAll('.eq-tabs button')];
+  const cards = [...document.querySelectorAll('.eq-card')];
+  tabs.forEach(b => b.addEventListener('click', () => {
+    tabs.forEach(x => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+    cards.forEach(c => { const m = b.dataset.f === 'todos' || c.dataset.f === b.dataset.f; c.hidden = !m; if (m) { c.style.animation = 'none'; void c.offsetWidth; c.style.animation = ''; } });
+  }));
+})();
+
+// 21/11: todo botão "Vamos conversar / Quero ser o próximo" leva ao formulário de diagnóstico (no lugar da janela antiga)
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-contact]');
+  const f = document.getElementById('diagnostico');
+  if (!b || !f) return;
+  e.preventDefault(); e.stopPropagation();
+  f.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}, true);
+
+// 21/11: Diagnóstico. Monta a mensagem com as respostas e abre o WhatsApp da Status.
+// WHATSAPP: colocar o número da Status só com dígitos, com 55 e DDD (ex.: '5511999999999').
+(() => {
+  'use strict';
+  const WHATSAPP = '';
+  const form = document.getElementById('dg-form');
+  if (!form) return;
+  const status = form.querySelector('.dg-status');
+  const tel = form.elements.whatsapp;
+  tel.addEventListener('input', () => {
+    const d = tel.value.replace(/[^0-9]/g, '').slice(0, 11);
+    tel.value = d.length > 6 ? `(${d.slice(0, 2)}) ${d.slice(2, 3)} ${d.slice(3, 7)}-${d.slice(7)}` : d.length > 2 ? `(${d.slice(0, 2)}) ${d.slice(2)}` : d;
+  });
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const obrig = ['nome', 'email', 'whatsapp'].map(n => form.elements[n]);
+    let ok = true;
+    obrig.forEach(i => { const bom = i.checkValidity() && i.value.trim(); i.classList.toggle('is-erro', !bom); if (!bom) ok = false; });
+    if (!ok) { status.textContent = 'Preencha nome, e-mail e WhatsApp para enviar.'; obrig.find(i => i.classList.contains('is-erro')).focus(); return; }
+    const v = n => form.elements[n].value.trim();
+    const servicos = [...form.querySelectorAll('input[name="servicos"]:checked')].map(i => i.value).join(', ') || 'Não informado';
+    const prazo = (form.querySelector('input[name="prazo"]:checked') || {}).value || 'Não informado';
+    const texto = [
+      'Olá, equipe Status! Quero solicitar um orçamento.', '',
+      `Nome: ${v('nome')}`, `E-mail: ${v('email')}`, `WhatsApp: ${v('whatsapp')}`,
+      v('empresa') && `Empresa: ${v('empresa')}`,
+      `Serviços: ${servicos}`, `Prazo: ${prazo}`,
+      v('sobre') && `Sobre o negócio: ${v('sobre')}`
+    ].filter(x => x !== '' && x !== undefined && x !== false).join('\n');
+    if (WHATSAPP) {
+      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+      status.textContent = 'Abrimos o WhatsApp com as suas respostas. É só enviar a mensagem.';
+    } else {
+      try { await navigator.clipboard.writeText(texto); status.textContent = 'Suas respostas foram copiadas. Em breve este formulário envia direto para a equipe Status.'; }
+      catch { status.textContent = 'Em breve este formulário envia direto para a equipe Status.'; }
+    }
+  });
+})();
