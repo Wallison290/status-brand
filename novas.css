@@ -1461,3 +1461,48 @@ dialog.dg[open]{position:fixed;inset:0}
   .jr-rolo.is-preso .jr-capa{min-height:min(560px,calc(100vh - 200px))}
 }
 .light-zone>.solutions{padding-top:clamp(28px,3vw,44px)}
+
+/* ===== 22/11 TESTE: site todo no escuro com roxo (para desfazer, tirar class="tema-escuro" do <html>) =====
+   As caixas que eram claras continuam brancas (mensagens, prints de resultado, etiquetas, abas). */
+html.tema-escuro .light-zone{background:
+  radial-gradient(ellipse 70% 35% at 85% 18%,rgba(117,70,255,.16),transparent 70%),
+  radial-gradient(ellipse 60% 30% at 10% 55%,rgba(82,50,201,.14),transparent 70%),
+  radial-gradient(ellipse 70% 30% at 80% 88%,rgba(117,70,255,.12),transparent 70%),#07050c;
+  color:#fff;border-radius:0;box-shadow:none}
+html.tema-escuro .light-zone::before{opacity:.22;mix-blend-mode:screen;-webkit-mask:linear-gradient(#000 45%,transparent);mask:linear-gradient(#000 45%,transparent)}
+html.tema-escuro .light-zone h2,html.tema-escuro .light-zone h3{color:#fff}
+html.tema-escuro .light-zone em{color:#b49cff}
+html.tema-escuro .light-zone p{color:#b5aec6}
+html.tema-escuro .light-zone .section-kicker{color:#8f88a3;border-top-color:rgba(255,255,255,.12)}
+html.tema-escuro .light-zone .svc-chip{color:#15111d}
+html.tema-escuro .light-zone .svc-intro>p,html.tema-escuro .light-zone .svc p{color:#b5aec6}
+html.tema-escuro .pt-tabs button{border-color:transparent}
+html.tema-escuro .pt-tabs button.is-on{background:linear-gradient(150deg,#8a6dff,#5232c9);border-color:transparent;color:#fff;box-shadow:0 12px 26px -10px rgba(117,70,255,.8)}
+html.tema-escuro .pt-card figcaption b{color:#fff}
+html.tema-escuro .pt-card figcaption span{color:#8f88a3}
+html.tema-escuro .pt-card img{box-shadow:0 30px 60px -30px #000}
+html.tema-escuro .light-zone .pt-head p{color:#b5aec6}
+html.tema-escuro .zona-escura{background:transparent;margin:0;border-radius:0}
+html.tema-escuro .zona-escura .nc{background:radial-gradient(ellipse 70% 60% at 20% 0,rgba(117,70,255,.25),transparent 70%),#120c24}
+html.tema-escuro .light-zone .ig-title{color:#8f88a3}
+html.tema-escuro .light-zone .ig-title em{color:#fff}
+html.tema-escuro .light-zone .ig-ph{box-shadow:0 30px 60px -30px #000}
+html.tema-escuro .sv-tab{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+html.tema-escuro .contact-section{box-shadow:none}
+
+/* ===== 22/11: Serviços, cada aba aberta mostra uma imagem do serviço (geradas no Flow, na identidade da marca) ===== */
+.sv-foto{position:absolute;top:12px;right:12px;bottom:12px;width:min(48%,520px);margin:0;border-radius:14px;overflow:hidden;z-index:0;
+  box-shadow:0 20px 50px -20px #000;opacity:0;transform:scale(.97);transition:opacity .5s .3s,transform .8s cubic-bezier(.16,1,.3,1) .3s}
+.sv-foto img{width:100%;height:100%;object-fit:cover}
+.sv-tab.is-open .sv-foto{opacity:1;transform:none}
+@media(min-width:901px){
+  .sv-body{padding-right:calc(min(48%,520px) + clamp(28px,3vw,44px))}
+  .sv-body>*:not(.sv-foto){position:relative;z-index:1}
+  .sv-cta{right:auto!important;left:clamp(26px,2.6vw,38px)}
+}
+@media(max-width:900px){
+  .sv-tab.is-open{height:560px}
+  .sv-foto{position:relative;inset:auto;width:auto;height:180px;margin:0 0 14px;flex:none}
+}
+@media(min-width:901px){.sv-body{padding-bottom:clamp(26px,2.6vw,38px)}.sv-cta{position:relative!important;left:auto!important;bottom:auto!important;right:auto!important;align-self:flex-start;margin-top:auto}}
+@media(min-width:901px){.sv-tab.is-open .sv-ico{opacity:0}}
