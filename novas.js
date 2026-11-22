@@ -704,3 +704,22 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
     i++;
   }, 1500);
 })();
+
+// 22/11: Serviços, as abas passam sozinhas (computador). Mouse em cima pausa; clique da pessoa pausa por 12 s.
+(() => {
+  'use strict';
+  const box = document.querySelector('.sv-tabs');
+  if (!box || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const tabs = [...box.querySelectorAll('.sv-tab')];
+  let visivel = false, dentro = false, ateQuando = 0, auto = false;
+  new IntersectionObserver(es => es.forEach(e => { visivel = e.isIntersecting; }), { threshold: .45 }).observe(box);
+  box.addEventListener('mouseenter', () => { dentro = true; });
+  box.addEventListener('mouseleave', () => { dentro = false; ateQuando = Date.now() + 2500; });
+  box.addEventListener('click', () => { if (!auto) ateQuando = Date.now() + 12000; });
+  setInterval(() => {
+    if (!visivel || dentro || document.hidden || Date.now() < ateQuando || !matchMedia('(min-width: 901px)').matches) return;
+    const atual = tabs.findIndex(t => t.classList.contains('is-open'));
+    const prox = tabs[(atual + 1) % tabs.length].querySelector('.sv-head');
+    auto = true; prox.click(); auto = false;
+  }, 4000);
+})();
