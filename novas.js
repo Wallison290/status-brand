@@ -724,3 +724,17 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
     auto = true; prox.click(); auto = false;
   }, 4000);
 })();
+
+// 22/11: jornada, o painel preso fica centralizado na altura da tela (abaixo do cabeçalho)
+(() => {
+  'use strict';
+  const rolo = document.querySelector('.jr-rolo'), painel = rolo && rolo.querySelector('.jr-painel');
+  if (!painel) return;
+  const centra = () => {
+    const h = painel.offsetHeight, cab = 80;
+    rolo.style.setProperty('--jr-top', Math.max(cab, Math.round(cab + (innerHeight - cab - h) / 2)) + 'px');
+  };
+  addEventListener('resize', centra);
+  new ResizeObserver(centra).observe(painel);
+  centra();
+})();

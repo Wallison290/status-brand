@@ -1533,3 +1533,16 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
+
+/* 22/11: serviços abrem sem atraso perceptível (imagens já carregadas, entrada mais curta) */
+.sv-tab.is-open .sv-body{transition:opacity .3s .08s,transform .45s cubic-bezier(.16,1,.3,1) .08s,visibility 0s}
+.sv-foto{transition:opacity .3s .1s,transform .55s cubic-bezier(.16,1,.3,1) .1s}
+
+/* 22/11: jornada centralizada na tela; só a etapa ativa mostra a descrição (abre e fecha suave), para caber em qualquer altura */
+@media(min-width:901px){
+  .jr-rolo.is-preso .jr-painel{top:var(--jr-top,90px)}
+  .jr-rolo.is-preso .jr-capa{min-height:min(540px,calc(100vh - 170px))}
+  .jr-rolo.is-preso .jr-passos{gap:clamp(8px,1.4vh,16px)}
+  .jr-rolo.is-preso .jr-passos p{max-height:calc(var(--luz,0) * 70px);opacity:var(--luz,0);overflow:hidden;margin-top:calc(var(--luz,0) * 6px);transition:none}
+}
+.jr-passos li.is-on .jr-n{background:linear-gradient(150deg,#8a6dff,#5232c9)!important;color:#fff!important;border-color:transparent!important}
