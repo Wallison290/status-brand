@@ -686,3 +686,21 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
     i = (i + 1) % cartas.length;
   }, 1500);
 })();
+
+// 22/11: Nível de atuação, as fotos do arco sobem sozinhas em sequência (pausa no mouse)
+(() => {
+  'use strict';
+  const arco = document.querySelector('.rs-fotos');
+  if (!arco || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let i = 0, pausa = false, visivel = false;
+  new IntersectionObserver(es => es.forEach(e => { visivel = e.isIntersecting; }), { threshold: .3 }).observe(arco);
+  const fotos = () => [...arco.children].filter(li => !li.classList.contains('is-clone'));
+  arco.addEventListener('mouseenter', () => { pausa = true; fotos().forEach(li => li.classList.remove('is-up')); });
+  arco.addEventListener('mouseleave', () => { pausa = false; });
+  setInterval(() => {
+    if (pausa || !visivel || document.hidden || !matchMedia('(min-width: 901px)').matches) return;
+    const f = fotos();
+    f.forEach((li, n) => li.classList.toggle('is-up', n === i % f.length));
+    i++;
+  }, 1500);
+})();
