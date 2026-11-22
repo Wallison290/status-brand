@@ -1192,3 +1192,35 @@ main>section:not(.hx) h2,main>.light-zone>section h2,.ecl-title,.eco3-title,.lig
 .ph-deco::before{background:radial-gradient(ellipse 90% 100% at 35% 115%,#7a4dff 0,rgba(98,56,226,.75) 30%,rgba(60,30,160,.35) 58%,transparent 80%)}
 .ph-word{color:#07050c;opacity:.9}
 .ph-icon{z-index:2;top:8%;left:clamp(130px,14vw,200px)}
+
+/* ===== 21/11 (2): EQUIPE com as pessoas reais; sem grade no fundo, sem abas; descrição aparece ao passar o mouse ===== */
+.eq{background:radial-gradient(ellipse 60% 50% at 80% 0,rgba(117,70,255,.22),transparent 70%),#07050c}
+.eq-head p{margin:0;max-width:360px;font-size:15px;line-height:1.55;color:#a9a2bb}
+.eq-card{outline:none}
+.eq-foto>img{object-position:50% 20%}
+.eq-card::after{background:linear-gradient(180deg,transparent 45%,rgba(7,5,12,.95));transition:background .5s}
+.eq-card:hover::after,.eq-card:focus-visible::after{background:linear-gradient(180deg,rgba(7,5,12,.15) 10%,rgba(18,10,40,.97) 62%)}
+.eq-info small{color:#c9bcff}
+.eq-info p,.eq-info .eq-at{max-height:0;margin:0;overflow:hidden;opacity:0;transform:translateY(10px);transition:max-height .6s cubic-bezier(.16,1,.3,1),opacity .4s,transform .5s,margin .5s}
+.eq-info p{font-size:14px;line-height:1.55;color:#ddd6f3}
+.eq-info .eq-at{font-style:normal!important;font-size:12.5px!important;color:#b49cff}
+.eq-card:hover .eq-info p,.eq-card:focus-visible .eq-info p{max-height:160px;margin-top:10px;opacity:1;transform:none}
+.eq-card:hover .eq-info .eq-at,.eq-card:focus-visible .eq-info .eq-at{max-height:30px;margin-top:6px;opacity:1;transform:none}
+.eq-card:focus-visible{box-shadow:0 0 0 2px #8a6dff,0 30px 60px -30px #000}
+@media(hover:none){.eq-info p{max-height:160px;margin-top:10px;opacity:1;transform:none}.eq-info .eq-at{max-height:30px;margin-top:6px;opacity:1;transform:none}.eq-card::after{background:linear-gradient(180deg,transparent 30%,rgba(18,10,40,.96) 70%)}}
+
+/* ===== 21/11 (2): INSTAGRAM em mosaico com os posts do STATUS BRAND (colunas desencontradas) ===== */
+.ig-mosaico{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:auto;gap:clamp(12px,1.4vw,20px);padding-bottom:40px}
+.ig-mosaico>*{aspect-ratio:4/5;min-width:0}
+.ig-mosaico>:nth-child(4n+2),.ig-mosaico>:nth-child(4n+4){transform:translateY(40px)}
+.ig-foto{margin:0;border-radius:20px;overflow:hidden;box-shadow:0 26px 50px -28px rgba(21,17,29,.6)}
+.ig-foto img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.ig-foto:hover img{transform:scale(1.05)}
+@media(max-width:800px){.ig-mosaico{grid-template-columns:repeat(2,minmax(0,1fr))}.ig-mosaico>:nth-child(4n+4){transform:none}.ig-mosaico>:nth-child(2n){transform:translateY(30px)}}
+
+/* ===== 21/11 (2): celular do diagnóstico não corta mais em cima ===== */
+.dg-side .ph-deco{overflow:visible}
+.ph-phone{bottom:-56%}
+.eq-chip{background:rgba(7,5,12,.55)}
+@media(max-width:800px){.ig-mosaico>.ig-card{grid-column:1/-1;aspect-ratio:auto;min-height:170px;transform:none!important}.ig-mosaico>.ig-foto:nth-child(2n+1){transform:translateY(30px)}.ig-mosaico>.ig-foto:nth-child(2n){transform:none}}
+@media(max-width:900px){.dg-side{padding-bottom:360px}.dg-side .ph-deco{height:340px}}
