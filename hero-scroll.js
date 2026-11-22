@@ -6,6 +6,10 @@
   const hx = document.querySelector('.hx');
   if (!hx || !window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
+  // 22/11: em telas de toque (tablet/celular) a tela para onde o dedo parou: sem encaixe automático,
+  // animação colada ao dedo e sem recalcular a página quando a barra do navegador aparece/some
+  const TOQUE = matchMedia('(pointer: coarse)').matches || !matchMedia('(hover: hover)').matches;
+  if (TOQUE) ScrollTrigger.config({ ignoreMobileResize: true });
   const q = s => hx.querySelector(s);
   const mm = gsap.matchMedia();
   const vw = v => () => innerWidth * v / 100, vh = v => () => innerHeight * v / 100;
@@ -56,10 +60,10 @@
 
     const tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { trigger: hx, start: 'top top', end: '+=110%', pin: true, scrub: .3, anticipatePin: 1, invalidateOnRefresh: true,
+      scrollTrigger: { trigger: hx, start: 'top top', end: '+=110%', pin: true, scrub: TOQUE ? .12 : .3, anticipatePin: 1, invalidateOnRefresh: true,
         // cada gesto de rolagem leva para a próxima etapa
         // com a rolagem suave (Lenis) o encaixe é feito abaixo; sem ela, usa o snap do GSAP
-        snap: window.lenis ? false : { snapTo: 'labelsDirectional', inertia: false, duration: { min: .25, max: .6 }, delay: .08, ease: 'power1.inOut' } },
+        snap: (window.lenis || TOQUE) ? false : { snapTo: 'labelsDirectional', inertia: false, duration: { min: .25, max: .6 }, delay: .08, ease: 'power1.inOut' } },
     });
 
     // fundo andando devagar o tempo todo (o S 3D é o foco)
