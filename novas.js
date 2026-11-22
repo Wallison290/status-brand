@@ -535,8 +535,13 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   if (!rolo || !lista) return;
   const itens = [...lista.children];
   const N = itens.length;
-  const marca = (k, p) => {
-    itens.forEach((li, n) => { li.classList.toggle('is-on', n === k); li.classList.toggle('is-feito', n < k); });
+  const marca = (k, p, pos) => {
+    // pos = posição contínua na linha (0..N-1): cada etapa acende aos poucos conforme a linha chega nela
+    const at = pos === undefined ? k : pos;
+    itens.forEach((li, n) => {
+      li.classList.toggle('is-on', n === k); li.classList.toggle('is-feito', n < k);
+      li.style.setProperty('--luz', String(Math.max(0, 1 - Math.abs(at - n)).toFixed(3)));
+    });
     lista.style.setProperty('--jr-p', String(p));
   };
   const desk = matchMedia('(min-width: 901px)');
@@ -547,7 +552,8 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
       const r = rolo.getBoundingClientRect();
       const total = rolo.offsetHeight - innerHeight;
       const p = Math.min(1, Math.max(0, -r.top / Math.max(1, total)));
-      marca(Math.min(N - 1, Math.floor(p * N)), Math.min(1, p * N / (N - 1)));
+      const pos = p * (N - 1);
+      marca(Math.round(pos), p, pos);
     } else {
       const meio = innerHeight * 0.55;
       let k = 0;
