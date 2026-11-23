@@ -1546,3 +1546,16 @@ html.lenis,html.lenis body{height:auto}
   .jr-rolo.is-preso .jr-passos p{max-height:calc(var(--luz,0) * 70px);opacity:var(--luz,0);overflow:hidden;margin-top:calc(var(--luz,0) * 6px);transition:none}
 }
 .jr-passos li.is-on .jr-n{background:linear-gradient(150deg,#8a6dff,#5232c9)!important;color:#fff!important;border-color:transparent!important}
+
+/* 23/11: serviços sem "carregamento" ao abrir: o conteúdo já nasce na largura final (a aba só revela) e a abertura é mais curta */
+@media(min-width:901px){
+  .sv-tab{transition:flex .5s cubic-bezier(.22,1,.36,1),box-shadow .4s,border-color .4s;contain:layout paint}
+  .sv-body{right:auto;width:var(--sv-aberta,100%)}
+}
+
+/* 23/11: Ecossistema mais sutil: a caixa da Status Brand já fica onde as caixas do lado (abertas) não alcançam; nada se move */
+@media(min-width:901px){
+  .mx-3 .mx-node[data-node="4"],
+  .mx-3:has(.mx-node[data-node="0"].is-open) .mx-node[data-node="4"],
+  .mx-3:has(.mx-node[data-node="2"].is-open) .mx-node[data-node="4"]{margin-top:var(--mx-desce,300px);transition:none}
+}

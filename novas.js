@@ -655,20 +655,22 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   });
 })();
 
-// 22/11: Ecossistema, a caixa de baixo desce exatamente o quanto a caixa aberta do lado precisa
+// 23/11: Ecossistema, a caixa de baixo fica fixa abaixo do alcance das caixas do lado quando abertas (sem movimento)
 (() => {
   'use strict';
   const mx = document.querySelector('.mx-3');
   if (!mx) return;
   const ajusta = () => {
-    const lado = mx.querySelector('.mx-node[data-node="0"].is-open, .mx-node[data-node="2"].is-open');
-    if (!lado) return;
-    const head = lado.querySelector('.mx-head').offsetHeight, corpo = lado.querySelector('.mx-more > div').scrollHeight;
-    const extra = head + corpo - lado.offsetHeight + 48;
-    mx.style.setProperty('--mx-desce', Math.max(72, extra) + 'px');
+    let extra = 72;
+    mx.querySelectorAll('.mx-node[data-node="0"], .mx-node[data-node="2"]').forEach(lado => {
+      const head = lado.querySelector('.mx-head').offsetHeight, corpo = lado.querySelector('.mx-more > div').scrollHeight;
+      extra = Math.max(extra, head + corpo - lado.offsetHeight + 40);
+    });
+    mx.style.setProperty('--mx-desce', extra + 'px');
   };
-  new MutationObserver(() => requestAnimationFrame(ajusta)).observe(mx, { subtree: true, attributes: true, attributeFilter: ['class'] });
   addEventListener('resize', ajusta);
+  addEventListener('load', ajusta);
+  ajusta();
 })();
 
 // 22/11: Resultados, as cartas do leque sobem sozinhas em sequência (pausa quando a pessoa passa o mouse)
@@ -737,4 +739,22 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   addEventListener('resize', centra);
   new ResizeObserver(centra).observe(painel);
   centra();
+})();
+
+// 23/11: serviços, largura final da aba aberta (o conteúdo não se reorganiza enquanto a aba abre)
+(() => {
+  'use strict';
+  const box = document.querySelector('.sv-tabs');
+  if (!box) return;
+  const mede = () => {
+    const tabs = [...box.querySelectorAll('.sv-tab')];
+    const fechada = tabs.find(t => !t.classList.contains('is-open'));
+    if (!fechada) return;
+    const gap = parseFloat(getComputedStyle(box).columnGap) || 10;
+    const w = box.clientWidth - (tabs.length - 1) * (fechada.offsetWidth + gap);
+    box.style.setProperty('--sv-aberta', Math.max(320, Math.round(w)) + 'px');
+  };
+  addEventListener('resize', mede);
+  addEventListener('load', mede);
+  mede();
 })();
