@@ -1555,3 +1555,27 @@ html.lenis,html.lenis body{height:auto}
 
 /* 23/11: linha de luz do centro do arco fica ATRÁS das fotos (o 3D compartilhado fazia a linha cortar as fotos do meio) */
 @media(min-width:901px){.rs-fotos{transform-style:flat}.rs-fotos::before,.rs-fotos::after{z-index:0}.rs-fotos li{z-index:1}}
+
+/* ===== 23/11: Diagnóstico em janela cabe inteiro na tela do computador (sem barra de rolagem dentro) ===== */
+@media(min-width:901px){
+  dialog.dg .dg-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;padding:40px clamp(24px,2.6vw,36px) clamp(22px,2.4vw,30px)}
+  dialog.dg .dg-form>.dg-grupo,dialog.dg .dg-form>.dg-campo:has(textarea),dialog.dg .dg-form>.dg-enviar,dialog.dg .dg-form>.dg-status{grid-column:1/-1}
+  dialog.dg .dg-campo{gap:6px;font-size:14px}
+  dialog.dg .dg-campo input,dialog.dg .dg-campo textarea{padding:12px 16px;font-size:14.5px}
+  dialog.dg .dg-campo textarea{height:76px;min-height:60px}
+  dialog.dg .dg-grupo legend{margin-bottom:8px;font-size:14px}
+  dialog.dg .dg-chips{gap:8px}
+  dialog.dg .dg-chip span{padding:8px 14px;font-size:13.5px}
+  dialog.dg .dg-enviar{padding:14px 28px}
+  dialog.dg .dg-side{gap:14px;padding:clamp(26px,2.6vw,36px) clamp(24px,2.6vw,36px) 230px}
+  dialog.dg .dg-side h2{font-size:clamp(34px,3.4vw,50px)}
+  dialog.dg .dg-side>p{font-size:15px;line-height:1.55}
+  dialog.dg .dg-passos{gap:12px;margin-top:4px}
+  dialog.dg .dg-passos li>span{width:40px;height:40px;border-radius:12px}
+  dialog.dg .dg-side .ph-deco{height:210px;overflow:hidden}
+  dialog.dg .ph-phone{width:170px;right:6%;bottom:-210px}
+  dialog.dg .dg-form>.dg-enviar{justify-self:start}
+}
+@media(min-width:901px) and (max-height:700px){dialog.dg .dg-side .ph-deco{display:none}dialog.dg .dg-side{padding-bottom:26px}}
+/* 23/11: a faixa de fotos usa 100vw, que no Windows inclui a barra de rolagem; corta a sobra para não rolar de lado */
+.rs{overflow-x:clip}
