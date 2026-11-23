@@ -472,7 +472,15 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   const mouse = matchMedia('(hover: hover) and (pointer: fine)');
   tabs.forEach(t => {
     // só abre quando o mouse se mexe em cima da aba (se abrisse ao "entrar", a troca de largura das abas faria o mouse cair em outra e ficar trocando sozinho)
-    t.addEventListener('pointermove', e => { if (mouse.matches && e.pointerType === 'mouse' && (e.movementX || e.movementY) && !t.classList.contains('is-open')) abre(t); });
+    // 23/11: abre só quando o mouse PARA em cima da aba (descansa ~0,28 s); passar por cima não abre
+    let parado;
+    t.addEventListener('pointermove', e => {
+      if (!mouse.matches || e.pointerType !== 'mouse') return;
+      clearTimeout(parado);
+      if (t.classList.contains('is-open')) return;
+      parado = setTimeout(() => { if (t.matches(':hover')) { abre(t); t.dispatchEvent(new CustomEvent('sv-escolhida', { bubbles: true })); } }, 280);
+    });
+    t.addEventListener('pointerleave', () => clearTimeout(parado));
     t.querySelector('.sv-head').addEventListener('click', () => abre(t));
     t.addEventListener('focusin', () => abre(t));
   });
@@ -714,8 +722,9 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
   const tabs = [...box.querySelectorAll('.sv-tab')];
   let visivel = false, dentro = false, ateQuando = 0, auto = false;
   new IntersectionObserver(es => es.forEach(e => { visivel = e.isIntersecting; }), { threshold: .45 }).observe(box);
-  box.addEventListener('mouseenter', () => { dentro = true; });
-  box.addEventListener('mouseleave', () => { dentro = false; ateQuando = Date.now() + 2500; });
+  // 23/11: o mouse só passando não trava a troca automática; ela pausa quando a pessoa escolhe uma aba (mouse parado em cima ou clique)
+  box.addEventListener('sv-escolhida', () => { ateQuando = Date.now() + 9000; });
+  box.addEventListener('pointermove', e => { const t = e.target.closest('.sv-tab'); if (t && t.classList.contains('is-open')) ateQuando = Math.max(ateQuando, Date.now() + 4000); });
   box.addEventListener('click', () => { if (!auto) ateQuando = Date.now() + 12000; });
   setInterval(() => {
     if (!visivel || dentro || document.hidden || Date.now() < ateQuando || !matchMedia('(min-width: 901px)').matches) return;
