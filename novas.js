@@ -612,20 +612,18 @@ if (matchMedia('(max-width: 900px)').matches) autoRoll(document.querySelector('.
     abrir();
   }, true);
 
-  // 23/11: intenção de saída. No computador, quando o mouse sai pelo topo da janela (abas, X, barra de endereço),
-  // abre o diagnóstico. Só uma vez por visita, depois de 6 s no site e se a pessoa ainda não abriu o formulário.
+  // 23/11: intenção de saída. No computador, quando o mouse sai pela parte de cima da janela (abas, X, barra de endereço),
+  // abre o diagnóstico. Uma vez a cada carregamento da página, depois de 3 s no site.
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  const CHAVE = 'sb-saida-mostrada';
-  const jaMostrou = () => { try { return sessionStorage.getItem(CHAVE) === '1'; } catch (_) { return false; } };
-  const marcar = () => { try { sessionStorage.setItem(CHAVE, '1'); } catch (_) {} };
   const inicio = Date.now();
-  let foi = jaMostrou();
-  dlg.addEventListener('close', () => { foi = true; marcar(); });
-  document.addEventListener('mouseout', e => {
-    if (foi || e.relatedTarget || e.clientY > 10 || dlg.open) return;
-    if (Date.now() - inicio < 6000 || document.querySelector('dialog[open]')) return;
-    foi = true; marcar(); abrir();
-  });
+  let foi = false;
+  const saida = e => {
+    if (foi || dlg.open || e.relatedTarget || e.clientY > 60) return;
+    if (Date.now() - inicio < 3000 || document.querySelector('dialog[open]')) return;
+    foi = true; abrir();
+  };
+  document.addEventListener('mouseout', saida);
+  document.documentElement.addEventListener('mouseleave', saida);
 })();
 
 // 21/11: Diagnóstico. Monta a mensagem com as respostas e abre o WhatsApp da Status.
