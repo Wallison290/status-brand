@@ -1553,3 +1553,5 @@ html.lenis,html.lenis body{height:auto}
   .sv-body{right:auto;width:var(--sv-aberta,100%)}
 }
 
+/* 23/11: linha de luz do centro do arco fica ATRÁS das fotos (o 3D compartilhado fazia a linha cortar as fotos do meio) */
+@media(min-width:901px){.rs-fotos{transform-style:flat}.rs-fotos::before,.rs-fotos::after{z-index:0}.rs-fotos li{z-index:1}}
